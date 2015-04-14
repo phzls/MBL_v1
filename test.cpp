@@ -18,6 +18,8 @@ using namespace Eigen;
 CRandomMersenne RanGen_mersenne(time(NULL));
 
 int main(){
+
+    clock_t time_begin = clock();
     EvolOP* floquet;
 
     floquet = new FloEvolIsingRandomSimpShiftReal(4, 0.6, true);
@@ -31,6 +33,12 @@ int main(){
 
     floquet -> Evec(evec);
     floquet -> Eval(eval);
+
+    floquet -> Eigen_Erase();
+
+    clock_t time_end = clock();
+
+    cout << "Floquet 2 time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
     cout << "Eigenvalues:" << endl;
     for (int i=0; i<eval.size();i++){
@@ -48,5 +56,7 @@ int main(){
 
     delete floquet;
     floquet = NULL;
+
+
 }
 
