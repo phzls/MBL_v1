@@ -88,7 +88,7 @@ public:
     void OP_Erase() {evol_op_.resize(0,0); constructed_ = false;}
 
     // Erase eigenvectors and eigenvalues
-    void Eigen_Erase() { if (eigen_ != NULL) {delete eigen_; eigen_ = NULL; eigen_info_ = false};}
+    void Eigen_Erase() { if (eigen_ != NULL) {delete eigen_; eigen_ = NULL; eigen_info_ = false;}}
 
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const;
@@ -125,9 +125,17 @@ public:
     }
 
     // No real Hamiltonian to return
-    const MatrixXd& Get_Real(string a) const;
+    const MatrixXd& Get_Real(string a) const{
+        cout << "No real Hamiltonian is constructed for " << Repr() << endl;
+        abort();
+    }
 
-    const MatrixXd& Get_Real(int a = 0) const;
+    const MatrixXd& Get_Real(int a = 0) const{
+        cout << "No real Hamiltonian is constructed for " << Repr() << endl;
+        abort();
+    }
+
+    bool Get_Eigen_Computed() const {return (eigen_ != NULL);}
 
     virtual ~FloEvolVanilla() { if (eigen_ != NULL) {delete eigen_; eigen_ = NULL;}}
 };
@@ -180,7 +188,7 @@ public:
     {eigen_name.resize(1,"");}
 
     // When local dimension is given
-    FloEvolVanillaReal(int size, int local_dim): EvolOP(size, local_dim), constructed_(false), eigen_info_(false),
+    FloEvolVanillaReal(int size, int local_dim): EvolOP(size, local_dim), constructed_(false), eigen_info_(false)
     {eigen_name.resize(1,"");}
 
     // Diagnolize time evolution matrix, user can determine whether eigenvectors are kept
@@ -216,10 +224,7 @@ public:
 
     // Return eigenvectors in a column_wise fashion at each index
     void Evec(vector<MatrixXd>&) const;
-    void Evec(vector<MatrixXcd>& evec) const{
-        cout << Repr() << " has no complex eigenvectors." << endl;
-        abort();
-    }
+    void Evec(vector<MatrixXcd>&) const;
 
     // Return eigenvalues
     void Eval(vector<VectorXcd>&) const;
@@ -244,6 +249,8 @@ public:
             abort();
         }
     }
+
+    bool Get_Eigen_Computed() const {return diag_;}
 
     const MatrixXd& Get_Real(string a) const;
 

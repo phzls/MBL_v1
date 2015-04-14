@@ -69,7 +69,7 @@ void FloEvolVanillaReal::Transition_Compute(TransitionMatrix& transition,
     }
 }
 
-void FloEvolVanillaReal::Evol_Diag(bool keep = true){
+void FloEvolVanillaReal::Evol_Diag(bool keep){
     if (constructed_){
         if (!diag_){
             SelfAdjointEigenSolver<MatrixXd>* eigen_; // Only one sector
@@ -165,6 +165,21 @@ void FloEvolVanillaReal::Evec(vector<MatrixXd>& evec) const {
     }
     evec.resize(1);
     evec[0] = evec_;
+}
+
+void FloEvolVanillaReal::Evec(vector<MatrixXcd>& evec) const {
+    if (!eigen_info_){
+        cout << Repr() << " has not been diagonalized with eigenvectors." << endl;
+    }
+    evec.resize(1);
+    evec[0].resize(evec_.rows(), evec_.cols());
+
+    for (int i=0; i<evec_.cols(); i++){
+        for (int j=0; j<evec_.rows(); j++){
+            evec[0](j,i) = complex<double>(evec_(j,i),0);
+        }
+    }
+
 }
 
 void FloEvolVanillaReal::Eval(vector<VectorXcd>& eval) const {
