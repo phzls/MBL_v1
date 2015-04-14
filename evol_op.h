@@ -88,12 +88,12 @@ public:
     virtual vector<int> Get_Sector_Dim() const = 0;
 
     // Return eigenvectors
-    virtual void Evec(vector<MatrixXcd>) const = 0;
-    virtual void Evec(vector<MatrixXd>) const = 0;
+    virtual void Evec(vector<MatrixXcd>&) const = 0;
+    virtual void Evec(vector<MatrixXd>&) const = 0;
 
     // Return eigenvalues
-    virtual void Eval(vector<VectorXcd>) const = 0;
-    virtual void Eval(vector<VectorXd>) const = 0;
+    virtual void Eval(vector<VectorXcd>&) const = 0;
+    virtual void Eval(vector<VectorXd>&) const = 0;
 
     // Return the complex unitary operator according to a string
     virtual const MatrixXcd& Get_Complex(string) const = 0;
