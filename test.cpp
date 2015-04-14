@@ -5,61 +5,48 @@
 #include <iostream>
 #include <Eigen/Core>
 #include <complex>
+#include <ctime>
 #include "matrix_algebra.h"
+#include "randomc.h"
+#include "screen_output.h"
+#include "evol_op.h"
+#include "flo_evol_model.h"
 
 using namespace std;
 using namespace Eigen;
 
+CRandomMersenne RanGen_mersenne(time(NULL));
+
 int main(){
-    MatrixXd A(2,2);
-    MatrixXcd B(2,2);
+    EvolOP* floquet;
 
-    for (int i=0; i<2; i++){
-        for (int j=0; j<2; j++){
-            A(j,i) = i + j;
-            B(j,i) = complex<double>(i,j);
-        }
-    }
+    floquet = new FloEvolIsingRandomSimpShiftReal(4, 0.6, true);
 
-    cout << "A:" << endl;
-    for (int i=0; i<2; i++){
-        for (int j=0; j<2; j++){
-            cout << A(i,j) << "  ";
-        }
+    floquet -> Evol_Para_Init();
+    floquet -> Evol_Construct();
+    floquet -> Evol_Diag();
+
+    vector<MatrixXcd> evec;
+    vector<VectorXcd> eval;
+
+    floquet -> Evec(evec);
+    floquet -> Eval(eval);
+
+    cout << "Eigenvalues:" << endl;
+    for (int i=0; i<eval.size();i++){
+        cout << "Sec " << i << endl;
+        complex_matrix_write(eval[i]);
         cout << endl;
     }
-    cout << endl;
 
-    cout << "B:" << endl;
-    for (int i=0; i<2; i++){
-        for (int j=0; j<2; j++){
-            cout << B(i,j) << "  ";
-        }
+    cout << "Eigenvectors:" << endl;
+    for (int i=0; i<evec.size();i++){
+        cout << "Sec " << i << endl;
+        complex_matrix_write(evec[i]);
         cout << endl;
     }
-    cout << endl;
 
-    MatrixXcd C;
-    Matrix_Add(A, B, C);
-
-    cout << "Add C:" << endl;
-    for (int i=0; i<2; i++){
-        for (int j=0; j<2; j++){
-            cout << C(i,j) << "  ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-
-    Matrix_Mul(A, B, C);
-
-    cout << "Mul C:" << endl;
-    for (int i=0; i<2; i++){
-        for (int j=0; j<2; j++){
-            cout << C(i,j) << "  ";
-        }
-        cout << endl;
-    }
-    cout << endl;
+    delete floquet;
+    floquet = NULL;
 }
 
