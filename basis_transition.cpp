@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <complex>
-#include "eigen_output.h"
+#include "screen_output.h"
 #include "basis_transition.h"
 
 using namespace std;
