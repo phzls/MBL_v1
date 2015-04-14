@@ -31,7 +31,6 @@ protected:
     const int local_dim_; // Local dimension of the Hilber space
     const bool iso_keep_; // Whether keep another EvolOP pointer which points
                           // to the isolated part of a model coupled to the bath
-    bool eigen_computed_; // Whether eigensystems of this model have been solved
 
     // Pointers pointing to isolated part of a model coupling to the bath
     EvolOP* model_iso_;
@@ -40,12 +39,12 @@ public:
     // When local dimension is not given
     EvolOP(int size, bool iso_keep = false):
             size_(size), local_dim_(2), dim_(1 << size), iso_keep_(iso_keep),
-            model_iso_(NULL),eigen_computed_(false) {};
+            model_iso_(NULL) {};
 
     // When local dimension is explicitly given
     EvolOP(int size, int local_dim, bool iso_keep = false):
             size_(size), local_dim_(local_dim), dim_(int(pow(double(local_dim), double(size)))),
-            iso_keep_(iso_keep), model_iso_(NULL), eigen_computed_(false) {};
+            iso_keep_(iso_keep), model_iso_(NULL) {};
 
     vector<string> eigen_name; // Name of each eigensectors
 
@@ -112,7 +111,7 @@ public:
     void Get_Iso(EvolOP*& model) {model = model_iso_;}
 
     // Check whether eigensystems have been solved
-    bool Get_Eigen_Computed() const {return eigen_computed_;}
+    virtual bool Get_Eigen_Computed() const = 0;
 
     virtual ~EvolOP(){
         if (model_iso_ != NULL) delete model_iso_;
