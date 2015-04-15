@@ -73,8 +73,14 @@ public:
     // Return the type of the model
     string Type() const {return type_;}
 
+    // Return the type of eigenvalues
+    string Eval_Type() const {return "Complex";}
+
+    // Return the type of eigenvectors
+    string Evec_Type() const {return "Complex";}
+
     // Return the type of the basis that eigenstates are written in
-    string Eigen_Type() const {return "Basic";}
+    string Eigen_Basis_Type() const {return "Basic";}
 
     // Return dimension of each sector. Here only 1 sector exists, so total dimension
     // is returned.
@@ -201,8 +207,14 @@ public:
     // Return the type of the model
     string Type() const {return type_;}
 
+    // Return the type of eigenvalues
+    string Eval_Type() const {return "Complex";}
+
+    // Return the type of eigenvectors
+    string Evec_Type() const {return "Real";}
+
     // Return the type of the basis that eigenstates are written in
-    string Eigen_Type() const {return "Basic";}
+    string Eigen_Basis_Type() const {return "Basic";}
 
     // Return dimension of each sector. Here only 1 sector exists, so total dimension
     // is returned.

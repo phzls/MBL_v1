@@ -75,8 +75,14 @@ public:
     // concerete parameters
     virtual string Type() const = 0;
 
+    // Return the type of eigenvectors: real or complex
+    virtual string Eval_Type() const = 0;
+
+    // Return the type of eigenvalues: real of complex
+    virtual string Evec_Type() const = 0;
+
     // Return the type of basis which eigenstates are written in
-    virtual string Eigen_Type() const = 0;
+    virtual string Eigen_Basis_Type() const = 0;
 
     // Return the size of the system
     int Get_Size() const {return size_;}
