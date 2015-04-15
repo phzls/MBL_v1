@@ -98,6 +98,8 @@ public:
 
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const;
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const;
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const;
 
     // Return eigenvectors in a column_wise fashion at each index
     void Evec(vector<MatrixXcd>&) const;
@@ -233,6 +235,8 @@ public:
 
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const;
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const;
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const;
 
     // Return eigenvectors in a column_wise fashion at each index
     void Evec(vector<MatrixXd>&) const;

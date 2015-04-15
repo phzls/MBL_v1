@@ -28,6 +28,26 @@ void FloEvolVanilla::Transition_Compute(TransitionMatrix& transition,
     }
 }
 
+void FloEvolVanilla::Transition_Compute(TransitionMatrix& transition, const string& matrix_name,
+                                        const vector<MatrixXcd>& evec) const{
+
+    if (matrix_name == "Basic_Full"){
+        if (eigen_info_) transition.Basic_Full(eigen_ -> eigenvectors());
+        else transition.Basic_Full(evec[0]);
+    }
+    else{
+        cout << "Transition matrix " << matrix_name << " cannot be established for "
+        << Type() << endl;
+        abort();
+    }
+}
+
+void FloEvolVanilla::Transition_Compute(TransitionMatrix& transition, const string& matrix_name,
+                                        const vector<MatrixXd>& evec) const{
+    cout << "Eigenvectors for transition computation of " << Type() << " must be complex." << endl;
+    abort();
+}
+
 void FloEvolVanilla::Evec(vector<MatrixXcd>& evec) const {
     if (eigen_ == NULL){
         cout << Repr() << " has not been diagonalized with eigenvectors." << endl;
@@ -53,14 +73,39 @@ void FloEvolVanilla::Eval(vector<VectorXcd>& eval) const {
 
 
 
-void FloEvolVanillaReal::Transition_Compute(TransitionMatrix& transition,
-                                            const string& matrix_name) const{
+void FloEvolVanillaReal::Transition_Compute(TransitionMatrix& transition, const string& matrix_name) const{
     if (matrix_name == "Basic_Full"){
         if (eigen_info_) transition.Basic_Full(evec_);
         else{
             cout << "Evolution Operator " << Repr() <<" has not been diagonalized." << endl;
             abort();
         }
+    }
+    else{
+        cout << "Transition matrix " << matrix_name << " cannot be established for "
+        << Type() << endl;
+        abort();
+    }
+}
+
+void FloEvolVanillaReal::Transition_Compute(TransitionMatrix& transition, const string& matrix_name,
+                                            const vector<MatrixXcd>& evec) const{
+    if (matrix_name == "Basic_Full"){
+        if (eigen_info_) transition.Basic_Full(evec_);
+        else transition.Basic_Full(evec[0]);
+    }
+    else{
+        cout << "Transition matrix " << matrix_name << " cannot be established for "
+        << Type() << endl;
+        abort();
+    }
+}
+
+void FloEvolVanillaReal::Transition_Compute(TransitionMatrix& transition, const string& matrix_name,
+                                            const vector<MatrixXd>& evec) const{
+    if (matrix_name == "Basic_Full"){
+        if (eigen_info_) transition.Basic_Full(evec_);
+        else transition.Basic_Full(evec[0]);
     }
     else{
         cout << "Transition matrix " << matrix_name << " cannot be established for "
