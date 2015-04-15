@@ -115,11 +115,6 @@ private:
     void Ent_var_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void Ent_var_out_(const AllPara&, const string&);
 
-    // For variance of entropy for eigenstate with smallest energy magnitude among different realizations
-    void Ent_smallest_var_init_(const AllPara&);
-    void Ent_smallest_var_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
-    void Ent_smallest_var_out_(const AllPara&, const string&);
-
     // For end to end zz time four-point correlation
     void ZZ_time_corr_init_(const AllPara&);
     void ZZ_time_corr_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);

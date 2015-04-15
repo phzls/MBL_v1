@@ -52,11 +52,11 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_func_map_[name2] = cal_func2;
     flo_out_map_[name2] = out_func2;
 
-    // entropy variance for eigenstate with smallest phase magnitude among all realizations
-    string name3 = "Entropy Variance Smallest";
-    Flo_init init_func3 = &DisorderModelTransition::Ent_smallest_var_init_;
-    Flo_func cal_func3 = &DisorderModelTransition::Ent_smallest_var_compute_;
-    Flo_out out_func3 = &DisorderModelTransition::Ent_smallest_var_out_;
+    // end-to-end z-z time correlation square
+    string name3 = "ZZ Time Correlation";
+    Flo_init init_func3 = &DisorderModelTransition::ZZ_time_corr_init_;
+    Flo_func cal_func3 = &DisorderModelTransition::ZZ_time_corr_compute_;
+    Flo_out out_func3 = &DisorderModelTransition::ZZ_time_corr_out_;
 
     // Make sure the name has not been used before
     init_it = flo_init_map_.find(name3);
@@ -72,10 +72,10 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_out_map_[name3] = out_func3;
 
     // end-to-end z-z time correlation square
-    string name4 = "ZZ Time Correlation";
-    Flo_init init_func4 = &DisorderModelTransition::ZZ_time_corr_init_;
-    Flo_func cal_func4 = &DisorderModelTransition::ZZ_time_corr_compute_;
-    Flo_out out_func4 = &DisorderModelTransition::ZZ_time_corr_out_;
+    string name4 = "ZZ Time Correlation Components";
+    Flo_init init_func4 = &DisorderModelTransition::ZZ_time_corr_component_init_;
+    Flo_func cal_func4 = &DisorderModelTransition::ZZ_time_corr_component_compute_;
+    Flo_out out_func4 = &DisorderModelTransition::ZZ_time_corr_component_out_;
 
     // Make sure the name has not been used before
     init_it = flo_init_map_.find(name4);
@@ -90,11 +90,11 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_func_map_[name4] = cal_func4;
     flo_out_map_[name4] = out_func4;
 
-    // end-to-end z-z time correlation square
-    string name5 = "ZZ Time Correlation Components";
-    Flo_init init_func5 = &DisorderModelTransition::ZZ_time_corr_component_init_;
-    Flo_func cal_func5 = &DisorderModelTransition::ZZ_time_corr_component_compute_;
-    Flo_out out_func5 = &DisorderModelTransition::ZZ_time_corr_component_out_;
+    // z-z correlation square at all distances
+    string name5 = "ZZ All Correlation Square";
+    Flo_init init_func5 = &DisorderModelTransition::ZZ_all_corr_square_init_;
+    Flo_func cal_func5 = &DisorderModelTransition::ZZ_all_corr_square_compute_;
+    Flo_out out_func5 = &DisorderModelTransition::ZZ_all_corr_square_out_;
 
     // Make sure the name has not been used before
     init_it = flo_init_map_.find(name5);
@@ -108,25 +108,6 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_init_map_[name5] = init_func5;
     flo_func_map_[name5] = cal_func5;
     flo_out_map_[name5] = out_func5;
-
-    // z-z correlation square at all distances
-    string name6 = "ZZ All Correlation Square";
-    Flo_init init_func6 = &DisorderModelTransition::ZZ_all_corr_square_init_;
-    Flo_func cal_func6 = &DisorderModelTransition::ZZ_all_corr_square_compute_;
-    Flo_out out_func6 = &DisorderModelTransition::ZZ_all_corr_square_out_;
-
-    // Make sure the name has not been used before
-    init_it = flo_init_map_.find(name6);
-    cal_it = flo_func_map_.find(name6);
-    out_it = flo_out_map_.find(name6);
-    if (init_it != flo_init_map_.end() || cal_it != flo_func_map_.end() || out_it != flo_out_map_.end()){
-        cout << name6 << " for disorder transition has appeared before." << endl;
-        abort();
-    }
-
-    flo_init_map_[name6] = init_func6;
-    flo_func_map_[name6] = cal_func6;
-    flo_out_map_[name6] = out_func6;
 
     // Check the number of function
     if ( flo_init_map_.size() != flo_func_map_.size() ){
