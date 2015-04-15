@@ -38,9 +38,9 @@ int main(){
 
     clock_t time_end = clock();
 
-    cout << "Floquet 2 time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
+    cout << "Floquet time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
-    cout << "Eigenvalues:" << endl;
+/*    cout << "Eigenvalues:" << endl;
     for (int i=0; i<eval.size();i++){
         cout << "Sec " << i << endl;
         complex_matrix_write(eval[i]);
@@ -52,7 +52,7 @@ int main(){
         cout << "Sec " << i << endl;
         complex_matrix_write(evec[i]);
         cout << endl;
-    }
+    }*/
 
     delete floquet;
     floquet = NULL;
