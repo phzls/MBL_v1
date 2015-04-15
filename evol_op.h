@@ -62,6 +62,14 @@ public:
     // Compute various transition matrix. The string specifies what transition to compute
     virtual void Transition_Compute(TransitionMatrix&, const string&) const = 0;
 
+    // Compute various transition matrix. The string specifies what transition to compute.
+    // Eigenvectors are passed in, in case the internal eigenstates have been deleted.
+    virtual void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const = 0;
+
+    // Compute various transition matrix. The string specifies what transition to compute
+    // Eigenvectors are passed in, in case the internal eigenstates have been deleted.
+    virtual void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const = 0;
+
     // Erase the matrix to free some memroy
     virtual void OP_Erase() = 0;
 
