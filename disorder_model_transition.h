@@ -140,6 +140,8 @@ public:
     evec_type_real_(true), eval_type_real_(true), op_keep_(false), op_diag_(false), op_dial_evec_keep_(false)
     {
         map_initialize_(parameters);
+
+        if (op_dial_evec_keep_) op_diag_ = true;
     }
 
     void Compute(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
