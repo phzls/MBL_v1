@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <string>
 #include <complex>
 #include "screen_output.h"
 #include "basis_transition.h"

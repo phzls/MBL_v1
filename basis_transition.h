@@ -9,6 +9,7 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
+#include "evol_op.h"
 
 using namespace std;
 using namespace Eigen;
