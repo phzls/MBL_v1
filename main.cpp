@@ -29,7 +29,7 @@ int main() {
     parameters.generic.task = "Disorder Transition";
     parameters.generic.model = "Ising Random Simp Shift Real Flo";
 
-    parameters.generic.size = 4; // System size
+    parameters.generic.size = 8; // System size
     parameters.generic.num_realizations = 100; // Number of realizations
     parameters.generic.threads_N = 8; // Number of threads in openmp
     parameters.generic.debug = false; // Whether output debug information
