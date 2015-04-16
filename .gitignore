@@ -44,3 +44,4 @@ Thumbs.db
 *.png
 *.run
 *.out
+*.err
