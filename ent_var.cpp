@@ -148,12 +148,12 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
 
     double mean,sd;
     generic_mean_sd(ent, mean, sd);
-    model_data_.ent_var[local_info.J_index][local_info.realization_index] = sd;
+    model_data_.ent_var[local_info.J_index][local_info.realization_index] = sd * sd;
 
 
     if (debug){
         cout << "Realization " << local_info.realization_index << " entropy variance: "
-        << sd << endl;
+        << model_data_.ent_var[local_info.J_index][local_info.realization_index] << endl;
         cout << endl;
     }
 }
@@ -206,7 +206,7 @@ void DisorderModelTransition::Ent_var_out_(AllPara const & parameters, const str
 
         generic_mean_sd(model_data_.ent_var[i], mean, sd);
         // Convert sd to var
-        fout << setw(10) << J << setw(width) << mean << setw(width) << sd * sd << endl;
+        fout << setw(10) << J << setw(width) << mean << setw(width) << sd << endl;
     }
 }
 
