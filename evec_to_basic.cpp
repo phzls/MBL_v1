@@ -10,6 +10,8 @@
 using namespace std;
 using namespace Eigen;
 
+// An overload ambiguity exists when functions from matrix_algebra.h are called
+
 void evec_to_basic(const EvolOP* evol, const vector<MatrixXd>& eigen, vector<vector<double> >& evec){
     if (evol -> Eigen_Basis_Type() == "Basic"){
         int index = 0;
