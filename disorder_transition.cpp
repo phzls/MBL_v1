@@ -18,7 +18,7 @@ using namespace std;
 
 extern TasksModels tasks_models; // Record all the tasks and methods. Defined in main.
 
-void flo_transition(const AllPara& parameters){
+void disorder_transition(const AllPara& parameters){
     const int J_N = parameters.floquet.J_N; // Number of points for J
     const double J_max = parameters.floquet.J_max; // Maximum J
     const double J_min = parameters.floquet.J_min; // Minimum J
