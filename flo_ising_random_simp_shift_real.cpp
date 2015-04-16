@@ -21,8 +21,8 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
  * Construct the representation string and abstract type of the class.
  */
 void FloEvolIsingRandomSimpShiftReal::Repr_Init_(){
-    repr_ << "Ising_Random_Simple_Shift_Real_Floquet_L=" << size_ << ",W=" << W_;
-    type_ = "Ising_Random_Simple_Shift_Real_Floquet";
+    repr_ << "Ising_Random_Simp_Shift_Real_Floquet_L=" << size_ << ",W=" << W_;
+    type_ = "Ising_Random_Simp_Shift_Real_Floquet";
 }
 
 /*
@@ -100,23 +100,23 @@ void FloEvolIsingRandomSimpShiftReal::Evol_Construct() {
 
     if (debug_){
         cout << "Sqrt X part of evolution matrix:" << endl;
-        complex_matrix_write(evol_half_x);
+        matrix_write(evol_half_x);
         cout << endl;
 
         cout << "Z part of evolution matrix:" << endl;
-        complex_matrix_write(evol_z);
+        matrix_write(evol_z);
         cout << endl;
 
         cout << "Evolution matrix:" << endl;
-        complex_matrix_write(evol_op_);
+        matrix_write(evol_op_);
         cout << endl;
 
         cout << "Real part of evolution matrix:" << endl;
-        real_matrix_write(evol_op_real_);
+        matrix_write(evol_op_real_);
         cout << endl;
 
         cout << "Imaginary part of evolution matrix:" << endl;
-        real_matrix_write(evol_op_imag_);
+        matrix_write(evol_op_imag_);
         cout << endl;
     }
 }

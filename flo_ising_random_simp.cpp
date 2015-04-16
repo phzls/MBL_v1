@@ -68,15 +68,15 @@ void FloEvolIsingRandomSimp::Evol_Construct() {
 
     if (debug_){
         cout << "X part of evolution matrix:" << endl;
-        complex_matrix_write(evol_x);
+        matrix_write(evol_x);
         cout << endl;
 
         cout << "Z part of evolution matrix:" << endl;
-        complex_matrix_write(evol_z);
+        matrix_write(evol_z);
         cout << endl;
 
         cout << "Evolution matrix:" << endl;
-        complex_matrix_write(evol_op_);
+        matrix_write(evol_op_);
         cout << endl;
     }
 }
