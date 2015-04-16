@@ -25,7 +25,7 @@ CXX = icpc
 CXXFLAGS += -I $(INC)
 endif
 
-OUT = flo_xxz_random_simp_shift_4
+OUT = flo_xxz_random_simp_shift_8
 
 all: mbl_real
 
