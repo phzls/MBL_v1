@@ -49,7 +49,7 @@ private:
 
 public:
     TasksModels() {Map_Construct_();}
-    ~TasksModels();
+    ~TasksModels() {};
 
     // Look up a name in tasks. If it exists, return true, otherwise false
     bool Task_Look_Up(const string&) const;
