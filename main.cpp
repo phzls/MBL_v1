@@ -25,14 +25,14 @@ int main() {
 
 
     parameters.generic.task = "Disorder Transition";
-    parameters.generic.model = "Ising Random Simple Flo";
+    parameters.generic.model = "Ising Random Simp Shift Real Flo";
 
-    parameters.generic.size = 10; // System size
-    parameters.generic.num_realizations = 10; // Number of realizations
+    parameters.generic.size = 4; // System size
+    parameters.generic.num_realizations = 1; // Number of realizations
     parameters.generic.threads_N = 1; // Number of threads in openmp
-    parameters.generic.debug = false; // Whether output debug information
+    parameters.generic.debug = true; // Whether output debug information
     parameters.generic.iso_keep = true; // Whether isolated part is kept
-    parameters.generic.version = 2; // Version of the output
+    parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
 
     parameters.output.width = 30; // Width for spacing in output files
@@ -120,14 +120,10 @@ int main() {
 
 
     // Methods to be called for studying transition of floquet systems from thermal to localization
-    parameters.transition.flo_transition_compute["ZZ Correlation Square"] = true; // End-to-end sigma_z X sigma_z
+    parameters.transition.flo_transition_compute["ZZ Correlation Square"] = false; // End-to-end sigma_z X sigma_z
     // correlation square
 
     parameters.transition.flo_transition_compute["Entropy Variance"] = false; // Entropy variance for all eigenstates
-
-    parameters.transition.flo_transition_compute["Entropy Variance Smallest"] = false; // Entropy variance eigenstates with
-    // smallest phase magnitude among all
-    // realizations
 
     parameters.transition.flo_transition_compute["ZZ Time Correlation"] = false; // End-to-end sigma_z X sigma_z
     // time correlation
@@ -135,7 +131,7 @@ int main() {
     parameters.transition.flo_transition_compute["ZZ Time Correlation Components"] = false; // End-to-end
     // sigma_z X sigma_z time correlation components. The first row in output is text header
 
-    parameters.transition.flo_transition_compute["ZZ All Correlation Square"] = false; // zz correlation square
+    parameters.transition.flo_transition_compute["ZZ All Correlation Square"] = true; // zz correlation square
     // at all distances
 
 
