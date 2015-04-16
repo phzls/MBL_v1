@@ -11,11 +11,14 @@
 #include "screen_output.h"
 #include "evol_op.h"
 #include "flo_evol_model.h"
+#include "tasks_models.h"
 
 using namespace std;
 using namespace Eigen;
 
 CRandomMersenne RanGen_mersenne(time(NULL));
+
+TasksModels tasks_models; // Record all the tasks and methods
 
 int main(){
 
