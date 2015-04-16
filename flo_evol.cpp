@@ -128,15 +128,18 @@ void FloEvolVanillaReal::Evol_Diag(bool keep){
             eval_.resize(dim_);
             VectorXd temp(dim_);
 
-            for (int i=0; i < eval_.rows(); i++){
+            for (int i=0; i < eval_.cols(); i++){
                 double real = eigen_ -> eigenvalues()[i];
 
                 temp = evol_op_imag_ * eigen_ -> eigenvectors().col(i);
 
                 int index = 0;
-                while (abs(temp[index]) < 2.0e-6 ) index ++;
+                while (abs(temp[index]) < 1.0e-10 ) index ++;
 
-                double imag = temp[index] / ( eigen_ -> eigenvectors().col(i)[index] );
+                double imag;
+
+                if (index < dim_) imag = temp[index] / ( eigen_ -> eigenvectors().col(i)[index] );
+                else imag = 0;
 
                 eval_[i] = complex<double>(real, imag);
             }
