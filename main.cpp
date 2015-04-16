@@ -29,9 +29,9 @@ int main() {
     parameters.generic.task = "Disorder Transition";
     parameters.generic.model = "Ising Random Simp Shift Real Flo";
 
-    parameters.generic.size = 13; // System size
-    parameters.generic.num_realizations = 12; // Number of realizations
-    parameters.generic.threads_N = 6; // Number of threads in openmp
+    parameters.generic.size = 11; // System size
+    parameters.generic.num_realizations = 100; // Number of realizations
+    parameters.generic.threads_N = 8; // Number of threads in openmp
     parameters.generic.debug = false; // Whether output debug information
     parameters.generic.iso_keep = true; // Whether isolated part is kept
     parameters.generic.version = 1; // Version of the output
@@ -40,9 +40,9 @@ int main() {
     parameters.output.width = 30; // Width for spacing in output files
     parameters.output.filename_output = true; // Whether print out file names
 
-    parameters.floquet.J_N = 8; // Number of points of coupling strength
-    parameters.floquet.J_min = 0.5; // Minimum J
-    parameters.floquet.J_max = 0.7; // Maximum J
+    parameters.floquet.J_N = 15; // Number of points of coupling strength
+    parameters.floquet.J_min = 0.4; // Minimum J
+    parameters.floquet.J_max = 0.8; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
     parameters.floquet.J = 0.6;
 
