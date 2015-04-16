@@ -12,6 +12,8 @@ CRandomMersenne RanGen_mersenne(time(NULL));
 
 TasksModels tasks_models; // Record all the tasks and methods
 
+int EvolOP::model_num = 0;
+
 int main() {
     AllPara parameters;
 
