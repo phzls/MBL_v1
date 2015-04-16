@@ -49,23 +49,37 @@ void evec_to_basic(const EvolOP* evol, const vector<MatrixXd>& eigen, vector<vec
             abort();
         }
 
-        MatrixXd single_evec;
+        VectorXcd single_evec;
+        VectorXcd temp_evec(eigen[0].rows());
 
         int index = 0;
         for (int i=0; i< eigen[0].cols(); i++){
-            // There may be a type problem, as transition matrix is always complex
-            single_evec = transition.Matrix("Basic_Even") * eigen[0].col(i);
+            for (int j=0; j < temp_evec.rows(); j++) temp_evec[j] = complex<double>(eigen[0](j,i),0);
+            single_evec = transition.Matrix("Basic_Even") * temp_evec;
 
-            for (int j=0; j< single_evec.size();j++)
-                evec[index][j] = single_evec[j];
+            for (int j=0; j< single_evec.size();j++){
+                evec[index][j] = real(single_evec[j]);
+                if (abs(imag(single_evec[j])) > 1.0e-10){
+                    cout << "Unexpected imaginary part in evec_to_basic for real eigen"
+                         << " and real output, parity even." << endl;
+                    cout << endl;
+                }
+            }
 
             index ++;
         }
 
-        for (int i=0; i< eigen[1].cols(); i++){
-            single_evec = transition.Matrix("Basic_Odd") * eigen[1].col(i);
-            for (int j=0; j< single_evec.size();j++)
-                evec[index][j] = single_evec[j];
+        for (int i=0; i< eigen[1].cols(); i++) {
+            for (int j = 0; j < temp_evec.rows(); j++) temp_evec[j] = complex<double>(eigen[1](j, i), 0);
+            single_evec = transition.Matrix("Basic_Odd") * temp_evec;
+            for (int j = 0; j < single_evec.size(); j++){
+                evec[index][j] = real(single_evec[j]);
+                if (abs(imag(single_evec[j])) > 1.0e-10) {
+                    cout << "Unexpected imaginary part in evec_to_basic for real eigen"
+                    << " and real output, parity odd." << endl;
+                    cout << endl;
+                }
+            }
 
             index ++;
         }
@@ -116,12 +130,13 @@ void evec_to_basic(const EvolOP* evol, const vector<MatrixXd>& eigen, vector<vec
             abort();
         }
 
-        MatrixXcd single_evec;
+        VectorXcd single_evec;
+        VectorXcd temp_evec(eigen[0].rows());
 
         int index = 0;
         for (int i=0; i< eigen[0].cols(); i++){
-            // There may be a type problem, as transition matrix is always complex
-            single_evec = transition.Matrix("Basic_Even") * eigen[0].col(i);
+            for (int j=0; j < temp_evec.rows(); j++) temp_evec[j] = complex<double>(eigen[0](j,i),0);
+            single_evec = transition.Matrix("Basic_Even") * temp_evec;
 
             for (int j=0; j< single_evec.size();j++)
                 evec[index][j] = single_evec[j];
@@ -130,7 +145,8 @@ void evec_to_basic(const EvolOP* evol, const vector<MatrixXd>& eigen, vector<vec
         }
 
         for (int i=0; i< eigen[1].cols(); i++){
-            single_evec = transition.Matrix("Basic_Odd") * eigen[1].col(i);
+            for (int j=0; j < temp_evec.rows(); j++) temp_evec[j] = complex<double>(eigen[1](j,i),0);
+            single_evec = transition.Matrix("Basic_Odd") * temp_evec;
             for (int j=0; j< single_evec.size();j++)
                 evec[index][j] = single_evec[j];
 
@@ -183,7 +199,7 @@ void evec_to_basic(const EvolOP* evol, const vector<MatrixXcd>& eigen, vector<ve
             abort();
         }
 
-        MatrixXcd single_evec;
+        VectorXcd single_evec;
 
         int index = 0;
         for (int i=0; i< eigen[0].cols(); i++){
