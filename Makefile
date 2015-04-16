@@ -13,7 +13,7 @@ small_methods = matrix_algebra.o screen_output.o mersenne.o evec_to_basic.o redu
 transitions = basis_transition.o basic_full.o basic_parity.o parity_full.o
 
 test_objects = test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls)
-mbl = main.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls)
+mbl_objects = main.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls)
 
 CXXFLAGS = -O3 -fopenmp
 CXX = g++
@@ -21,14 +21,14 @@ CXX = g++
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 CXX = icpc
-CXXFLAGS += $(INC)
+CXXFLAGS += -I $(INC)
 endif
 
 OUT = flo_xxz_random_simp_13_zz
 
 all: mbl_real
 
-mbl_real: $(main_objects)
+mbl_real: $(mbl_objects)
 	$(CXX) -o $(OUT) $(CXXFLAGS) $^
 
 mbl: $(mbl_objects)
