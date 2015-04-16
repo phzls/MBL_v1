@@ -26,8 +26,6 @@ struct GenericPara
 	int threads_N; // Number of threads
 	int size; // System size
 	int local_dimension; // Local dimension at each site
-	bool evec; // Whether eigenvectors are computed during diagonization
-	bool erase; // Whether erase the Hamiltonian/Evolution Operator after diagonization
 	bool debug; // Whether show debug information
 	string task; // String for the computation task
 	string model; // String for the model
@@ -58,25 +56,6 @@ struct FloPara
 			 // and J_max
 	double J; // Coupling strength J
 	double tau; // Time step
-};
-
-/*
- * Parameters that are related to Random Rotation Floquet models.
- */
-struct FloRrotationPara
-{
-	double angle_min; // Minimum angle in rotation. Should be between [0, 2*pi)
-	double angle_sup; // Supreme angle in rotation. Should be between [0, 2*pi), and no
-					  // less than angle_min
-};
-
-/*
- * Parameters that are related to Random Rotation Floquet models.
- */
-struct FloXXZPara
-{
-	double g; // Transverse field strength
-	double h; // Longitude field strength
 };
 
 struct MatrixPara
@@ -173,12 +152,6 @@ struct AllPara
 
 	// Floquet parameters
 	FloPara floquet;
-
-	// Random Rotation Floquet parameters
-	FloRrotationPara floquet_random;
-
-	// XXZ Floquet parameters
-	FloXXZPara floquet_xxz;
 
 	// Matrix relevant parameters
 	MatrixPara matrix_para;
