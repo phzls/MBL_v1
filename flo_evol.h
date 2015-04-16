@@ -192,12 +192,12 @@ protected:
 
 public:
     // When local dimension is not given
-    FloEvolVanillaReal(int size): EvolOP(size), constructed_(false), eigen_info_(false)
+    FloEvolVanillaReal(int size): EvolOP(size), constructed_(false), eigen_info_(false), diag_(false)
     {eigen_name.resize(1,"");}
 
     // When local dimension is given
-    FloEvolVanillaReal(int size, int local_dim): EvolOP(size, local_dim), constructed_(false), eigen_info_(false)
-    {eigen_name.resize(1,"");}
+    FloEvolVanillaReal(int size, int local_dim): EvolOP(size, local_dim), constructed_(false), eigen_info_(false),
+    diag_(false) {eigen_name.resize(1,"");}
 
     // Diagnolize time evolution matrix, user can determine whether eigenvectors are kept
     // False is not kept; True is kept
