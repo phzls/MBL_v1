@@ -106,14 +106,14 @@ void disorder_transition(const AllPara& parameters){
                         cout << "Eigenvalues:" << endl;
 
                         if (disorder_model_transition.Eval_Real() && (models[k]->Eval_Type() == "Real")){
-                            for (int l=0; l<local_info.eval_real.size(); i++){
+                            for (int l=0; l<local_info.eval_real.size(); l++){
                                 cout << "Sector " << l << endl;
                                 real_matrix_write(local_info.eval_real[l]);
                                 cout << endl;
                             }
                         }
                         else{
-                            for (int l=0; l<local_info.eval_complex.size(); i++){
+                            for (int l=0; l<local_info.eval_complex.size(); l++){
                                 cout << "Sector " << l << endl;
                                 complex_matrix_write(local_info.eval_complex[l]);
                                 cout << endl;
@@ -124,14 +124,14 @@ void disorder_transition(const AllPara& parameters){
                             cout << "Eigenvectors:" << endl;
 
                             if (disorder_model_transition.Evec_Real() && (models[k]->Evec_Type() == "Real")){
-                                for (int l=0; l<local_info.evec_real.size(); i++){
+                                for (int l=0; l<local_info.evec_real.size(); l++){
                                     cout << "Sector " << l << endl;
                                     real_matrix_write(local_info.evec_real[l]);
                                     cout << endl;
                                 }
                             }
                             else{
-                                for (int l=0; l<local_info.evec_complex.size(); i++){
+                                for (int l=0; l<local_info.evec_complex.size(); l++){
                                     cout << "Sector " << l << endl;
                                     complex_matrix_write(local_info.evec_complex[l]);
                                     cout << endl;
