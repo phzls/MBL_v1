@@ -13,6 +13,7 @@ small_methods = matrix_algebra.o screen_output.o mersenne.o evec_to_basic.o redu
 transitions = basis_transition.o basic_full.o basic_parity.o parity_full.o
 
 test_objects = test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls)
+mbl_test_objects = main_test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls)
 mbl_objects = main.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls)
 
 CXXFLAGS = -O3 -fopenmp
@@ -31,7 +32,7 @@ all: mbl_real
 mbl_real: $(mbl_objects)
 	$(CXX) -o $(OUT) $(CXXFLAGS) $^
 
-mbl: $(mbl_objects)
+mbl: $(mbl_test_objects)
 	$(CXX) -o $@ $(CXXFLAGS) $^
 
 test: $(test_objects)
