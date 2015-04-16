@@ -35,16 +35,18 @@ protected:
     // Pointers pointing to isolated part of a model coupling to the bath
     EvolOP* model_iso_;
 
+    int model_id_;
+
 public:
     // When local dimension is not given
     EvolOP(int size, bool iso_keep = false):
             size_(size), local_dim_(2), dim_(1 << size), iso_keep_(iso_keep),
-            model_iso_(NULL) {};
+            model_iso_(NULL) {model_num ++; model_id_ = model_num;}
 
     // When local dimension is explicitly given
     EvolOP(int size, int local_dim, bool iso_keep = false):
             size_(size), local_dim_(local_dim), dim_(int(pow(double(local_dim), double(size)))),
-            iso_keep_(iso_keep), model_iso_(NULL) {};
+            iso_keep_(iso_keep), model_iso_(NULL) {model_num++; model_id_ = model_num;}
 
     vector<string> eigen_name; // Name of each eigensectors
 
@@ -126,6 +128,11 @@ public:
 
     // Check whether eigensystems have been solved
     virtual bool Get_Eigen_Computed() const = 0;
+
+    // Get the number for current model
+    int Get_Model_ID() const {return model_id_;}
+
+    static int model_num; // Model number
 
     virtual ~EvolOP(){
         if (model_iso_ != NULL) delete model_iso_;
