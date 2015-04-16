@@ -28,8 +28,8 @@ void TasksModels::Map_Construct_(){
     string model_type1;
     model_func model_function1;
 
-    model_name1 = "Ising Random Simple Flo";
-    model_type1 = "Ising Random Simple Floquet";
+    model_name1 = "Ising Random Simp Flo";
+    model_type1 = "Ising Random Simp Floquet";
     model_function1 = &Flo_Evol_Ising_Random_Simp_Func;
     Model_Map_Insert(model_name1, model_type1, model_function1);
 
@@ -38,8 +38,8 @@ void TasksModels::Map_Construct_(){
     string model_type2;
     model_func model_function2;
 
-    model_name2 = "Ising Random Simple Shift Real Flo";
-    model_type2 = "Ising Random Simple Shift Real Floquet";
+    model_name2 = "Ising Random Simp Shift Real Flo";
+    model_type2 = "Ising Random Simp Shift Real Floquet";
     model_function2 = &Flo_Evol_Ising_Random_Simp_Shift_Real_Func;
     Model_Map_Insert(model_name2, model_type2, model_function2);
 }
@@ -91,6 +91,7 @@ task_func TasksModels::Task(const string& task_name) {
     it = tasks_.find(task_name);
     if (it == tasks_.end()){
         cout << "The task desired is not found." << endl;
+        cout << "Desired task: " << task_name << endl;
         Print_Task();
         abort();
     }
@@ -107,6 +108,7 @@ void TasksModels::Model(const string& model_name, const AllPara& parameters,
 
     if (it == models_.end()){
         cout << "The model desired is not found." << endl;
+        cout << "Desired model: " << model_name << endl;
         Print_Model();
         abort();
     }
