@@ -97,7 +97,7 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
             if (debug){
                 cout << "Realization " << local_info.realization_index << " eigenstate " << i << ":" << endl;
                 cout << "Reduced Density Matrix: " << endl;
-                complex_matrix_write(reduced_d);
+                real_matrix_write(reduced_d);
                 cout << "Entropy: " << ent[i] << endl;
             }
         }
