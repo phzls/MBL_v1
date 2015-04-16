@@ -29,7 +29,7 @@ OUT = flo_xxz_random_simp_13_zz
 all: mbl_real
 
 mbl_real: $(main_objects)
-        $(CXX) -o $(OUT) $(CXXFLAGS) $^
+	$(CXX) -o $(OUT) $(CXXFLAGS) $^
 
 mbl: $(mbl_objects)
 	$(CXX) -o $@ $(CXXFLAGS) $^
