@@ -93,5 +93,11 @@ void complex_matrix_write(const MatrixXcd&);
  */
 void real_matrix_write(const MatrixXd&);
 
+/*
+ * Write out an Eigen dynamic matrix
+ */
+void matrix_write(const MatrixXcd&);
+void matrix_write(const MatrixXd&);
+
 
 #endif //MBL_V1_SCREEN_OUTPUT_H

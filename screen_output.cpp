@@ -2,14 +2,14 @@
 // Created by Liangsheng Zhang on 4/14/15.
 //
 
+/*
+ * Implement functions in eigen_output.h
+ */
+
 #include "screen_output.h"
 
 using namespace std;
 using namespace Eigen;
-
-/**
- ** Implement functions in eigen_output.h
- **/
 
 void complex_matrix_write(const MatrixXcd& M){
     for (int i=0; i<M.rows(); i++){
@@ -28,3 +28,9 @@ void real_matrix_write(const MatrixXd& M){
         cout << endl;
     }
 }
+
+void matrix_write(const MatrixXcd& M) {complex_matrix_write(M);}
+
+void matrix_write(const MatrixXd& M) {real_matrix_write(M);}
+
+
