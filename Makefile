@@ -1,6 +1,6 @@
 INC = ~/
 
-models = flo_evol.o flo_ising_random_simp.o flo_ising_random_simp_shift_real.o flo_ising_quasi_simp_shift_real.o
+models = flo_evol.o flo_ising_random_simp.o flo_ising_random_simp_shift_real.o flo_ising_quasi_simp_shift_real.o flo_ising_all_random_simp_shift_real.o
 
 tasks = disorder_transition.o
 

@@ -27,7 +27,7 @@ int main() {
 
 
     parameters.generic.task = "Disorder Transition";
-    parameters.generic.model = "Ising Random Simp Shift Real Flo";
+    parameters.generic.model = "Ising All Random Simp Shift Real Flo";
 
     parameters.generic.size = 11; // System size
     parameters.generic.num_realizations = 100; // Number of realizations
