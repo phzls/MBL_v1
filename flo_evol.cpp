@@ -128,9 +128,9 @@ void FloEvolVanillaReal::Evol_Diag(bool keep){
             eval_.resize(dim_);
             VectorXd temp(dim_);
 
-            for (int i=0; i < eval_.cols(); i++){
+            for (int i=0; i < eval_.rows(); i++){
                 double real = eigen_ -> eigenvalues()[i];
-
+                
                 temp = evol_op_imag_ * eigen_ -> eigenvectors().col(i);
 
                 int index = 0;
