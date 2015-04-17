@@ -122,18 +122,18 @@ int main() {
 
 
     // Methods to be called for studying transition of floquet systems from thermal to localization
-    parameters.transition.flo_transition_compute["ZZ Correlation Square"] = true; // End-to-end sigma_z X sigma_z
+    parameters.transition.flo_transition_compute["ZZ_Correlation_Square"] = true; // End-to-end sigma_z X sigma_z
     // correlation square
 
-    parameters.transition.flo_transition_compute["Entropy Variance"] = false; // Entropy variance for all eigenstates
+    parameters.transition.flo_transition_compute["Entropy_Variance"] = false; // Entropy variance for all eigenstates
 
-    parameters.transition.flo_transition_compute["ZZ Time Correlation"] = true; // End-to-end sigma_z X sigma_z
+    parameters.transition.flo_transition_compute["ZZ_Time_Correlation"] = true; // End-to-end sigma_z X sigma_z
     // time correlation
 
-    parameters.transition.flo_transition_compute["ZZ Time Correlation Components"] = false; // End-to-end
+    parameters.transition.flo_transition_compute["ZZ_Time_Correlation_Components"] = false; // End-to-end
     // sigma_z X sigma_z time correlation components. The first row in output is text header
 
-    parameters.transition.flo_transition_compute["ZZ All Correlation Square"] = false; // zz correlation square
+    parameters.transition.flo_transition_compute["ZZ_All_Correlation_Square"] = false; // zz correlation square
     // at all distances
 
 

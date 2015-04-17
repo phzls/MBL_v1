@@ -15,7 +15,7 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     map<string, Flo_out >::iterator out_it;
 
     // end-to-end z-z correlation square
-    string name1 = "ZZ Correlation Square";
+    string name1 = "ZZ_Correlation_Square";
     Flo_init init_func1 = &DisorderModelTransition::ZZ_corr_square_init_;
     Flo_func cal_func1 = &DisorderModelTransition::ZZ_corr_square_compute_;
     Flo_out out_func1 = &DisorderModelTransition::ZZ_corr_square_out_;
@@ -34,7 +34,7 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_out_map_[name1] = out_func1;
 
     // entropy variance
-    string name2 = "Entropy Variance";
+    string name2 = "Entropy_Variance";
     Flo_init init_func2 = &DisorderModelTransition::Ent_var_init_;
     Flo_func cal_func2 = &DisorderModelTransition::Ent_var_compute_;
     Flo_out out_func2 = &DisorderModelTransition::Ent_var_out_;
@@ -53,7 +53,7 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_out_map_[name2] = out_func2;
 
     // end-to-end z-z time correlation square
-    string name3 = "ZZ Time Correlation";
+    string name3 = "ZZ_Time_Correlation";
     Flo_init init_func3 = &DisorderModelTransition::ZZ_time_corr_init_;
     Flo_func cal_func3 = &DisorderModelTransition::ZZ_time_corr_compute_;
     Flo_out out_func3 = &DisorderModelTransition::ZZ_time_corr_out_;
@@ -72,7 +72,7 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_out_map_[name3] = out_func3;
 
     // end-to-end z-z time correlation square
-    string name4 = "ZZ Time Correlation Components";
+    string name4 = "ZZ_Time_Correlation_Components";
     Flo_init init_func4 = &DisorderModelTransition::ZZ_time_corr_component_init_;
     Flo_func cal_func4 = &DisorderModelTransition::ZZ_time_corr_component_compute_;
     Flo_out out_func4 = &DisorderModelTransition::ZZ_time_corr_component_out_;
@@ -91,7 +91,7 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_out_map_[name4] = out_func4;
 
     // z-z correlation square at all distances
-    string name5 = "ZZ All Correlation Square";
+    string name5 = "ZZ_All_Correlation_Square";
     Flo_init init_func5 = &DisorderModelTransition::ZZ_all_corr_square_init_;
     Flo_func cal_func5 = &DisorderModelTransition::ZZ_all_corr_square_compute_;
     Flo_out out_func5 = &DisorderModelTransition::ZZ_all_corr_square_out_;
