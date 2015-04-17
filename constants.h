@@ -6,6 +6,7 @@
 #define MBL_V1_CONSTANTS_H
 
 #include <complex>
+#include <cmath>
 
 using namespace std;
 
@@ -20,5 +21,7 @@ const complex<double> Complex_zero = complex<double>(0,0);
 const complex<double> Complex_one = complex<double>(1,0);
 
 const complex<double> Complex_I = complex<double>(0,1);
+
+const double Phi = (1 + sqrt(5) ) /2.0; // Golden ratio
 
 #endif //MBL_V1_CONSTANTS_H
