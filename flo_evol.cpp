@@ -130,7 +130,7 @@ void FloEvolVanillaReal::Evol_Diag(bool keep){
 
             for (int i=0; i < eval_.rows(); i++){
                 double real = eigen_ -> eigenvalues()[i];
-                
+
                 temp = evol_op_imag_ * eigen_ -> eigenvectors().col(i);
 
                 int index = 0;
