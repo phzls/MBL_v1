@@ -27,10 +27,10 @@ int main() {
 
 
     parameters.generic.task = "Disorder Transition";
-    parameters.generic.model = "Ising Random Simp Shift Real Flo";
+    parameters.generic.model = "Ising Quasi Simp Shift Real Flo";
 
-    parameters.generic.size = 11; // System size
-    parameters.generic.num_realizations = 100; // Number of realizations
+    parameters.generic.size = 12; // System size
+    parameters.generic.num_realizations = 25; // Number of realizations
     parameters.generic.threads_N = 8; // Number of threads in openmp
     parameters.generic.debug = false; // Whether output debug information
     parameters.generic.iso_keep = true; // Whether isolated part is kept
@@ -40,8 +40,8 @@ int main() {
     parameters.output.width = 30; // Width for spacing in output files
     parameters.output.filename_output = true; // Whether print out file names
 
-    parameters.floquet.J_N = 15; // Number of points of coupling strength
-    parameters.floquet.J_min = 0.4; // Minimum J
+    parameters.floquet.J_N = 11; // Number of points of coupling strength
+    parameters.floquet.J_min = 0.5; // Minimum J
     parameters.floquet.J_max = 0.8; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
     parameters.floquet.J = 0.6;
@@ -125,7 +125,7 @@ int main() {
     parameters.transition.flo_transition_compute["ZZ Correlation Square"] = true; // End-to-end sigma_z X sigma_z
     // correlation square
 
-    parameters.transition.flo_transition_compute["Entropy Variance"] = false; // Entropy variance for all eigenstates
+    parameters.transition.flo_transition_compute["Entropy Variance"] = true; // Entropy variance for all eigenstates
 
     parameters.transition.flo_transition_compute["ZZ Time Correlation"] = true; // End-to-end sigma_z X sigma_z
     // time correlation
@@ -133,7 +133,7 @@ int main() {
     parameters.transition.flo_transition_compute["ZZ Time Correlation Components"] = false; // End-to-end
     // sigma_z X sigma_z time correlation components. The first row in output is text header
 
-    parameters.transition.flo_transition_compute["ZZ All Correlation Square"] = true; // zz correlation square
+    parameters.transition.flo_transition_compute["ZZ All Correlation Square"] = false; // zz correlation square
     // at all distances
 
 
