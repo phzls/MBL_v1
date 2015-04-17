@@ -42,6 +42,16 @@ void TasksModels::Map_Construct_(){
     model_type2 = "Ising Random Simp Shift Real Floquet";
     model_function2 = &Flo_Evol_Ising_Random_Simp_Shift_Real_Func;
     Model_Map_Insert(model_name2, model_type2, model_function2);
+
+    // Quasi-periodic Simple Shift Real Ising Floquet Operator
+    string model_name3;
+    string model_type3;
+    model_func model_function3;
+
+    model_name3 = "Ising Quasi Simp Shift Real Flo";
+    model_type3 = "Ising Quasi Simp Shift Real Floquet";
+    model_function3 = &Flo_Evol_Ising_Quasi_Simp_Shift_Real_Func;
+    Model_Map_Insert(model_name3, model_type3, model_function3);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
