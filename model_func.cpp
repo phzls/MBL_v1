@@ -19,7 +19,6 @@ string Flo_Evol_Ising_Random_Simp_Func(const AllPara& parameters, EvolOP*& model
     model = new FloEvolIsingRandomSimp(size, W, debug);
 
     string type = model -> Type();
-    replace(type.begin(), type.end(), '_', ' ');
 
     return type;
 }
@@ -34,7 +33,6 @@ string Flo_Evol_Ising_Random_Simp_Shift_Real_Func(const AllPara& parameters, Evo
     model = new FloEvolIsingRandomSimpShiftReal(size, W, debug);
 
     string type = model -> Type();
-    replace(type.begin(), type.end(), '_', ' ');
 
     return type;
 }
@@ -49,7 +47,6 @@ string Flo_Evol_Ising_Quasi_Simp_Shift_Real_Func(const AllPara& parameters, Evol
     model = new FloEvolIsingQuasiSimpShiftReal(size, W, debug);
 
     string type = model -> Type();
-    replace(type.begin(), type.end(), '_', ' ');
 
     return type;
 }
@@ -64,7 +61,6 @@ string Flo_Evol_Ising_All_Random_Simp_Shift_Real_Func(const AllPara& parameters,
     model = new FloEvolIsingAllRandomSimpShiftReal(size, W, debug);
 
     string type = model -> Type();
-    replace(type.begin(), type.end(), '_', ' ');
 
     return type;
 }

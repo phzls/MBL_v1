@@ -18,7 +18,7 @@ void TasksModels::Map_Construct_(){
     string task_type1;
     task_func task_function1;
 
-    task_name1 = "Disorder Transition";
+    task_name1 = "Disorder_Transition";
     task_type1 = "All";
     task_function1 = &disorder_transition;
     Task_Map_Insert(task_name1, task_type1, task_function1);
@@ -28,8 +28,8 @@ void TasksModels::Map_Construct_(){
     string model_type1;
     model_func model_function1;
 
-    model_name1 = "Ising Random Simp Flo";
-    model_type1 = "Ising Random Simp Floquet";
+    model_name1 = "Ising_Random_Simp_Flo";
+    model_type1 = "Ising_Random_Simp_Floquet";
     model_function1 = &Flo_Evol_Ising_Random_Simp_Func;
     Model_Map_Insert(model_name1, model_type1, model_function1);
 
@@ -38,8 +38,8 @@ void TasksModels::Map_Construct_(){
     string model_type2;
     model_func model_function2;
 
-    model_name2 = "Ising Random Simp Shift Real Flo";
-    model_type2 = "Ising Random Simp Shift Real Floquet";
+    model_name2 = "Ising_Random_Simp_Shift_Real_Flo";
+    model_type2 = "Ising_Random_Simp_Shift_Real_Floquet";
     model_function2 = &Flo_Evol_Ising_Random_Simp_Shift_Real_Func;
     Model_Map_Insert(model_name2, model_type2, model_function2);
 
@@ -48,8 +48,8 @@ void TasksModels::Map_Construct_(){
     string model_type3;
     model_func model_function3;
 
-    model_name3 = "Ising Quasi Simp Shift Real Flo";
-    model_type3 = "Ising Quasi Simp Shift Real Floquet";
+    model_name3 = "Ising_Quasi_Simp_Shift_Real_Flo";
+    model_type3 = "Ising_Quasi_Simp_Shift_Real_Floquet";
     model_function3 = &Flo_Evol_Ising_Quasi_Simp_Shift_Real_Func;
     Model_Map_Insert(model_name3, model_type3, model_function3);
 
@@ -58,8 +58,8 @@ void TasksModels::Map_Construct_(){
     string model_type4;
     model_func model_function4;
 
-    model_name4 = "Ising All Random Simp Shift Real Flo";
-    model_type4 = "Ising All Random Simp Shift Real Floquet";
+    model_name4 = "Ising_All_Random_Simp_Shift_Real_Flo";
+    model_type4 = "Ising_All_Random_Simp_Shift_Real_Floquet";
     model_function4 = &Flo_Evol_Ising_All_Random_Simp_Shift_Real_Func;
     Model_Map_Insert(model_name4, model_type4, model_function4);
 }
