@@ -81,6 +81,7 @@ elif system == "Linux\n":
         if choice.startswith("r") or choice.startswith("R"):
             run = subprocess.Popen("./" + progname, stdout=subprocess.PIPE, shell=True)
             print run.communicate()[0]
+            valid_choice = True
 
         elif choice.startswith("v") or choice.startswith("R"):
             if int(data.num_threads) > 1:
@@ -89,6 +90,7 @@ elif system == "Linux\n":
                 val = subprocess.Popen("valgrind --leak-check=full ./" + progname,
                                        stdout=subprocess.PIPE, shell=True)
                 out = val.communicate()[0]
+                valid_choice = True
 
         elif choice.startswith("e") or choice.startswith("E") or choice.startswith('q') or choice.startswith('Q'):
             # Exit
