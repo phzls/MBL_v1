@@ -6,4 +6,4 @@ size 4 // System size
 num_realizations 10 // Number of realizations
 threads_N 1 // Number of threads in openmp
 debug false // Whether output debug information
-version 2 // Version of the output
+version 1 // Version of the output
