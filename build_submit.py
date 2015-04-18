@@ -13,7 +13,7 @@ proc = subprocess.Popen("uname", stdout=subprocess.PIPE, shell=True)
 system = proc.communicate()[0]
 
 if system == "Linux\n":
-    mod = subprocess.Popen("module load intel", stdout=subprocess.PIPE, shell=True)
+    subprocess.call("module load intel", stdout=subprocess.PIPE, shell=True)
 
 # Obtain tasks and models
 tm.task_model(tasks_models)
