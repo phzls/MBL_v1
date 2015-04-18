@@ -27,10 +27,9 @@ struct GenericPara
 	int size; // System size
 	int local_dimension; // Local dimension at each site
 	bool debug; // Whether show debug information
+	bool iso_keep; // Whether isolated part is kept
 	string task; // String for the computation task
 	string model; // String for the model
-	bool iso_keep; // Whether keep the isolated part; so far only works for
-				   // Flo_Evol_Markov_Inter_Random_Both_X
 	int version; // Version number of the output file. If it is smaller than 1,
 				 // then no version number is outputted
 	bool time; // Whether various parts of the program is timed
