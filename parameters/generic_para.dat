@@ -4,6 +4,6 @@ task Disorder_Transition // Task to be performed
 model Ising_All_Random_Simp_Shift_Real_Flo // Model to be implemented
 size 4 // System size
 num_realizations 10 // Number of realizations
-threads_N 4 // Number of threads in openmp
+threads_N 1 // Number of threads in openmp
 debug false // Whether output debug information
-version 1 // Version of the output
+version 2 // Version of the output
