@@ -57,7 +57,7 @@ if system == "Darwin\n":
     if (cont == '') or cont.startswith('y') or cont.startswith('Y'):
         make_process = subprocess.Popen("make auto OUT=mbl_auto -j4",stderr=subprocess.STDOUT, shell=True)
         if make_process.wait() != 0:
-            print "Make Error"
+            raise Exception("Make Error")
 
         run = subprocess.Popen("./mbl_auto", stdout=subprocess.PIPE, shell=True)
         print run.communicate()[0]
