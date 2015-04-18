@@ -1,0 +1,5 @@
+// Output related parameters
+//
+time true // Whether the program is timed
+width 30 // Width for spacing in output files
+filename_output true // Whether print out file names
