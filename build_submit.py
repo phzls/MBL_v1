@@ -8,6 +8,13 @@ import submit as sb
 data = fp.DATA()
 tasks_models = tm.TASK_MODEL()
 
+# Obtain system
+proc = subprocess.Popen("uname", stdout=subprocess.PIPE, shell=True)
+system = proc.communicate()[0]
+
+if system == "Linux\n":
+    mod = subprocess.Popen("module load intel", stdout=subprocess.PIPE, shell=True)
+
 # Obtain tasks and models
 tm.task_model(tasks_models)
 
@@ -47,9 +54,6 @@ fp.para_gen(data.model.lower(), tasks_models, data)
 
 # Generate Task data
 fp.para_gen(data.task.lower(), tasks_models, data)
-
-proc = subprocess.Popen("uname", stdout=subprocess.PIPE, shell=True)
-system = proc.communicate()[0]
 
 if system == "Darwin\n":
     # It is a mac system
