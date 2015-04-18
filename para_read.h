@@ -3,8 +3,8 @@
 //
 
 /*
- * This file contains functions which deal with reading parameters from files and assign
- * them to parameters
+ * This file contains the data structure which has functions which deal with reading parameters from files
+ * and assign them to parameters
  */
 
 #ifndef MBL_V1_PARA_READ_H
@@ -26,6 +26,7 @@
  * is the name of the variable, and the second element is the value of that variable.
  */
 void para_get(string, const vector<vector<string> >&, string, int&);
+void para_get(string, const vector<vector<string> >&, string, double&);
 void para_get(string, const vector<vector<string> >&, string, bool&);
 void para_get(string, const vector<vector<string> >&, string, string&);
 
