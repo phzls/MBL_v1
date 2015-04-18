@@ -115,7 +115,6 @@ elif system == "Linux\n":
 else:
     print fp.bcolors.FAIL + "Unknown system type." << fp.bcolors.ENDC
 
-sb.feynman_submit(data,"aa")
 
 
 
