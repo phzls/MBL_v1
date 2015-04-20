@@ -40,7 +40,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Init() {
 
         if (i<size_-1){
             u = RanGen_mersenne.Random();
-            random_J_[i] = sqrt(1-W_) * (1-W_ ) + W_ * sqrt(1-W_) * u;
+            random_J_[i] = sqrt(1-W_) * (1-W_) * (1-W_) + W_ * (2-W_) * sqrt(1-W_) * u;
         }
 
         u = RanGen_mersenne.Random();
