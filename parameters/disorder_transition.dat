@@ -1,10 +1,10 @@
 // Disorder Transition Parameters
 //
-J_N 10 // Number of points of coupling strength
-J_min 0.1 // Minimum J
-J_max 0.9 // Maximum J
+J_N 11 // Number of points of coupling strength
+J_min 0.5 // Minimum J
+J_max 0.8 // Maximum J
 ZZ_Correlation_Square true // End-to-end sigma_z X sigma_z correlation square
-Entropy_Variance false // Entropy variance for all eigenstates
-ZZ_Time_Correlation false // End-to-end sigma_z X sigma_z time correlation
+Entropy_Variance true // Entropy variance for all eigenstates
+ZZ_Time_Correlation true // End-to-end sigma_z X sigma_z time correlation
 ZZ_Time_Correlation_Components false // End-to-end sigma_z X sigma_z time correlation components
 ZZ_All_Correlation-Square false // zz correlation square at all distances
