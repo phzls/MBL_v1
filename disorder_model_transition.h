@@ -131,8 +131,8 @@ private:
     void ZZ_all_corr_square_out_(const AllPara&, const string&);
 
 public:
-    DisorderModelTransition(const AllPara& parameters) : flo_func_bool_map_(parameters.transition.flo_transition_compute),
-    evec_type_real_(true), eval_type_real_(true), op_keep_(false), op_diag_(false), op_dial_evec_keep_(false)
+    DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
+                                                         op_keep_(false), op_diag_(false), op_dial_evec_keep_(false)
     {
         map_initialize_(parameters);
 

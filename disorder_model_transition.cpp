@@ -14,6 +14,13 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     map<string, Flo_func >::iterator cal_it;
     map<string, Flo_out >::iterator out_it;
 
+    flo_func_bool_map_.insert(parameters.transition.flo_transition_compute.begin(),
+    parameters.transition.flo_transition_compute.end());
+    /*for (map<string,bool>::const_iterator para_it = parameters.transition.flo_transition_compute.begin();
+            para_it != parameters.transition.flo_transition_compute.end(); para_it++){
+
+    }*/
+
     // end-to-end z-z correlation square
     string name1 = "ZZ_Correlation_Square";
     Flo_init init_func1 = &DisorderModelTransition::ZZ_corr_square_init_;
