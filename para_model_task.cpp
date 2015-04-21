@@ -12,8 +12,8 @@ using namespace std;
 //=================================== MODELS ===================================================
 
 // For Ising random simple floquet operator
-void Ising_Random_Simp_Flo_Para(AllPara& parameters){
-    string filename = "ising_random_simp_flo";
+void Ising_Random_Simp_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_random_simp_flo_" + count;
     vector<vector<string> > content;
     string keyword = "J";
 
@@ -22,8 +22,8 @@ void Ising_Random_Simp_Flo_Para(AllPara& parameters){
 }
 
 // For Ising random simple shift real floquet operator
-void Ising_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters){
-    string filename = "ising_random_simp_shift_real_flo";
+void Ising_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_random_simp_shift_real_flo_" + count;
     vector<vector<string> > content;
     string keyword = "J";
 
@@ -32,8 +32,8 @@ void Ising_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters){
 }
 
 // For Ising quasi-periodic simple shift real floquet operator
-void Ising_Quasi_Simp_Shift_Real_Flo_Para(AllPara& parameters){
-    string filename = "ising_quasi_simp_shift_real_flo";
+void Ising_Quasi_Simp_Shift_Real_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_quasi_simp_shift_real_flo_" + count;
     vector<vector<string> > content;
     string keyword = "J";
 
@@ -42,8 +42,8 @@ void Ising_Quasi_Simp_Shift_Real_Flo_Para(AllPara& parameters){
 }
 
 // For Ising all random simple shift real floquet operator
-void Ising_All_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters){
-    string filename = "ising_all_random_simp_shift_real_flo";
+void Ising_All_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_all_random_simp_shift_real_flo_" + count;
     vector<vector<string> > content;
     string keyword = "J";
 
@@ -55,8 +55,8 @@ void Ising_All_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters){
 //=================================== TASKS =====================================================
 
 // generic parameters
-void Generic_Para(AllPara& parameters){
-    string filename = "generic_para";
+void Generic_Para(AllPara& parameters, string count){
+    string filename = "generic_para_" + count;
     vector<vector<string> > content;
 
     para_file_read(filename, content);
@@ -84,8 +84,8 @@ void Generic_Para(AllPara& parameters){
 }
 
 // For output parameters
-void Output_Para(AllPara& parameters){
-    string filename = "output_para";
+void Output_Para(AllPara& parameters, string count){
+    string filename = "output_para_" + count;
     vector<vector<string> > content;
 
     para_file_read(filename, content);
@@ -101,8 +101,8 @@ void Output_Para(AllPara& parameters){
 }
 
 // For disorder_transition
-void Disorder_Transition_Para(AllPara& parameters){
-    string filename = "disorder_transition";
+void Disorder_Transition_Para(AllPara& parameters, string count){
+    string filename = "disorder_transition_" + count;
     vector<vector<string> > content;
 
     para_file_read(filename, content);
