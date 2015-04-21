@@ -10,6 +10,8 @@ import fnmatch
 data = fp.DATA()
 tasks_models = tm.TASK_MODEL()
 
+success_run = False # Check whether the program has successfully run
+
 # Obtain system
 proc = subprocess.Popen("uname", stdout=subprocess.PIPE, shell=True)
 system = proc.communicate()[0]
@@ -18,6 +20,7 @@ if system == "Linux\n":
     subprocess.call("module load intel", stdout=subprocess.PIPE, shell=True)
 
 # Obtain count and update count file
+count = None
 count = fp.count_obtain()
 
 print fp.bcolors.BOLD, "\nThis is " + str(count) + "th running.\n", fp.bcolors.ENDC
@@ -92,10 +95,12 @@ if system == "Darwin\n":
     if (cont == '') or cont.startswith('y') or cont.startswith('Y'):
         make_process = subprocess.Popen("make auto OUT=mbl_auto -j4",stderr=subprocess.STDOUT, shell=True)
         if make_process.wait() != 0:
+            fp.file_clean(count)
             raise Exception("Make Error")
 
         run = subprocess.Popen("./mbl_auto " + str(count), stdout=subprocess.PIPE, shell=True)
         print run.communicate()[0]
+        success_run = True
 
 elif system == "Linux\n":
     # Make the program
@@ -103,7 +108,8 @@ elif system == "Linux\n":
     make_process = subprocess.Popen("make auto OUT=" + progname
                                     + " -j4",stderr=subprocess.STDOUT, shell=True)
     if make_process.wait() != 0:
-        print "Make Error"
+        fp.file_clean(count)
+        raise Exception("Make Error")
 
     valid_choice = False
     while valid_choice is False:
@@ -113,6 +119,7 @@ elif system == "Linux\n":
             run = subprocess.Popen("./" + progname + " " + str(count), stdout=subprocess.PIPE, shell=True)
             print run.communicate()[0]
             valid_choice = True
+            success_run = True
 
         elif choice.startswith("v") or choice.startswith("R"):
             if int(data.num_threads) > 1:
@@ -122,6 +129,7 @@ elif system == "Linux\n":
                                        stdout=subprocess.PIPE, shell=True)
                 out = val.communicate()[0]
                 valid_choice = True
+                success_run = True
 
         elif choice.startswith("e") or choice.startswith("E") or choice.startswith('q') or choice.startswith('Q'):
             # Exit
@@ -146,11 +154,20 @@ elif system == "Linux\n":
                 sb.feynman_submit(data, progname, count)
 
             valid_choice = True
+            success_run = True
 
         else:
             print fp.bcolors.FAIL + "Invalid choice." << fp.bcolors.ENDC
 else:
     print fp.bcolors.FAIL + "Unknown system type." << fp.bcolors.ENDC
+
+if success_run:
+    file = "./parameters/count.txt"
+    file_new = "./parameters/count_temp.txt"
+    subprocess.call("rm " + file, shell=True)
+    subprocess.call("mv " + file_new + " " + file, shell=True)
+else:
+    fp.file_clean(count)
 
 
 

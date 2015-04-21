@@ -1,6 +1,7 @@
 __author__ = 'liangshengzhang'
 
 import subprocess
+import file_process as fp
 
 
 class TASK_MODEL(object):
@@ -22,6 +23,7 @@ def task_model(tasks_models):
     """
     make_process = subprocess.Popen("make task_model -j4",stderr=subprocess.STDOUT, shell=True)
     if make_process.wait() != 0:
+        fp.file_clean()
         raise Exception("Make Error")
 
     proc = subprocess.Popen("./task_model", stdout=subprocess.PIPE, shell=True)
