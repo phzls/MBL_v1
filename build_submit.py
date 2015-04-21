@@ -4,6 +4,8 @@ import subprocess
 import task_model as tm
 import file_process as fp
 import submit as sb
+import os
+import fnmatch
 
 data = fp.DATA()
 tasks_models = tm.TASK_MODEL()
@@ -15,11 +17,29 @@ system = proc.communicate()[0]
 if system == "Linux\n":
     subprocess.call("module load intel", stdout=subprocess.PIPE, shell=True)
 
+# Obtain count and update count file
+count = fp.count_obtain()
+
+print fp.bcolors.BOLD, "\nThis is " + str(count) + "th running.\n", fp.bcolors.ENDC
+
+file_modify = {} # Check whether files have been modified so that new files have been created
+if count > 1:
+    match_name = "_" + str(count-1) + ".dat" # A suffix for files
+else:
+    match_name = ".dat"
+for file in os.listdir('./parameters'):
+    if fnmatch.fnmatch(file, "*" + match_name):
+        start = file.find(match_name)
+        file_modify[file[:start]] = False
+
+
 # Obtain tasks and models
 tm.task_model(tasks_models)
 
 # Generate parameters
-fp.para_gen("generic_para", tasks_models, data)
+fp.para_gen("generic_para", tasks_models, data, count)
+
+file_modify["generic_para"] = True
 """
 print "Tasks:"
 for n in tasks_models.tasks:
@@ -36,6 +56,7 @@ for n in tasks_models.models:
     f.close()
 """
 
+print fp.bcolors.BOLD, "System size is " + str(data.size) + "\n", fp.bcolors.ENDC
 
 # Ask whether need to change output data
 output_a = False
@@ -44,16 +65,26 @@ while output_a is False:
     if (answer == "Yes") or (answer == "yes") or (answer == "Y") or (answer == "y"):
         fp.para_gen("output_para", tasks_models, data)
         output_a = True
+        file_modify["output_para"] = True
     elif (answer == 'No') or (answer == 'no') or (answer == 'N') or (answer == 'n'):
         output_a = True
     else:
         print "Answer must be Yes(Y) or No(N)."
 
 # Generate Model data
-fp.para_gen(data.model.lower(), tasks_models, data)
+fp.para_gen(data.model.lower(), tasks_models,data, count)
+file_modify[data.model.lower()] = True
 
 # Generate Task data
-fp.para_gen(data.task.lower(), tasks_models, data)
+fp.para_gen(data.task.lower(), tasks_models, data, count)
+file_modify[data.task.lower()] = True
+
+# Update all files which are not modified to have correct file names
+new_match_name = "_" + str(count) + ".dat"
+for key in file_modify:
+    if file_modify[key] is False:
+        subprocess.call("mv ./parameters/" + key + match_name
+                        + " ./parameters/" + key + new_match_name, shell=True )
 
 if system == "Darwin\n":
     # It is a mac system
@@ -63,7 +94,7 @@ if system == "Darwin\n":
         if make_process.wait() != 0:
             raise Exception("Make Error")
 
-        run = subprocess.Popen("./mbl_auto", stdout=subprocess.PIPE, shell=True)
+        run = subprocess.Popen("./mbl_auto " + str(count), stdout=subprocess.PIPE, shell=True)
         print run.communicate()[0]
 
 elif system == "Linux\n":
@@ -79,7 +110,7 @@ elif system == "Linux\n":
         choice = raw_input("Submit (s), Direct Run (r), Valgrind (v) or Exit (e)?\n")
 
         if choice.startswith("r") or choice.startswith("R"):
-            run = subprocess.Popen("./" + progname, stdout=subprocess.PIPE, shell=True)
+            run = subprocess.Popen("./" + progname + " " + str(count), stdout=subprocess.PIPE, shell=True)
             print run.communicate()[0]
             valid_choice = True
 
@@ -87,7 +118,7 @@ elif system == "Linux\n":
             if int(data.num_threads) > 1:
                 print "Valgrind has problems handling multi-thread."
             else:
-                val = subprocess.Popen("valgrind --leak-check=full ./" + progname,
+                val = subprocess.Popen("valgrind --leak-check=full ./" + progname + " " + str(count),
                                        stdout=subprocess.PIPE, shell=True)
                 out = val.communicate()[0]
                 valid_choice = True
@@ -109,10 +140,10 @@ elif system == "Linux\n":
                     break
 
             if (server == "Adroit") or (server == "adroit"):
-                sb.adroit_submit(data, progname)
+                sb.adroit_submit(data, progname, count)
 
             elif (server == "Feynman") or (server == "feynman"):
-                sb.feynman_submit(data, progname)
+                sb.feynman_submit(data, progname, count)
 
             valid_choice = True
 
@@ -120,8 +151,6 @@ elif system == "Linux\n":
             print fp.bcolors.FAIL + "Invalid choice." << fp.bcolors.ENDC
 else:
     print fp.bcolors.FAIL + "Unknown system type." << fp.bcolors.ENDC
-
-
 
 
 
