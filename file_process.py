@@ -181,7 +181,7 @@ def slurm_file_gen(data, run_time, count):
             new_line = line[:time_start + len(time)] + run_time.hour + ":" + run_time.min + ":00\n"
         elif prog_start > -1:
             new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
-                       + " " " > " + filename + ".out\n"
+                       + " > " + filename + ".out\n"
         elif dir_start > -1:
             new_line = line[:dir_start + len(dire)] + address + '\n'
         elif server_start > -1:
@@ -196,11 +196,12 @@ def slurm_file_gen(data, run_time, count):
     return filename
 
 
-def qsub_file_gen(data, run_time):
+def qsub_file_gen(data, run_time, count):
     """
     Generate a qsub submitting file.
     :param data: Data structure which gives parameters in the submitting script
     :param run_time: Data structure which gives estimated running time and memory
+    :param count: The current count of running, which needs to be passed into main program
     :return: program name
     """
     f_old = open("submit_template.run",'r')
@@ -232,7 +233,8 @@ def qsub_file_gen(data, run_time):
             new_line = line[:threads_start + len(threads)] + data.num_threads + \
                        ",cput=" + run_time.hour + ":" + run_time.min + ":00\n"
         elif prog_start > -1:
-            new_line = line[:prog_start + len(prog)] + filename + " > " + filename + ".out\n"
+            new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
+                       + " > " + filename + ".out\n"
         elif dir_start > -1:
             new_line = line[:dir_start + len(dire)] + address + '\n'
         elif server_start > -1:
