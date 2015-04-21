@@ -1,7 +1,8 @@
 __author__ = 'liangshengzhang'
 
 import subprocess
-import os.path
+import os
+import fnmatch
 
 class bcolors:
     # Used for colorful output on consoles
@@ -269,9 +270,9 @@ def count_obtain():
     :return: current new count
     """
     file = "./parameters/count.txt"
+    file_new = "./parameters/count_temp.txt"
     if os.path.exists(file):
         f_old = open(file,'r')
-        file_new = "./parameters/count_temp.txt"
         f_new = open(file_new,'w')
 
         for line in f_old:
@@ -282,15 +283,32 @@ def count_obtain():
         f_new.write(str(count)+'\n')
         f_new.close()
 
-        subprocess.call("rm " + file, shell=True)
-        subprocess.call("mv " + file_new + " " + file, shell=True)
     else:
-        f = open(file,'w')
+        f = open(file_new,'w')
         count = 1
         f.write(str(count) + '\n')
         f.close()
 
     return count
+
+def file_clean(count = None):
+    """
+    Clean up generated data files and count files when program is
+    not run successfully.
+    :param count: Given count of this run
+    :return: None
+    """
+
+    filename = "./parameters/count_temp.txt"
+    if os.path.exists(filename):
+        subprocess.call("rm " + filename, shell=True)
+
+    if count is not None:
+        match_name = "_" + str(count) + ".dat"
+        for file in os.listdir('./parameters'):
+            if fnmatch.fnmatch(file, "*" + match_name):
+                subprocess.call("rm ./parameters/" + file, shell=True)
+
 
 
 
