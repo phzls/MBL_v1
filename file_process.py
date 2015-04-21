@@ -1,6 +1,7 @@
 __author__ = 'liangshengzhang'
 
 import subprocess
+import os.path
 
 class bcolors:
     # Used for colorful output on consoles
@@ -78,7 +79,7 @@ class RunTime(object):
         self.mem = "500mb"
 
 
-def para_gen(filename, tasks_models, data = None):
+def para_gen(filename, tasks_models, data, count):
     """
     Generate parameters from command line. Possible parameters are first read from file with filename.
     Then these parameters are asked, with default values being the values given in the file. If use
@@ -87,11 +88,16 @@ def para_gen(filename, tasks_models, data = None):
     :param filename: Filename for the file
     :param tasks_models: Data structure which records possible tasks and models
     :param data: Data struture which records parameters used for generating submitting script
+    :param count: Current count of running. Used as suffix for data files
     :return: None
     """
     # Generate parameters from command line
-    f_old = open("./parameters/" + filename + ".dat",'r')
-    f_new = open("./parameters/" + filename + "_temp.dat",'w')
+    if count > 1:
+        f_old = open("./parameters/" + filename + "_" + str(count-1) + ".dat",'r')
+    else:
+        f_old = open("./parameters/" + filename + ".dat",'r')
+
+    f_new = open("./parameters/" + filename + "_" + str(count) + ".dat",'w')
     print bcolors.BOLD + '\n' + filename.upper() + bcolors.ENDC
     print bcolors.FAIL + "By directly pressing enter, default/previous values will be used.\n" + bcolors.ENDC
     for line in f_old:
@@ -136,16 +142,13 @@ def para_gen(filename, tasks_models, data = None):
     f_old.close()
     f_new.close()
 
-    subprocess.call("rm " + "./parameters/" + filename + ".dat", shell=True)
-    subprocess.call("mv " + "./parameters/" + filename + "_temp.dat " +
-                    " ./parameters/" + filename + ".dat", shell=True)
 
-
-def slurm_file_gen(data, run_time):
+def slurm_file_gen(data, run_time, count):
     """
     Generate a slurm submitting file.
     :param data: Data structure which gives parameters in the submitting script
     :param run_time: Data structure which gives estimated running time
+    :param count: The current count of running, which needs to be passed into main program
     :return: program name
     """
     f_old = open("submit_template.run",'r')
@@ -177,7 +180,8 @@ def slurm_file_gen(data, run_time):
         elif time_start > -1:
             new_line = line[:time_start + len(time)] + run_time.hour + ":" + run_time.min + ":00\n"
         elif prog_start > -1:
-            new_line = line[:prog_start + len(prog)] + filename + " > " + filename + ".out\n"
+            new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
+                       + " " " > " + filename + ".out\n"
         elif dir_start > -1:
             new_line = line[:dir_start + len(dire)] + address + '\n'
         elif server_start > -1:
@@ -255,3 +259,38 @@ def exception(name, data):
         if (data.task == "Disorder_Transition") and (name == "J"):
             exc = True
     return exc
+
+def count_obtain():
+    """
+    Get the count for the current running. This is used to generate a unique number for
+    all data files.
+    :return: current new count
+    """
+    file = "./parameters/count.txt"
+    if os.path.exists(file):
+        f_old = open(file,'r')
+        file_new = "./parameters/count_temp.txt"
+        f_new = open(file_new,'w')
+
+        for line in f_old:
+            count = int(line.split()[0])
+        f_old.close()
+
+        count += 1
+        f_new.write(str(count)+'\n')
+        f_new.close()
+
+        subprocess.call("rm " + file, shell=True)
+        subprocess.call("mv " + file_new + " " + file, shell=True)
+    else:
+        f = open(file,'w')
+        count = 1
+        f.write(str(count) + '\n')
+        f.close()
+
+    return count
+
+
+
+
+
