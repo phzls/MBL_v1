@@ -131,43 +131,30 @@ void FloEvolIsingQuasiSimpShiftReal::Evol_Construct() {
  * Construct X part of the evolution matrix
  */
 void FloEvolIsingQuasiSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
-    for (int i=0; i<dim_; i++){
-        int flip_spin = 1;
-        for (int j=0;j<size_;j++){
-            int pos = i ^ flip_spin;
-            evol_half_x(pos,i) += (1 - W_);
-            flip_spin = flip_spin << 1;
-        }
+    vector<double>cos_prod(dim_+1);
+    vector<double>sin_prod(dim_+1);
+
+    cos_prod[0] = 1;
+    sin_prod[0] = 1;
+
+    for (int i=1; i<dim_+1; i++){
+        cos_prod[i] = cos_prod[i-1] * cos((1-W_)/2);
+        sin_prod[i] = sin_prod[i-1] * ( - sin((1-W_)/2) );
     }
-
-    // Check if the matrix is Hermitian
-    for (int i=0; i<evol_half_x.cols(); i++){
-        for (int j=i+1; j< evol_half_x.rows();j++){
-            if (abs(evol_half_x(j,i) - evol_half_x(i,j)) > 1.0e-10){
-                cout << "x part is not Hermitian at row " << j <<" and col " << i << endl;
-                cout << "(i,j): " << evol_half_x(i,j) << endl;
-                cout << "(j,i): " << evol_half_x(j,i) << endl;
-                abort();
-            }
-        }
-    }
-
-    SelfAdjointEigenSolver<MatrixXcd> x_eigen;
-
-    x_eigen.compute(evol_half_x);
 
     for (int i=0; i<dim_; i++){
-        for (int j=0; j< dim_; j++){
-            if (i==j){
-                evol_half_x(i,j) = exp( - Complex_I * x_eigen.eigenvalues()[i] * complex<double>(0.5,0) );
-            }
-            else{
-                evol_half_x(i,j) = complex<double>(0,0);
-            }
+        for (int j=i; j<dim_;j++){
+            int flip = __builtin_popcount(i ^ j);
+            complex<double> sign;
+            if (flip % 4 == 1) sign = Complex_I;
+            else if (flip % 4 == 2) sign = -Complex_one;
+            else if (flip % 4 == 3) sign = -Complex_I;
+            else sign = Complex_one;
+
+            evol_half_x(j,i) = sign * complex<double>(cos_prod[size_ - flip] * sin_prod[flip], 0);
+            if (i != j) evol_half_x(i,j) = evol_half_x(j,i);
         }
     }
-
-    evol_half_x = x_eigen.eigenvectors() * evol_half_x * x_eigen.eigenvectors().adjoint();
 }
 
 /*

@@ -144,6 +144,43 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Construct() {
  * Construct X part of the evolution matrix
  */
 void FloEvolIsingAllRandomSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
+
+    for (int i=0; i<dim_; i++){
+        for (int j=i; j<dim_;j++){
+            int pos = 0;
+            int count = 0;
+            double prod = 1;
+            int diff = i ^ j;
+
+            while (diff != 0){
+                if (diff & 1 == 1){
+                    prod *= (-sin(random_g_[pos]/2));
+                    count ++;
+                }
+                else {
+                    prod *= cos(random_g_[pos]/2);
+                }
+
+                pos ++;
+                diff = diff >> 1;
+            }
+
+            while (pos < size_){
+                prod *= cos(random_g_[pos]/2);
+                pos ++;
+            }
+
+            complex<double> sign;
+            if (count % 4 == 1) sign = Complex_I;
+            else if (count % 4 == 2) sign = -Complex_one;
+            else if (count % 4 == 3) sign = -Complex_I;
+            else sign = Complex_one;
+
+            evol_half_x(j,i) = sign * complex<double>(prod, 0);
+            if (i != j) evol_half_x(i,j) = evol_half_x(j,i);
+        }
+    }
+    /*
     for (int i=0; i<dim_; i++){
         int flip_spin = 1;
         for (int j=0;j<size_;j++){
@@ -180,7 +217,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half
         }
     }
 
-    evol_half_x = x_eigen.eigenvectors() * evol_half_x * x_eigen.eigenvectors().adjoint();
+    evol_half_x = x_eigen.eigenvectors() * evol_half_x * x_eigen.eigenvectors().adjoint();*/
 }
 
 /*
