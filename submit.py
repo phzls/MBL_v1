@@ -3,7 +3,7 @@ __author__ = 'liangshengzhang'
 import file_process as fp
 import subprocess
 
-def adroit_submit(data, program_name):
+def adroit_submit(data, program_name, count):
     T = fp.RunTime()
     # Obtain estimated running time
     non_neg = False
@@ -26,7 +26,7 @@ def adroit_submit(data, program_name):
             non_neg = True
 
     # Generate submitting files
-    submit_program_name = fp.slurm_file_gen(data, T)
+    submit_program_name = fp.slurm_file_gen(data, T, count)
 
     if submit_program_name != program_name:
         print "Program names do not match:"
@@ -37,7 +37,7 @@ def adroit_submit(data, program_name):
     sub = subprocess.Popen("sbatch " + program_name + ".run", stdout=subprocess.PIPE, shell=True)
     print(sub.communicate()[0])
 
-def feynman_submit(data, program_name):
+def feynman_submit(data, program_name, count):
     T = fp.RunTime()
     # Obtain estimated running time
     non_neg = False
@@ -74,7 +74,7 @@ def feynman_submit(data, program_name):
             mem_valid = True
 
     # Generate submitting files
-    submit_program_name = fp.qsub_file_gen(data, T)
+    submit_program_name = fp.qsub_file_gen(data, T, count)
 
     if submit_program_name != program_name:
         print "Program names do not match:"
