@@ -1,9 +1,0 @@
-// Generic parameters
-//
-task Disorder_Transition // Task to be performed
-model Ising_All_Random_Simp_Shift_Real_Flo // Model to be implemented
-size 13 // System size
-num_realizations 12 // Number of realizations
-threads_N 6 // Number of threads in openmp
-debug false // Whether output debug information
-version 2 // Version of the output
