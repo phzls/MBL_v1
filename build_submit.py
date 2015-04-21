@@ -157,9 +157,9 @@ elif system == "Linux\n":
             success_run = True
 
         else:
-            print fp.bcolors.FAIL + "Invalid choice." << fp.bcolors.ENDC
+            print fp.bcolors.FAIL + "Invalid choice." + fp.bcolors.ENDC
 else:
-    print fp.bcolors.FAIL + "Unknown system type." << fp.bcolors.ENDC
+    print fp.bcolors.FAIL + "Unknown system type." + fp.bcolors.ENDC
 
 if success_run:
     file = "./parameters/count.txt"
