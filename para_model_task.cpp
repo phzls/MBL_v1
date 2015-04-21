@@ -136,10 +136,5 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     keyword = "ZZ_All_Correlation_Square";
     para_get(filename, content, keyword, choice);
     parameters.transition.flo_transition_compute["ZZ_All_Correlation_Square"] = choice;
-
-    for (map<string, bool>::iterator it = parameters.transition.flo_transition_compute.begin();
-             it != parameters.transition.flo_transition_compute.end(); it++){
-            cout << it -> first << endl;
-        }
 }
 
