@@ -43,24 +43,43 @@ int main(int argc, char* argv[]){
     model_para_read_map["Ising_Random_Simp_Shift_Real_Flo"] = Ising_Random_Simp_Shift_Real_Flo_Para;
     model_para_read_map["Ising_Quasi_Simp_Shift_Real_Flo"] = Ising_Quasi_Simp_Shift_Real_Flo_Para;
     model_para_read_map["Ising_All_Random_Simp_Shift_Real_Flo"] = Ising_All_Random_Simp_Shift_Real_Flo_Para;
+    model_para_read_map["Ising_All_Quasi_Simp_Shift_Real_Flo"] = Ising_All_Quasi_Simp_Shift_Real_Flo_Para;
 
     task_para_read_map["Disorder_Transition"] = Disorder_Transition_Para;
 
-    cout << "Generic parameters:"<< endl;
+    cout << "Read generic parameters:"<< endl;
     // Obtain generic parameters
     Generic_Para(parameters, count);
 
-    cout << "Output parameters:" << endl;
+    cout << "Read output parameters:" << endl;
     // Obtain output parameters
     Output_Para(parameters, count);
 
-    cout << "Model parameters:" << endl;
+    cout << "Read model parameters:" << endl;
     // Obtain model parameters
-    model_para_read_map[parameters.generic.model](parameters,count);
+    map<string,para>::iterator it = model_para_read_map.find(parameters.generic.model);
+    if (it != model_para_read_map.end()) it -> second(parameters, count);
+    else{
+        cout << "Data reading function for model " << parameters.generic.model << " cannot be found." << endl;
+        abort();
+    }
+    for (map<string,para>::iterator it = model_para_read_map.begin(); it != model_para_read_map.end();
+            it ++){
 
-    cout << "Task parameters:" << endl;
+    }
+
+    cout << "Read task parameters:" << endl;
     // Obtain task parameters
-    task_para_read_map[parameters.generic.task](parameters, count);
+    it = task_para_read_map.find(parameters.generic.task);
+    if (it != task_para_read_map.end()) it -> second(parameters, count);
+    else{
+        cout << "Data reading function for task " << parameters.generic.task << " cannot be found." << endl;
+        abort();
+    }
+    for (map<string,para>::iterator it = task_para_read_map.begin(); it != task_para_read_map.end();
+         it ++){
+
+    }
 
     Eigen::initParallel();
 
