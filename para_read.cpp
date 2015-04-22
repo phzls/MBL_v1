@@ -96,6 +96,11 @@ void para_file_read(string filename, vector<vector<string> >& content){
 
     ifstream fin(file.str().c_str());
 
+    if (!fin.good()){
+        cout << filename << ".dat is not accessible." << endl;
+        abort();
+    }
+
     int index = 0;
     while(!fin.eof()){
         string temp_line;

@@ -64,3 +64,17 @@ string Flo_Evol_Ising_All_Random_Simp_Shift_Real_Func(const AllPara& parameters,
 
     return type;
 }
+
+// For Ising all quasi simple shift real floquet operator
+string Flo_Evol_Ising_All_Quasi_Simp_Shift_Real_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double W = parameters.floquet.J; // Disorder strength
+
+    const bool debug = parameters.generic.debug;
+
+    model = new FloEvolIsingAllQuasiSimpShiftReal(size, W, debug);
+
+    string type = model -> Type();
+
+    return type;
+}

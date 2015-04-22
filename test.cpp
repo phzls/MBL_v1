@@ -27,7 +27,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolIsingQuasiSimpShiftReal(4, 0.6, false);
+    floquet = new FloEvolIsingAllQuasiSimpShiftReal(4, 0.9, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
@@ -49,7 +49,7 @@ int main(){
 
     cout << "Floquet time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
-/*    cout << "Eigenvalues:" << endl;
+    cout << "Eigenvalues:" << endl;
     complex_matrix_write(eval[0]);
     cout << endl;
 
@@ -57,7 +57,7 @@ int main(){
     real_matrix_write(evec[0]);
     cout << endl;
 
-    cout << "Eigenvalues:" << endl;
+    /*cout << "Eigenvalues:" << endl;
     for (int i=0; i<eval.size();i++){
         cout << "Sec " << i << endl;
         complex_matrix_write(eval[i]);
@@ -74,6 +74,6 @@ int main(){
     delete floquet;
     floquet = NULL;
 
-
+    return 0;
 }
 
