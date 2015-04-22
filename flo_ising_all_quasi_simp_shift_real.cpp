@@ -1,9 +1,9 @@
 //
-// Created by Liangsheng Zhang on 4/17/15.
+// Created by Liangsheng Zhang on 4/22/15.
 //
 
 /*
- * Implementation of FloEvolIsingAllRandomSimpReal class
+ * Implementation of FloEvolIsingAllQuasiSimpReal class
  */
 
 #include <complex>
@@ -20,43 +20,55 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
 /*
  * Construct the representation string and abstract type of the class.
  */
-void FloEvolIsingAllRandomSimpShiftReal::Repr_Init_(){
-    repr_ << "Ising_All_Random_Simp_Shift_Real_Floquet_L=" << size_ << ",W=" << W_;
-    type_ = "Ising_All_Random_Simp_Shift_Real_Floquet";
+void FloEvolIsingAllQuasiSimpShiftReal::Repr_Init_(){
+    repr_ << "Ising_All_Quasi_Simp_Shift_Real_Floquet_L=" << size_ << ",W=" << W_;
+    type_ = "Ising_All_Quasi_Simp_Shift_Real_Floquet";
 }
 
 /*
  * Initialize random numbers
  */
-void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Init() {
+void FloEvolIsingAllQuasiSimpShiftReal::Evol_Para_Init() {
     random_h_.resize(size_);
     random_J_.resize(size_-1);
     random_g_.resize(size_);
 
+    double u = RanGen_mersenne.Random();
+    double h_theta = 2 * Pi * u;
+
+    u = RanGen_mersenne.Random();
+    double J_theta = 2 * Pi * u;
+
+    u = RanGen_mersenne.Random();
+    double g_theta = 2 * Pi * u;
+
     // Random Fields
     for (int i=0; i<size_;i++){
         double u = RanGen_mersenne.Random();
-        random_h_[i] = 1 + W_ * (2*u-1);
+        random_h_[i] = 1 + W_ * cos(i * Pi / Phi + h_theta);
 
         if (i<size_-1){
             u = RanGen_mersenne.Random();
-            random_J_[i] = 1 + W_ * (2*u-1);
+            random_J_[i] = 1 + W_ * cos(i * Pi / Phi + J_theta);
         }
 
         u = RanGen_mersenne.Random();
-        random_g_[i] = sqrt(1-W_) * (1-W_) * (1-W_) + W_ * (2-W_) * sqrt(1-W_) * u;
+        random_g_[i] = (1-W_) * (1 + cos(i * Pi / Phi + g_theta) );
     }
 
     if (debug_){
-        cout << "Random longitude field:" << endl;
+        cout << "Random longitude field phase:  " << h_theta << endl;
+        cout << "Longitude field:" << endl;
         for (int i=0; i<size_;i++) cout << random_h_[i] << endl;
         cout << endl;
 
-        cout << "Random NN interaction:" << endl;
+        cout << "Random NN interaction phase:  " << J_theta << endl;
+        cout << "NN interaction:" << endl;
         for (int i=0; i<size_-1;i++) cout << random_J_[i] << endl;
         cout << endl;
 
-        cout << "Random transverse field:" << endl;
+        cout << "Random transverse field phase:  " << g_theta << endl;
+        cout << "Transverse field:" << endl;
         for (int i=0; i<size_;i++) cout << random_g_[i] << endl;
         cout << endl;
     }
@@ -65,7 +77,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Init() {
 /*
  * Construct the time evolution matrix
  */
-void FloEvolIsingAllRandomSimpShiftReal::Evol_Construct() {
+void FloEvolIsingAllQuasiSimpShiftReal::Evol_Construct() {
 
     if (!constructed_){
         evol_op_ = MatrixXcd::Zero(dim_, dim_);
@@ -143,7 +155,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Construct() {
 /*
  * Construct X part of the evolution matrix
  */
-void FloEvolIsingAllRandomSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
+void FloEvolIsingAllQuasiSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
 
     for (int i=0; i<dim_; i++){
         for (int j=i; j<dim_;j++){
@@ -185,7 +197,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half
 /*
  *  Construct z part of the evolution matrix
  */
-void FloEvolIsingAllRandomSimpShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
+void FloEvolIsingAllQuasiSimpShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
     for (int i=0; i<dim_;i++){
 
         int state = i;
@@ -205,6 +217,8 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
         evol_z(i,i) = exp( - Complex_I * complex<double>(value,0) );
     }
 }
+
+
 
 
 

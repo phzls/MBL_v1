@@ -291,11 +291,12 @@ def count_obtain():
 
     return count
 
-def file_clean(count = None):
+def file_clean(count = None, file_modify = None):
     """
     Clean up generated data files and count files when program is
     not run successfully.
     :param count: Given count of this run
+    :param file_modify: A map which records whether files have been modified
     :return: None
     """
 
@@ -307,8 +308,14 @@ def file_clean(count = None):
         match_name = "_" + str(count) + ".dat"
         for file in os.listdir('./parameters'):
             if fnmatch.fnmatch(file, "*" + match_name):
-                subprocess.call("rm ./parameters/" + file, shell=True)
-
+                start = file.find(match_name)
+                file_name = file[:start]
+                if file_modify[file_name] is False:
+                    new_file = file_name + "_" + str(count-1) + ".dat"
+                    subprocess.call("mv ./parameters/" + file +
+                                    " ./parameters/" + new_file, shell=True)
+                else:
+                    subprocess.call("rm ./parameters/" + file, shell=True)
 
 
 

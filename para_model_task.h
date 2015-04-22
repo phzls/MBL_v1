@@ -28,6 +28,9 @@ void Ising_Quasi_Simp_Shift_Real_Flo_Para(AllPara&, string);
 // For Ising all random simple shift real floquet operator
 void Ising_All_Random_Simp_Shift_Real_Flo_Para(AllPara&, string);
 
+// For Ising all quasi-periodic simple shift real floquet operator
+void Ising_All_Quasi_Simp_Shift_Real_Flo_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 
