@@ -95,11 +95,17 @@ if system == "Darwin\n":
     if (cont == '') or cont.startswith('y') or cont.startswith('Y'):
         make_process = subprocess.Popen("make auto OUT=mbl_auto -j4",stderr=subprocess.STDOUT, shell=True)
         if make_process.wait() != 0:
-            fp.file_clean(count)
+            fp.file_clean(count, file_modify)
             raise Exception("Make Error")
 
         run = subprocess.Popen("./mbl_auto " + str(count), stdout=subprocess.PIPE, shell=True)
-        print run.communicate()[0]
+        stdout = []
+        while True:
+            line = run.stdout.readline()
+            stdout.append(line)
+            print line,
+            if line == '' and run.poll() != None:
+                break
         success_run = True
 
 elif system == "Linux\n":
@@ -108,7 +114,7 @@ elif system == "Linux\n":
     make_process = subprocess.Popen("make auto OUT=" + progname
                                     + " -j4",stderr=subprocess.STDOUT, shell=True)
     if make_process.wait() != 0:
-        fp.file_clean(count)
+        fp.file_clean(count, file_modify)
         raise Exception("Make Error")
 
     valid_choice = False
@@ -117,7 +123,13 @@ elif system == "Linux\n":
 
         if choice.startswith("r") or choice.startswith("R"):
             run = subprocess.Popen("./" + progname + " " + str(count), stdout=subprocess.PIPE, shell=True)
-            print run.communicate()[0]
+            stdout = []
+            while True:
+                line = run.stdout.readline()
+                stdout.append(line)
+                print line,
+                if line == '' and run.poll() != None:
+                    break
             valid_choice = True
             success_run = True
 
@@ -127,7 +139,13 @@ elif system == "Linux\n":
             else:
                 val = subprocess.Popen("valgrind --leak-check=full ./" + progname + " " + str(count),
                                        stdout=subprocess.PIPE, shell=True)
-                out = val.communicate()[0]
+                stdout = []
+            while True:
+                line = val.stdout.readline()
+                stdout.append(line)
+                print line,
+                if line == '' and val.poll() != None:
+                    break
                 valid_choice = True
                 success_run = True
 
@@ -167,8 +185,9 @@ if success_run:
     if count > 1:
         subprocess.call("rm " + file, shell=True)
     subprocess.call("mv " + file_new + " " + file, shell=True)
+
 else:
-    fp.file_clean(count)
+    fp.file_clean(count, file_modify)
 
 
 
