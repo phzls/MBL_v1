@@ -51,6 +51,16 @@ void Ising_All_Random_Simp_Shift_Real_Flo_Para(AllPara& parameters, string count
     para_get(filename, content, keyword, parameters.floquet.J);
 }
 
+// For Ising all quasi-periodic simple shift real floquet operator
+void Ising_All_Quasi_Simp_Shift_Real_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_all_quasi_simp_shift_real_flo_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+}
+
 
 //=================================== TASKS =====================================================
 
@@ -136,10 +146,5 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     keyword = "ZZ_All_Correlation_Square";
     para_get(filename, content, keyword, choice);
     parameters.transition.flo_transition_compute["ZZ_All_Correlation_Square"] = choice;
-
-    for (map<string, bool>::iterator it = parameters.transition.flo_transition_compute.begin();
-             it != parameters.transition.flo_transition_compute.end(); it++){
-            cout << it -> first << endl;
-        }
 }
 
