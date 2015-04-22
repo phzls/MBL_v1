@@ -86,7 +86,7 @@ file_modify[data.task.lower()] = True
 new_match_name = "_" + str(count) + ".dat"
 for key in file_modify:
     if file_modify[key] is False:
-        subprocess.call("mv ./parameters/" + key + match_name
+        subprocess.call("cp ./parameters/" + key + match_name
                         + " ./parameters/" + key + new_match_name, shell=True )
 
 if system == "Darwin\n":
