@@ -164,7 +164,8 @@ else:
 if success_run:
     file = "./parameters/count.txt"
     file_new = "./parameters/count_temp.txt"
-    subprocess.call("rm " + file, shell=True)
+    if count > 1:
+        subprocess.call("rm " + file, shell=True)
     subprocess.call("mv " + file_new + " " + file, shell=True)
 else:
     fp.file_clean(count)
