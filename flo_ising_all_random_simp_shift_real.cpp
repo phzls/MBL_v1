@@ -180,44 +180,6 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half
             if (i != j) evol_half_x(i,j) = evol_half_x(j,i);
         }
     }
-    /*
-    for (int i=0; i<dim_; i++){
-        int flip_spin = 1;
-        for (int j=0;j<size_;j++){
-            int pos = i ^ flip_spin;
-            evol_half_x(pos,i) += random_g_[j];
-            flip_spin = flip_spin << 1;
-        }
-    }
-
-    // Check if the matrix is Hermitian
-    for (int i=0; i<evol_half_x.cols(); i++){
-        for (int j=i+1; j< evol_half_x.rows();j++){
-            if (abs(evol_half_x(j,i) - evol_half_x(i,j)) > 1.0e-10){
-                cout << "x part is not Hermitian at row " << j <<" and col " << i << endl;
-                cout << "(i,j): " << evol_half_x(i,j) << endl;
-                cout << "(j,i): " << evol_half_x(j,i) << endl;
-                abort();
-            }
-        }
-    }
-
-    SelfAdjointEigenSolver<MatrixXcd> x_eigen;
-
-    x_eigen.compute(evol_half_x);
-
-    for (int i=0; i<dim_; i++){
-        for (int j=0; j< dim_; j++){
-            if (i==j){
-                evol_half_x(i,j) = exp( - Complex_I * x_eigen.eigenvalues()[i] * complex<double>(0.5,0) );
-            }
-            else{
-                evol_half_x(i,j) = complex<double>(0,0);
-            }
-        }
-    }
-
-    evol_half_x = x_eigen.eigenvectors() * evol_half_x * x_eigen.eigenvectors().adjoint();*/
 }
 
 /*
