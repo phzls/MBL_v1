@@ -225,6 +225,7 @@ def qsub_file_gen(data, run_time, count):
         prog_start = line.find(prog)
         dir_start = line.find(dire)
         server_start = line.find(server)
+        mem_start = line.find("mem=")
 
         new_line = line
 
@@ -240,6 +241,8 @@ def qsub_file_gen(data, run_time, count):
             new_line = line[:dir_start + len(dire)] + address + '\n'
         elif server_start > -1:
             new_line_write = False
+        elif mem_start > -1:
+            new_line = line[:mem_start + len(memory)] + run_time.mem + "\n"
 
         if new_line_write:
             f_new.write(new_line)
