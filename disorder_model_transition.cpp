@@ -78,7 +78,7 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_func_map_[name3] = cal_func3;
     flo_out_map_[name3] = out_func3;
 
-    // end-to-end z-z time correlation square
+    // end-to-end z-z time correlation components
     string name4 = "ZZ_Time_Correlation_Components";
     Flo_init init_func4 = &DisorderModelTransition::ZZ_time_corr_component_init_;
     Flo_func cal_func4 = &DisorderModelTransition::ZZ_time_corr_component_compute_;
@@ -115,6 +115,44 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_init_map_[name5] = init_func5;
     flo_func_map_[name5] = cal_func5;
     flo_out_map_[name5] = out_func5;
+
+    // end-to-end z-z correlation square for all samples
+    string name6 = "ZZ_Correlation_Square_All_Sample";
+    Flo_init init_func6 = &DisorderModelTransition::ZZ_corr_square_all_sample_init_;
+    Flo_func cal_func6 = &DisorderModelTransition::ZZ_corr_square_all_sample_compute_;
+    Flo_out out_func6 = &DisorderModelTransition::ZZ_corr_square_all_sample_out_;
+
+    // Make sure the name has not been used before
+    init_it = flo_init_map_.find(name6);
+    cal_it = flo_func_map_.find(name6);
+    out_it = flo_out_map_.find(name6);
+    if (init_it != flo_init_map_.end() || cal_it != flo_func_map_.end() || out_it != flo_out_map_.end()){
+        cout << name6 << " for disorder transition has appeared before." << endl;
+        abort();
+    }
+
+    flo_init_map_[name6] = init_func6;
+    flo_func_map_[name6] = cal_func6;
+    flo_out_map_[name6] = out_func6;
+
+    // end-to-end z-z time correlation all sample
+    string name7 = "ZZ_Time_Correlation_All_Sample";
+    Flo_init init_func7 = &DisorderModelTransition::ZZ_time_corr_all_sample_init_;
+    Flo_func cal_func7 = &DisorderModelTransition::ZZ_time_corr_all_sample_compute_;
+    Flo_out out_func7 = &DisorderModelTransition::ZZ_time_corr_all_sample_out_;
+
+    // Make sure the name has not been used before
+    init_it = flo_init_map_.find(name7);
+    cal_it = flo_func_map_.find(name7);
+    out_it = flo_out_map_.find(name7);
+    if (init_it != flo_init_map_.end() || cal_it != flo_func_map_.end() || out_it != flo_out_map_.end()){
+        cout << name7 << " for disorder transition has appeared before." << endl;
+        abort();
+    }
+
+    flo_init_map_[name7] = init_func7;
+    flo_func_map_[name7] = cal_func7;
+    flo_out_map_[name7] = out_func7;
 
     // Check the number of function
     if ( flo_init_map_.size() != flo_func_map_.size() ){
