@@ -110,6 +110,13 @@ private:
     void ZZ_corr_square_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void ZZ_corr_square_out_(const AllPara&, const string&);
 
+    // Output end to end zz correlation square for all samples.
+    // It calls same functions as zz correlation square for iniitalization and computation
+    // if they are not called
+    void ZZ_corr_square_all_sample_init_(const AllPara&);
+    void ZZ_corr_square_all_sample_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void ZZ_corr_square_all_sample_out_(const AllPara&, const string&);
+
     // For variance of entropy among eigenstates
     void Ent_var_init_(const AllPara&);
     void Ent_var_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
@@ -119,6 +126,13 @@ private:
     void ZZ_time_corr_init_(const AllPara&);
     void ZZ_time_corr_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void ZZ_time_corr_out_(const AllPara&, const string&);
+
+    // Output end to end zz four-point correlation for all samples.
+    // It calls same functions as zz four-point correlation for iniitalization and computation
+    // if they are not called
+    void ZZ_time_corr_all_sample_init_(const AllPara&);
+    void ZZ_time_corr_all_sample_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void ZZ_time_corr_all_sample_out_(const AllPara&, const string&);
 
     // For end to end zz time four-point correlation components
     void ZZ_time_corr_component_init_(const AllPara&);
