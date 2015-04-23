@@ -8,6 +8,7 @@
 
 #include <complex>
 #include <iostream>
+#include <cmath>
 #include "constants.h"
 #include "flo_evol_model.h"
 #include "screen_output.h"
@@ -53,7 +54,8 @@ void FloEvolIsingAllQuasiSimpShiftReal::Evol_Para_Init() {
         }
 
         u = RanGen_mersenne.Random();
-        random_g_[i] = (1-W_) * (1 + cos(i * Pi / Phi + g_theta) );
+        random_g_[i] = sqrt(1-W_) / 2.0
+                       * ( 1 + (1-W_)*(1-W_) + W_ * (2-W_) * cos(i * Pi / Phi + g_theta) );
     }
 
     if (debug_){

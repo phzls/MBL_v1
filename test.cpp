@@ -27,7 +27,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolIsingAllQuasiSimpShiftReal(4, 0.9, true);
+    floquet = new FloEvolIsingAllQuasiSimpShiftReal(4, 0.6, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
