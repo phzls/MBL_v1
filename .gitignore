@@ -47,4 +47,6 @@ Thumbs.db
 *.out
 *.err
 /transition
+/Distribution
 *.dat
+.idea/
