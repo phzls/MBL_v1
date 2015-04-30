@@ -88,6 +88,7 @@ for key in file_modify:
     if file_modify[key] is False:
         subprocess.call("cp ./parameters/" + key + match_name
                         + " ./parameters/" + key + new_match_name, shell=True )
+        file_modify[key] = True
 
 if system == "Darwin\n":
     # It is a mac system
