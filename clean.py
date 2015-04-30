@@ -17,12 +17,12 @@ if count is not None:
         if fnmatch.fnmatch(file, '*' + count + ".dat"):
             start = file.find(".dat")
             filename = file[:start]
-            subprocess.call("mv ./parameters/" + file + " ./parameters/" + filename + ".temp")
+            subprocess.call("mv ./parameters/" + file + " ./parameters/" + filename + ".temp", shell=True)
         elif fnmatch.fnmatch(file, "*.dat"):
-            subprocess.call("rm ./parameters/" + file)
+            subprocess.call("rm ./parameters/" + file, shell=True)
 
     for file in os.listdir("./parameters"):
         if fnmatch.fnmatch(file, "*.temp"):
             start = file.find(".temp")
             filename = file[:start]
-            subprocess.call("mv ./parameters/" + file + " ./parameters/" + filename + ".dat")
+            subprocess.call("mv ./parameters/" + file + " ./parameters/" + filename + ".dat", shell=True)
