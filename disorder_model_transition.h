@@ -36,6 +36,9 @@ struct DisorderModelData
 
     // zz correlation at different distances with configuration symmetric w.r.t the center
     vector< vector<vector<double> > > zz_all_corr_square;
+
+    // End-to-end sigma_z-sigma_z correlation square with its logarithm averaged over all eigenstates and realizations
+    vector< vector<double> > log_zz_corr_square;
 };
 
 /*
@@ -143,6 +146,11 @@ private:
     void ZZ_all_corr_square_init_(const AllPara&);
     void ZZ_all_corr_square_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void ZZ_all_corr_square_out_(const AllPara&, const string&);
+
+    // For log end to end zz correlation square, used in MBL phase
+    void Log_ZZ_corr_square_init_(const AllPara&);
+    void Log_ZZ_corr_square_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void Log_ZZ_corr_square_out_(const AllPara&, const string&);
 
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
