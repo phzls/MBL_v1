@@ -66,12 +66,7 @@ void FloEvolIsingRandomSimpShiftReal::Evol_Construct() {
     Evol_X_Construct_(evol_half_x);
     Evol_Z_Construct_(evol_z);
 
-    clock_t time_begin = clock();
-
     evol_op_ = evol_half_x * evol_z * evol_half_x;
-
-    clock_t time_end = clock();
-    cout << "Multiplication time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
     for (int i=0; i<evol_op_.cols();i++){
         for (int j=0; j<evol_op_.rows();j++){
@@ -161,7 +156,6 @@ void FloEvolIsingRandomSimpShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x)
  *  Construct z part of the evolution matrix
  */
 void FloEvolIsingRandomSimpShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
-    clock_t time_begin = clock();
     for (int i=0; i<dim_;i++){
 
         int state = i;
@@ -180,8 +174,6 @@ void FloEvolIsingRandomSimpShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
 
         evol_z(i,i) = exp( - Complex_I * complex<double>(value,0) );
     }
-    clock_t time_end = clock();
-    cout << "Z construction time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 
