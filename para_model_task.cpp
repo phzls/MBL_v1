@@ -154,5 +154,13 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     keyword = "ZZ_Time_Correlation_All_Sample";
     para_get(filename, content, keyword, choice);
     parameters.transition.flo_transition_compute["ZZ_Time_Correlation_All_Sample"] = choice;
+
+    keyword = "Log_ZZ_Correlation_Square";
+    para_get(filename, content, keyword, choice);
+    parameters.transition.flo_transition_compute["Log_ZZ_Correlation_Square"] = choice;
+
+    keyword = "Log_ZZ_All_Correlation_Square";
+    para_get(filename, content, keyword, choice);
+    parameters.transition.flo_transition_compute["Log_ZZ_All_Correlation_Square"] = choice;
 }
 
