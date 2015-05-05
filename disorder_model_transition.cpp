@@ -192,6 +192,25 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_func_map_[name9] = cal_func9;
     flo_out_map_[name9] = out_func9;
 
+    // z-z time correlation at all distances
+    string name10 = "ZZ_All_Time_Correlation";
+    Flo_init init_func10 = &DisorderModelTransition::ZZ_all_time_corr_init_;
+    Flo_func cal_func10 = &DisorderModelTransition::ZZ_all_time_corr_compute_;
+    Flo_out out_func10 = &DisorderModelTransition::ZZ_all_time_corr_out_;
+
+    // Make sure the name has not been used before
+    init_it = flo_init_map_.find(name10);
+    cal_it = flo_func_map_.find(name10);
+    out_it = flo_out_map_.find(name10);
+    if (init_it != flo_init_map_.end() || cal_it != flo_func_map_.end() || out_it != flo_out_map_.end()){
+        cout << name10 << " for disorder transition has appeared before." << endl;
+        abort();
+    }
+
+    flo_init_map_[name10] = init_func10;
+    flo_func_map_[name10] = cal_func10;
+    flo_out_map_[name10] = out_func10;
+
     // Check the number of function
     if ( flo_init_map_.size() != flo_func_map_.size() ){
 
