@@ -103,7 +103,7 @@ void DisorderModelTransition::ZZ_all_corr_square_compute_(AllPara const & parame
 
             if (debug){
                 cout << "Realization " << local_info.realization_index << "  Configuration: " << i << endl;
-                cout << "Average time correlation: " << zz_square / double(dim) << endl;
+                cout << "Average correlation square: " << zz_square / double(dim) << endl;
                 cout << endl;
             }
         }
@@ -155,7 +155,7 @@ void DisorderModelTransition::ZZ_all_corr_square_compute_(AllPara const & parame
 
             if (debug){
                 cout << "Realization " << local_info.realization_index << "  Configuration: " << i << endl;
-                cout << "Average time correlation: " << zz_square / double(dim) << endl;
+                cout << "Average correlation square: " << zz_square / double(dim) << endl;
                 cout << endl;
             }
         }
