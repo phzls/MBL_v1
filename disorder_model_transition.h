@@ -42,6 +42,9 @@ struct DisorderModelData
 
     // log zz correlation square at different distances with configuration symmetric w.r.t the center
     vector< vector<vector<double> > > log_zz_all_corr_square;
+
+    // zz time correlation at different distances with configuration symmetric w.r.t the center
+    vector< vector<vector<double> > > zz_all_time_corr;
 };
 
 /*
@@ -159,6 +162,11 @@ private:
     void Log_ZZ_all_corr_square_init_(const AllPara&);
     void Log_ZZ_all_corr_square_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void Log_ZZ_all_corr_square_out_(const AllPara&, const string&);
+
+    // For zz time correlation at all distances
+    void ZZ_all_time_corr_init_(const AllPara&);
+    void ZZ_all_time_corr_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void ZZ_all_time_corr_out_(const AllPara&, const string&);
 
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
