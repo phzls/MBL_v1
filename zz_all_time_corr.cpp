@@ -97,7 +97,8 @@ void DisorderModelTransition::ZZ_all_time_corr_compute_(AllPara const & paramete
                 z_left_ave_right_ave += left_temp * right_temp;
 
                 if (debug){
-                    cout << "Realization " << local_info.realization_index << " eigenstate " << i << ":" << endl;
+                    cout << "Realization " << local_info.realization_index << "  Configuration: " << i << endl;
+                    cout << " eigenstate " << j << ":" << endl;
                     cout << "Average left spin: " << left_temp << endl;
                     cout << "Average right spin: " << right_temp << endl;
                     cout << "Average left X right: " << left_right_temp << endl;
@@ -115,7 +116,7 @@ void DisorderModelTransition::ZZ_all_time_corr_compute_(AllPara const & paramete
 
             if (debug){
                 cout << "Realization " << local_info.realization_index << "  Configuration: " << i << endl;
-                cout << "Average correlation square: " << zz_time_corr << endl;
+                cout << "Average time correlation: " << zz_time_corr << endl;
                 cout << endl;
             }
         }
@@ -161,7 +162,8 @@ void DisorderModelTransition::ZZ_all_time_corr_compute_(AllPara const & paramete
                 z_left_ave_right_ave += left_temp * right_temp;
 
                 if (debug){
-                    cout << "Realization " << local_info.realization_index << " eigenstate " << i << ":" << endl;
+                    cout << "Realization " << local_info.realization_index << "  Configuration: " << i << endl;
+                    cout << " eigenstate " << j << ":" << endl;
                     cout << "Average left spin: " << left_temp << endl;
                     cout << "Average right spin: " << right_temp << endl;
                     cout << "Average left X right: " << left_right_temp << endl;
@@ -179,7 +181,7 @@ void DisorderModelTransition::ZZ_all_time_corr_compute_(AllPara const & paramete
 
             if (debug){
                 cout << "Realization " << local_info.realization_index << "  Configuration: " << i << endl;
-                cout << "Average correlation square: " << zz_time_corr << endl;
+                cout << "Average time correlation: " << zz_time_corr << endl;
                 cout << endl;
             }
         }
