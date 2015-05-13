@@ -80,7 +80,7 @@ class RunTime(object):
         self.mem = "500mb"
 
 
-def para_gen(filename, tasks_models, data, count):
+def para_gen(filename, tasks_models, data, count, modify_words = None):
     """
     Generate parameters from command line. Possible parameters are first read from file with filename.
     Then these parameters are asked, with default values being the values given in the file. If use
@@ -90,6 +90,8 @@ def para_gen(filename, tasks_models, data, count):
     :param tasks_models: Data structure which records possible tasks and models
     :param data: Data struture which records parameters used for generating submitting script
     :param count: Current count of running. Used as suffix for data files
+    :param modify_words: Items in the file that possibly needs to be modified if appeared. For other
+    item, previous values are used. If it is None, then every item will be asked.
     :return: None
     """
     # Generate parameters from command line
@@ -119,6 +121,11 @@ def para_gen(filename, tasks_models, data, count):
             if exception(name, data): # This variable can be skipped
                 valid_var = True
                 var_temp = var
+
+            if modify_words is not None:
+                if name not in modify_words:
+                    valid_var = True
+                    var_temp = var
 
             while valid_var is not True:
                 var_temp = raw_input(name+": (previous: " + var +" )  " + bcolors.OKBLUE +
@@ -320,6 +327,34 @@ def file_clean(count = None, file_modify = None):
                 else:
                     subprocess.call("rm ./parameters/" + file, shell=True)
 
+def display_file(filename, data, count):
+    """
+    Display parameters in the file
+    :param filename: Filename for the file
+    :param data: Data structure which gives parameters in the submitting script
+    :param count: Current count of running. Used as suffix for data files
+    :return: None
+    """
+    # Generate parameters from command line
+    if count > 1:
+        f = open("./parameters/" + filename + "_" + str(count) + ".dat",'r')
+    else:
+        f = open("./parameters/" + filename + ".dat",'r')
+
+    for line in f:
+        if (line.startswith("//")) is not True:
+            comment_start = line.find("//")
+
+            # Get lines after //
+            comment = " ".join(line[comment_start+2:].split())
+
+            name = line.split()[0]
+            var = line.split()[1]
+
+            if not exception(name, data):
+                print name + ": " + var + " (" + bcolors.OKBLUE + comment + bcolors.ENDC+ ')\n'
+
+    f.close()
 
 
 
