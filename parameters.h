@@ -85,6 +85,7 @@ struct Evolution
 
 	int leftmost_spin_z_index; // The number gives the index of leftmost spin z value
 
+	bool sample_detail; // Whether output sample_to_sample detail data
 };
 
 /*
