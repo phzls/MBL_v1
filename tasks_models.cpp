@@ -23,6 +23,16 @@ void TasksModels::Map_Construct_(){
     task_function1 = &disorder_transition;
     Task_Map_Insert(task_name1, task_type1, task_function1);
 
+    // Study time evolution of a single model
+    string task_name2;
+    string task_type2;
+    task_func task_function2;
+
+    task_name2 = "Single_Model_Time_Evolution";
+    task_type2 = "All";
+    task_function2 = &single_model_time_evolution;
+    Task_Map_Insert(task_name2, task_type2, task_function2);
+
     // Random Simple Ising Floquet Operator
     string model_name1;
     string model_type1;
