@@ -25,7 +25,6 @@ void single_model_time_evolution(const AllPara& parameters){
 
     const string model = parameters.generic.model;
     const bool debug = parameters.generic.debug; // Whether print debug information
-    const int width = parameters.output.width; // Width in output file
     const string init_func_name = parameters.evolution.init_func_name;
 
     EvolOP* floquet;
