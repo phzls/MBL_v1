@@ -33,7 +33,6 @@ void disorder_transition(const AllPara& parameters){
 
     AllPara local_parameters(parameters); // Local parameters which can be changed
 
-
     Eigen::initParallel();
 
     cout << "Disorder transition:" << endl;
