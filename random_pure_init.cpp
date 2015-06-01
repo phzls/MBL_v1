@@ -3,9 +3,7 @@
 //
 
 #include <vector>
-#include <cmath>
 #include <complex>
-#include "constants.h"
 #include "init_obj.h"
 #include "screen_output.h"
 
