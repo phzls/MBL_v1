@@ -10,7 +10,23 @@ using namespace std;
  ** This file contains some common functions in evol_data.h
  **/
 
-EvolData::EvolData(const AllPara& parameters): size_(parameters.generic.size){
+EvolInfo::EvolInfo(const AllPara& parameters) {
+    num_realization = parameters.generic.num_realizations;
+    debug = parameters.generic.debug; // Whether print debug information
+    threads_N = parameters.generic.threads_N; // Number of threads for parallelization
+    time_step = parameters.evolution.time_step; // Number of time steps
+    jump = parameters.evolution.jump; // jump of time points
+
+    // Whether time changes logarithmically
+    log_time = parameters.evolution.log_time;
+
+    // The base under which time changes logarithmically
+    log_time_jump = parameters.evolution.log_time_jump;
+
+    left_size = parameters.evolution.left_size;
+}
+
+EvolData::EvolData(const AllPara& parameters): size_(parameters.generic.size), evol_info(parameters) {
     func_status_ = parameters.evolution.evol_compute;
     Data_Func_Map_Init_();
 

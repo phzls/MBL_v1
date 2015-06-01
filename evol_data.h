@@ -34,6 +34,22 @@ struct StepInfo{
     int left_size; // If partition the chain to two halves, the size of left part
 };
 
+/*
+ * This structure gives relevant information for the time evolution as a whole
+ */
+struct EvolInfo{
+    int num_realization;
+    bool debug;
+    int time_step;
+    int jump;
+    int threads_N;
+    bool log_time;
+    int log_time_jump;
+    int left_size; // If partition the chain to two halves, the size of left part
+
+    EvolInfo(const AllPara&);
+};
+
 class EvolData;
 
 // Functions that initialize data using parameters passed in
@@ -113,6 +129,8 @@ private:
     const int size_; // Size of the system
 
 public:
+    EvolInfo evol_info;
+
     EvolData(const AllPara&);
 
     void Print_All_Name() const; // Print all possible names of data type calculation
