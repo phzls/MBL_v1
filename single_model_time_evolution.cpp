@@ -3,15 +3,11 @@
 //
 
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <algorithm>
 #include "evol_op.h"
 #include "parameters.h"
 #include "init_obj.h"
 #include "evol_data.h"
 #include "tasks_models.h"
-#include "screen_output.h"
 
 using namespace std;
 
