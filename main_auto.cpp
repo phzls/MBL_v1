@@ -63,10 +63,6 @@ int main(int argc, char* argv[]){
         cout << "Data reading function for model " << parameters.generic.model << " cannot be found." << endl;
         abort();
     }
-    for (map<string,para>::iterator it = model_para_read_map.begin(); it != model_para_read_map.end();
-            it ++){
-
-    }
 
     cout << "Read task parameters:" << endl;
     // Obtain task parameters
@@ -75,10 +71,6 @@ int main(int argc, char* argv[]){
     else{
         cout << "Data reading function for task " << parameters.generic.task << " cannot be found." << endl;
         abort();
-    }
-    for (map<string,para>::iterator it = task_para_read_map.begin(); it != task_para_read_map.end();
-         it ++){
-
     }
 
     Eigen::initParallel();
