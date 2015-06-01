@@ -59,7 +59,7 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data){
 
         cout << "Time evolution starts." << endl;
 
-        #pragma omp parallel num_threads(threads_N)
+        #pragma omp parallel num_threads(evol_data.evol_info.threads_N)
         {
             #pragma omp for
             for (int t=0; t < evol_data.evol_info.time_step; t++){
