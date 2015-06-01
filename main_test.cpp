@@ -30,13 +30,13 @@ int main() {
 
 
 
-    parameters.generic.task = "Disorder_Transition";
-    parameters.generic.model = "Ising_All_Random_Simp_Shift_Real_Flo";
+    parameters.generic.task = "Single_Model_Time_Evolution";
+    parameters.generic.model = "Ising_Random_Simp_Shift_Real_Flo";
 
-    parameters.generic.size = 6; // System size
-    parameters.generic.num_realizations = 100; // Number of realizations
-    parameters.generic.threads_N = 4; // Number of threads in openmp
-    parameters.generic.debug = false; // Whether output debug information
+    parameters.generic.size = 2; // System size
+    parameters.generic.num_realizations = 2; // Number of realizations
+    parameters.generic.threads_N = 1; // Number of threads in openmp
+    parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
 
@@ -61,15 +61,11 @@ int main() {
 
     parameters.evolution.time_step = 20; // Number of time steps
     parameters.evolution.step_size = parameters.floquet.tau; // Time step size
-    parameters.evolution.init_func_name = "Leftmost Spin Random State"; // Initial state name
+    parameters.evolution.init_func_name = "Random Product"; // Initial state name
 
-    parameters.evolution.evol_compute["Entropy Per Model"] = false;
-    parameters.evolution.evol_compute["Leftmost Spin Z Per Model"] = true;
-    parameters.evolution.evol_compute["Leftmost Spin X Per Model"] = true;
-    parameters.evolution.evol_compute["Leftmost Spin Y Per Model"] = true;
+    parameters.evolution.evol_compute["Entropy Per Model"] = true;
 
-    parameters.evolution.evol_total_compute["Leftmost Spin Z One Run"] = false;
-    parameters.evolution.evol_total_compute["Full Leftmost Spin Z Per Model"] = false;
+    parameters.evolution.sample_detail = true; // Determine whether print out all sample values
 
     parameters.evolution.model_num = 1; // Number of models for evolution
     // If partition the chain to two halves, the size of left part
@@ -138,6 +134,22 @@ int main() {
 
     parameters.transition.flo_transition_compute["ZZ_All_Correlation-Square"] = false; // zz correlation square
     // at all distances
+
+    parameters.transition.flo_transition_compute["Log_ZZ_Correlation_Square"] = false; // zz correlation suqare with
+    // logarithm taken with each eigenstate first
+
+    parameters.transition.flo_transition_compute["Log_ZZ_All_Correlation_Square"] = false; // log zz correlation square
+    // at all distances
+
+    parameters.transition.flo_transition_compute["ZZ_Correlation_Square_All_Sample"] = false; // zz correlation square
+    // for all samples
+
+    parameters.transition.flo_transition_compute["ZZ_Time_Correlation_All_Sample"] = false; // zz time correlation for
+    // all samples
+
+    parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = false; // zz time correlation at all
+    // distances
+
 
 
 
