@@ -18,8 +18,7 @@ using namespace Eigen;
  **/
 
 /*
- * Information that is related to constructing initial states. Every initial state construction
- * function just takes this structure, transition matrix class and the initial state vector.
+ * Information that is related to constructing initial states.
  */
 
 struct InitInfo
@@ -28,12 +27,16 @@ struct InitInfo
     int dim; // Total dimension of Hilbert space
     double norm_delta; // A small number used to check whether norm is 1
     bool debug; // Whether output debug information
+    string init_func_name; // The function name for initial state/density matrix construction
 
     // A deep copy constructor except for multi_ini_para
     InitInfo(const InitInfo&);
 
     // Default constructor
-    InitInfo(){};
+    InitInfo(): init_func_name("") {};
+
+    // A deep copy operator
+    void Copy(const InitInfo&);
 };
 
 // Pointer to all possible initial state construction function which gives a state vector
@@ -54,22 +57,17 @@ private:
     void map_init_(); // Initialize init_func_map and init_func_C_map
 
 public:
+    InitInfo init_info;
+
     InitObj() {map_init_();}
 
-    // Use a string to access different initial construction functions for state vector
-    init_func Init_Func(const string&) const;
+    InitObj(const InitInfo& info): init_info(info) {map_init_();}
 
-    // Use a string to access different initial construction functions for density matrix
-    init_func_C Init_Func_C(const string&) const;
+    // Construct initial state vector
+    void Init_Func(const TransitionMatrix&, VectorXcd&) const;
 
-    // Initialize multi_ini_para_num in InitInfo according to the initial condition string
-    void Multi_Num_Init(const string&, InitInfo&) const;
-
-    // Return possible strings for parameters of initial condition
-    string Init_Para_String(const string&, const InitInfo&) const;
-
-    // Return possible strings for parameters of initial condition
-    string Init_Para_String(const string&, const AllPara&) const;
+    // Construct initial density matrix
+    void Init_Func_C(MatrixXcd&) const;
 
     // Print out all init_func
     void Print() const;
@@ -81,7 +79,7 @@ public:
 };
 
 /*
- * Initial state functions
+ * Initial state functions (more in old codes)
  */
 
 void product_random(const InitInfo&, const TransitionMatrix&, VectorXcd&);
@@ -90,12 +88,6 @@ void random_product(const InitInfo&, const TransitionMatrix&, VectorXcd&);
 void random_product(const InitInfo&, MatrixXcd&);
 
 void random_pure(const InitInfo&, MatrixXcd&);
-
-void largest_leftmost_spin_z_complex_eigenstate(const InitInfo&, MatrixXcd&);
-void leftmost_spin_z_complex_eigenstate(const InitInfo&, MatrixXcd&);
-
-void leftmost_spin_random_state(const InitInfo&, MatrixXcd&);
-
 
 /*
  * Some useful functions for initial state construction
