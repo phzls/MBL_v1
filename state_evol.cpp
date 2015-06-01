@@ -10,7 +10,6 @@
 #include "evol_op.h"
 #include "evol_data.h"
 #include "init_obj.h"
-#include "parameters.h"
 #include "screen_output.h"
 
 using namespace std;
@@ -19,29 +18,30 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data){
 
     TransitionMatrix transition;
     VectorXcd init_state; // Initial state
+    vector<VectorXcd> eval; // Eigenvalues
 
     cout << "Diagonalize Evolution Operator." << endl;
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
     floquet -> Evol_Diag();
     floquet -> OP_Erase();
+    floquet -> Eval(eval);
+
+    cout << "Construct Transition Matrix." << endl;
+    floquet -> Transition_Compute(transition, "Basic_Full");
+
+    floquet -> Eigen_Erase();
 
     if (evol_data.evol_info.debug){
         cout << "Eigenvectors and eigenvalues:" << endl;
 
-        for (int i=0; i<floquet -> eigen.size(); i++){
+        for (int i=0; i < eval.size(); i++){
             cout << "Sector " << i <<" :" << endl;
-            cout << "Eigenvectors:" << endl;
-            complex_matrix_write(floquet -> eigen[i].eigenvectors());
-            cout << endl;
             cout << "Eigenvalues:" << endl;
-            complex_matrix_write(floquet -> eigen[i].eigenvalues());
+            complex_matrix_write(eval[i]);
             cout << endl;
         }
     }
-
-    cout << "Construct Transition Matrix." << endl;
-    floquet -> Transition_Compute(transition, "Basic_Full");
 
     if (evol_data.evol_info.debug){
         cout << "Full to Basic transtion matrix:" << endl;
@@ -61,7 +61,7 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data){
 
         #pragma omp parallel num_threads(threads_N)
         {
-        #pragma omp for
+            #pragma omp for
             for (int t=0; t < evol_data.evol_info.time_step; t++){
                 long long int power = t*evol_data.evol_info.jump;
 
@@ -79,10 +79,10 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data){
                 VectorXcd state_basic(init_state.size()); // Current state in binary basis
 
                 int index = 0;
-                for (int j=0; j<floquet -> eigen.size(); j++){
-                    for (int k=0; k<floquet -> eigen[j].eigenvalues().rows(); k++){
-                        complex<double> eval = floquet -> eigen[j].eigenvalues()(k);
-                        state_evec(index) = pow(eval, power) * init_state(index);
+                for (int j=0; j < eval.size(); j++){
+                    for (int k=0; k < eval[j].rows(); k++){
+                        complex<double> eigenvalue = eval[j](k);
+                        state_evec(index) = pow(eigenvalue, power) * init_state(index);
                         index ++;
                     }
                 }
