@@ -138,8 +138,7 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
                     var_temp = var
                 else:
                     var_temp = choice
-
-            valid_var, var_option = para_check(name, var, var_temp, tasks_models)
+                    valid_var, var_option = para_check(name, var, var_temp, tasks_models)
 
             if modify_words is not None:
                 if name not in modify_words:
@@ -166,7 +165,7 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
             elif name == "log_time":
                 para_temp_data.log_time = value_table[var_temp]
             elif name == "Entropy_Per_Model":
-                para_temp_data.log_time = value_table[var_temp]
+                para_temp_data.ent_cal = value_table[var_temp]
 
             f_new.write(name + " " + var_temp + " // " + comment + '\n')
 
@@ -296,11 +295,12 @@ def exception(name, data, para_temp_data):
     if data.task is not None:
         if (data.task == "Disorder_Transition") and (name == "J"):
             exc = "Previous"
+
     if data.size is not None:
         if name == "left_size":
-            if para_temp_data is False:
+            if para_temp_data.ent_cal is False:
                 exc = "Previous"
-            elif para_temp_data is True:
+            elif para_temp_data.ent_cal is True:
                 half_size_choice = None
                 while not half_size_choice:
                     ans = raw_input("Compute entanglement entropy for half chain?\n")
@@ -311,10 +311,11 @@ def exception(name, data, para_temp_data):
                     else:
                         print bcolors.FAIL + "Answer must be Yes(Y) or No(N)." + bcolors.ENDC
                 if half_size_choice:
-                    exc = int(data.size)/2
+                    exc = str(int(data.size)/2)
+                    print "Half chain size: " + exc
     if data.model is not None:
         if (name == "step_size") and (data.model.find("Flo") != -1):
-            exc = 1
+            exc = str(1)
     if (name == "log_time_jump") and (para_temp_data.log_time is False):
         exc = "Previous"
     elif (name == "jump") and (para_temp_data.log_time is True):
@@ -390,6 +391,7 @@ def display_file(filename, data, count):
     else:
         f = open("./parameters/" + filename + ".dat",'r')
 
+    para_temp_data = PARA_TEMP_DATA()
     for line in f:
         if (line.startswith("//")) is not True:
             comment_start = line.find("//")
@@ -400,8 +402,15 @@ def display_file(filename, data, count):
             name = line.split()[0]
             var = line.split()[1]
 
-            if not exception(name, data):
+            if exception(name, data, para_temp_data) is not "Previous":
                 print name + ": " + var + " (" + bcolors.OKBLUE + comment + bcolors.ENDC+ ')\n'
+
+            if name == "log_time":
+                para_temp_data.log_time = value_table[var]
+            elif name == "Entropy_Per_Model":
+                para_temp_data.ent_cal = value_table[var]
+                if para_temp_data.ent_cal is True:
+                    para_temp_data.ent_cal = None # So that left_size will be directly displayed
 
     f.close()
 
