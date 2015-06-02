@@ -153,6 +153,7 @@ void EvolData::Entropy_Per_Model_Cal_C_(const MatrixXcd& density_matrix, const S
 
 void EvolData::Entropy_Per_Model_Out_(const AllPara& parameters, const string& name){
     const int time_step = parameters.evolution.time_step;
+    const int model_num = parameters.evolution.model_num;
     const int num_realizations = parameters.generic.num_realizations;
     const int jump = parameters.evolution.jump;
     const bool output = parameters.output.filename_output;
@@ -163,18 +164,29 @@ void EvolData::Entropy_Per_Model_Out_(const AllPara& parameters, const string& n
     const bool markov_jump = parameters.evolution.markov_jump;
     const int markov_time_jump = parameters.evolution.markov_time_jump;
 
-    if (entropy_per_model_.size() != time_step){
-        cout << "Not enough time steps are computed for entropy." << endl;
-        cout << "Expected: " << time_step << endl;
+    if (entropy_per_model_.size() != model_num){
+        cout << "Not enough models are computed for entropy." << endl;
+        cout << "Expected: " << model_num << endl;
         cout << "Computed: " << entropy_per_model_.size() << endl;
     }
 
-    for(int i=0; i<time_step; i++){
-        if (num_realizations != entropy_per_model_[i].size()){
-            cout << "Entropy is not computed with enough realizations for time " << i << endl;
-            cout << "Expect: " << num_realizations << endl;
+    for (int i=0; i<model_num;i++){
+        if (entropy_per_model_[i].size() != time_step){
+            cout << "Not enough time steps are computed for entropy at " << i << "th model." << endl;
+            cout << "Expected: " << time_step << endl;
             cout << "Computed: " << entropy_per_model_[i].size() << endl;
-            abort();
+        }
+    }
+
+    for (int i=0; i<model_num;i++){
+        for(int j=0; j<time_step; j++){
+            if (num_realizations != entropy_per_model_[i][j].size()){
+                cout << "Entropy is not computed with enough realizations at " << i
+                     << "th model for time " << i << endl;
+                cout << "Expect: " << num_realizations << endl;
+                cout << "Computed: " << entropy_per_model_[i][j].size() << endl;
+                abort();
+            }
         }
     }
 
