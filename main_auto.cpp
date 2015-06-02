@@ -46,6 +46,8 @@ int main(int argc, char* argv[]){
     model_para_read_map["Ising_All_Quasi_Simp_Shift_Real_Flo"] = Ising_All_Quasi_Simp_Shift_Real_Flo_Para;
 
     task_para_read_map["Disorder_Transition"] = Disorder_Transition_Para;
+    task_para_read_map["Single_Model_Time_Evolution"] = Single_Model_Time_Evolution_Para;
+    task_para_read_map["Single_Model_Time_Evolution"] = Multi_Model_Time_Evolution_Para;
 
     cout << "Read generic parameters:"<< endl;
     // Obtain generic parameters
