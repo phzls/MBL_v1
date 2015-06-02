@@ -22,19 +22,23 @@ using namespace Eigen;
  **/
 
 /*
- * Initialize the entropy. The outer index is time; the inner index is realization
+ * Initialize the entropy. The outer index is model, middle index is time and the inner index is realization.
  */
 void EvolData::Entropy_Per_Model_Init_(const AllPara& parameters){
     const int num_realizations = parameters.generic.num_realizations;
     const int time_step = parameters.evolution.time_step;
 
-    entropy_per_model_.resize(time_step);
+    entropy_per_model_.resize(parameters.evolution.model_num);
 
-    for (int i=0; i<time_step; i++){
-        entropy_per_model_[i].resize(num_realizations);
+    for (int i=0; i<parameters.evolution.model_num; i++){
+        entropy_per_model_[i].resize(time_step);
 
-        for (int j=0; j<num_realizations; j++){
-            entropy_per_model_[i][j] = 0;
+        for (int j=0; j<time_step; j++){
+            entropy_per_model_[i][j].resize(num_realizations);
+
+            for (int k=0; k<num_realizations; k++){
+                entropy_per_model_[i][j][k] = 0;
+            }
         }
     }
 }
@@ -45,6 +49,7 @@ void EvolData::Entropy_Per_Model_Init_(const AllPara& parameters){
 void EvolData::Entropy_Per_Model_Cal_(const VectorXcd& state_basic, const StepInfo& info){
     const int realization = info.realization;
     const int time = info.time;
+    const int model = info.model;
     const int left_size = info.left_size;
 
     MatrixXcd reduced_density; // Reduced density matrix for the left part
@@ -60,7 +65,7 @@ void EvolData::Entropy_Per_Model_Cal_(const VectorXcd& state_basic, const StepIn
 
     density_eigen.compute(reduced_density, false); // Eigenvectors not computed
 
-    entropy_per_model_[time][realization] = 0;
+    entropy_per_model_[model][time][realization] = 0;
 
     for (int i=0; i<density_eigen.eigenvalues().rows();i++){
         double eval = density_eigen.eigenvalues()(i);
@@ -72,13 +77,13 @@ void EvolData::Entropy_Per_Model_Cal_(const VectorXcd& state_basic, const StepIn
                 cout << eval << endl;
                 abort();
             }
-            entropy_per_model_[time][realization] += -eval*log2(eval);
+            entropy_per_model_[model][time][realization] += -eval*log2(eval);
         }
     }
 
     if (info.debug){
         cout << "Entropy per model:" << endl;
-        cout << entropy_per_model_[time][realization] << endl;
+        cout << entropy_per_model_[model][time][realization] << endl;
         cout << endl;
     }
 }
@@ -89,6 +94,7 @@ void EvolData::Entropy_Per_Model_Cal_(const VectorXcd& state_basic, const StepIn
 void EvolData::Entropy_Per_Model_Cal_C_(const MatrixXcd& density_matrix, const StepInfo& info){
     const int realization = info.realization;
     const int time = info.time;
+    const int model = info.model;
 
     // Check whether density_matrix is Hermitian
     if (density_matrix.rows() != density_matrix.cols()){
@@ -113,7 +119,7 @@ void EvolData::Entropy_Per_Model_Cal_C_(const MatrixXcd& density_matrix, const S
 
     density_eigen.compute(density_matrix, false); // Eigenvectors not computed
 
-    entropy_per_model_[time][realization] = 0;
+    entropy_per_model_[model][time][realization] = 0;
 
     for (int i=0; i<density_eigen.eigenvalues().rows();i++){
         double eval = density_eigen.eigenvalues()(i);
@@ -126,13 +132,13 @@ void EvolData::Entropy_Per_Model_Cal_C_(const MatrixXcd& density_matrix, const S
                 cout << "Time: " << time << "  Realization: " << realization << endl;
                 abort();
             }
-            entropy_per_model_[time][realization] += -eval*log2(eval);
+            entropy_per_model_[model][time][realization] += -eval*log2(eval);
         }
     }
 
     if (info.debug){
         cout << "Entropy per model:" << endl;
-        cout << entropy_per_model_[time][realization] << endl;
+        cout << entropy_per_model_[model][time][realization] << endl;
         cout << endl;
     }
 }
@@ -172,9 +178,6 @@ void EvolData::Entropy_Per_Model_Out_(const AllPara& parameters, const string& n
         }
     }
 
-    vector<double> mean(time_step);
-    vector<double> sd(time_step);
-
     stringstream filename;
     filename << name <<",Run=" << num_realizations << ",Total=" << time_step;
 
@@ -201,15 +204,35 @@ void EvolData::Entropy_Per_Model_Out_(const AllPara& parameters, const string& n
             time = step_size * power;
         }
 
-        if (parameters.evolution.sample_detail){
+        if (parameters.evolution.sample_detail && (entropy_per_model_.size() == 1)){
             fout << setw(10) << time;
 
-            for (int i=0; i<entropy_per_model_[t].size(); i++) fout << setw(width) << entropy_per_model_[t][i];
+            for (int i=0; i<entropy_per_model_[0][t].size(); i++) fout << setw(width) << entropy_per_model_[0][t][i];
+            fout << endl;
+        }
+        else if (parameters.evolution.sample_detail){
+            fout << setw(10) << time;
+            for (int i=0; i < entropy_per_model_.size(); i++){
+                double mean, sd;
+                generic_mean_sd(entropy_per_model_[i][t], mean, sd);
+                // For now errors are not outputted
+                fout << setw(width) << mean;
+            }
             fout << endl;
         }
         else{
-            generic_mean_sd(entropy_per_model_[t], mean[t], sd[t]);
-            fout << setw(10) << time << setw(width) << mean[t] << setw(width) << sd[t] << endl;
+            const int model_num = entropy_per_model_.size();
+            vector<double> mean(model_num);
+            vector<double> sd(model_num);
+
+            for (int i=0; i<model_num; i++){
+                generic_mean_sd(entropy_per_model_[i][t], mean[i], sd[i]);
+            }
+
+            double final_mean, final_sd;
+            generic_mean_sd(mean, final_mean, final_sd);
+
+            fout << setw(10) << time << setw(width) << final_mean << setw(width) << final_sd << endl;
         }
     }
 }
