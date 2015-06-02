@@ -163,6 +163,7 @@ void EvolData::Entropy_Per_Model_Out_(const AllPara& parameters, const string& n
     const int log_time_jump = parameters.evolution.log_time_jump;
     const bool markov_jump = parameters.evolution.markov_jump;
     const int markov_time_jump = parameters.evolution.markov_time_jump;
+    const int version = parameters.generic.version;
 
     if (entropy_per_model_.size() != model_num){
         cout << "Not enough models are computed for entropy." << endl;
@@ -199,8 +200,9 @@ void EvolData::Entropy_Per_Model_Out_(const AllPara& parameters, const string& n
 
     filename << ",jump=" << jump << ",entropy_per_model";
 
-    if (parameters.evolution.sample_detail) filename << "_sample_detail.txt";
-    else filename << ".txt";
+    if (parameters.evolution.sample_detail) filename << "_sample_detail";
+    if (version > 0) filename <<",v" << version;
+    filename << ".txt";
 
     if (output) cout << filename.str() <<endl;
 
