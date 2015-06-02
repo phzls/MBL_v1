@@ -24,6 +24,8 @@ EvolInfo::EvolInfo(const AllPara& parameters) {
     log_time_jump = parameters.evolution.log_time_jump;
 
     left_size = parameters.evolution.left_size;
+
+    
 }
 
 EvolData::EvolData(const AllPara& parameters): size_(parameters.generic.size), evol_info(parameters) {

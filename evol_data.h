@@ -80,7 +80,7 @@ private:
     void Name_Check_() const; // Check names in different maps are consistent
 
     // Entropy per model. The outer index is for time; the inner index is for realization
-    vector<vector<double> > entropy_per_model_;
+    vector<vector<vector<double> > > entropy_per_model_;
     void Entropy_Per_Model_Init_(const AllPara&); // Initialize entropy_per_model
     // Compute entropy_per_model given state vector
     void Entropy_Per_Model_Cal_(const VectorXcd&, const StepInfo&);
