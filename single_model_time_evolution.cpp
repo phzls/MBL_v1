@@ -19,13 +19,20 @@ using namespace std;
  **/
 
 extern TasksModels tasks_models; // Record all the tasks and methods. Defined in main.
-void state_evol(EvolOP*, const InitObj&, EvolData&); // Evolve using state vectors
+void state_evol(EvolOP*, const InitObj&, EvolData&); // Evolve using state vectors. The last integer is model
+// number, whichby default is 0
 
 void single_model_time_evolution(const AllPara& parameters){
 
     const string model = parameters.generic.model;
     const bool debug = parameters.generic.debug; // Whether print debug information
     const string init_func_name = parameters.evolution.init_func_name;
+
+    if (parameters.evolution.model_num != 1){
+        cout << "Single model time evolution should only have one model realization." << endl;
+        cout << "Obtained number of models:" << parameters.evolution.model_num << endl;
+        abort();
+    }
 
     EvolOP* floquet;
     EvolData evol_data(parameters);
