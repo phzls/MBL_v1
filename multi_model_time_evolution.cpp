@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <string>
 #include "evol_op.h"
 #include "parameters.h"
 #include "init_obj.h"
@@ -19,7 +20,7 @@ using namespace std;
  **/
 
 extern TasksModels tasks_models; // Record all the tasks and methods. Defined in main.
-void state_evol(EvolOP*, const InitObj&, EvolData&, int); // Evolve using state vectors. The last integer is model
+void state_evol(EvolOP*, const InitObj&, EvolData&, int n = 0); // Evolve using state vectors. The last integer is model
 // number, whichby default is 0
 
 void multi_model_time_evolution(const AllPara& parameters){
@@ -35,6 +36,8 @@ void multi_model_time_evolution(const AllPara& parameters){
     InitObj init_obj;
 
     for(int n=0; n<model_num; n++){
+        cout << endl;
+        cout << n << "th model" << endl;
         init_obj.init_info.size = parameters.generic.size;
         init_obj.init_info.norm_delta = 1.0e-15;
         init_obj.init_info.debug = debug;
@@ -55,7 +58,10 @@ void multi_model_time_evolution(const AllPara& parameters){
     string task_string = parameters.generic.task;
     replace(task_string.begin(), task_string.end(),' ','_');
 
-    evol_data.Data_Output(parameters, floquet -> Repr() + ",Task_" + task_string + ",Init_" + init_string );
+    stringstream file_name;
+    file_name << floquet -> Repr() << ",Task_" << task_string << ",model_num_" << model_num << ",Init_" << init_string;
+
+    evol_data.Data_Output(parameters, file_name.str() );
 
     cout << endl;
     cout << endl;
