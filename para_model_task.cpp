@@ -168,3 +168,82 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = choice;
 }
 
+// For single_model_time_evolution_para
+void Single_Model_Time_Evolution_Para(AllPara& parameters, string count){
+    string filename = "single_model_time_evolution_" + count;
+    vector<vector<string> > content;
+
+    para_file_read(filename, content);
+
+    string keyword = "time_step";
+    para_get(filename, content, keyword, parameters.evolution.time_step);
+
+    keyword = "step_size";
+    para_get(filename, content, keyword, parameters.evolution.step_size);
+
+    keyword = "init_func_name";
+    para_get(filename, content, keyword, parameters.evolution.init_func_name);
+
+    keyword = "log_time";
+    para_get(filename, content, keyword, parameters.evolution.log_time);
+
+    keyword = "log_time_jump";
+    para_get(filename, content, keyword, parameters.evolution.log_time_jump);
+
+    keyword = "jump";
+    para_get(filename, content, keyword, parameters.evolution.jump);
+
+    keyword = "Entropy_Per_Model";
+    bool choice;
+    para_get(filename, content, keyword, choice);
+    parameters.evolution.evol_compute["Entropy_Per_Model"] = choice;
+
+    keyword = "left_size";
+    para_get(filename, content, keyword, parameters.evolution.left_size);
+
+    keyword = "sample_detail";
+    para_get(filename, content, keyword, parameters.evolution.sample_detail);
+
+    parameters.evolution.model_num = 1;
+}
+
+// For multi_model_time_evolution_para
+void Multi_Model_Time_Evolution_Para(AllPara& parameters, string count){
+    string filename = "single_model_time_evolution_" + count;
+    vector<vector<string> > content;
+
+    para_file_read(filename, content);
+
+    string keyword = "time_step";
+    para_get(filename, content, keyword, parameters.evolution.time_step);
+
+    keyword = "step_size";
+    para_get(filename, content, keyword, parameters.evolution.step_size);
+
+    keyword = "init_func_name";
+    para_get(filename, content, keyword, parameters.evolution.init_func_name);
+
+    keyword = "log_time";
+    para_get(filename, content, keyword, parameters.evolution.log_time);
+
+    keyword = "log_time_jump";
+    para_get(filename, content, keyword, parameters.evolution.log_time_jump);
+
+    keyword = "jump";
+    para_get(filename, content, keyword, parameters.evolution.jump);
+
+    keyword = "Entropy_Per_Model";
+    bool choice;
+    para_get(filename, content, keyword, choice);
+    parameters.evolution.evol_compute["Entropy_Per_Model"] = choice;
+
+    keyword = "left_size";
+    para_get(filename, content, keyword, parameters.evolution.left_size);
+
+    keyword = "sample_detail";
+    para_get(filename, content, keyword, parameters.evolution.sample_detail);
+
+    keyword = "model_num";
+    para_get(filename, content, keyword, parameters.evolution.model_num);
+}
+
