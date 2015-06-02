@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data){
+void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, int model = 0){
 
     TransitionMatrix transition;
     VectorXcd init_state; // Initial state
@@ -112,6 +112,7 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data){
                 info.time = t;
                 info.debug = evol_data.evol_info.debug;
                 info.left_size = evol_data.evol_info.left_size;
+                info.model = model;
 
                 evol_data.Data_Compute(state_basic, info);
             }
