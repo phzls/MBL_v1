@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
 
     task_para_read_map["Disorder_Transition"] = Disorder_Transition_Para;
     task_para_read_map["Single_Model_Time_Evolution"] = Single_Model_Time_Evolution_Para;
-    task_para_read_map["Single_Model_Time_Evolution"] = Multi_Model_Time_Evolution_Para;
+    task_para_read_map["Multi_Model_Time_Evolution"] = Multi_Model_Time_Evolution_Para;
 
     cout << "Read generic parameters:"<< endl;
     // Obtain generic parameters
