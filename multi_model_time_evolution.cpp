@@ -32,12 +32,13 @@ void multi_model_time_evolution(const AllPara& parameters){
 
     EvolData evol_data(parameters);
 
-    EvolOP* floquet;
-    InitObj init_obj;
+    string floquet_name;
 
     for(int n=0; n<model_num; n++){
         cout << endl;
         cout << n << "th model" << endl;
+	EvolOP* floquet;
+	InitObj init_obj;
         init_obj.init_info.size = parameters.generic.size;
         init_obj.init_info.norm_delta = 1.0e-15;
         init_obj.init_info.debug = debug;
@@ -48,6 +49,10 @@ void multi_model_time_evolution(const AllPara& parameters){
         init_obj.init_info.dim = floquet -> Get_Dim();
 
         state_evol(floquet, init_obj, evol_data, n);
+
+	if (n==0) floquet_name = floquet -> Repr();
+	delete floquet;
+	floquet = NULL;
     }
 
     cout << "Output data." << endl;
@@ -59,15 +64,12 @@ void multi_model_time_evolution(const AllPara& parameters){
     replace(task_string.begin(), task_string.end(),' ','_');
 
     stringstream file_name;
-    file_name << floquet -> Repr() << ",Task_" << task_string << ",model_num_" << model_num << ",Init_" << init_string;
+    file_name << floquet_name << ",Task_" << task_string << ",model_num_" << model_num << ",Init_" << init_string;
 
     evol_data.Data_Output(parameters, file_name.str() );
 
     cout << endl;
     cout << endl;
-
-    delete floquet;
-    floquet = NULL;
 
 }
 
