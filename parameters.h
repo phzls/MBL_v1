@@ -85,7 +85,9 @@ struct Evolution
 
 	int leftmost_spin_z_index; // The number gives the index of leftmost spin z value
 
-	bool sample_detail; // Whether output sample_to_sample detail data
+	bool sample_detail; // Whether output sample_to_sample detail data. If only one model is computed, sample
+                        // refers to different initial condition; otherwise it refers to different realization
+                        // of model
 };
 
 /*
