@@ -68,6 +68,14 @@ class DATA(object):
         self.num_threads = None
         self.size = None
 
+class PARA_TEMP_DATA(object):
+    """
+    Record data when reading parameters which will be used for various decisions when
+    generating parameters in the same file
+    """
+    def __init__(self):
+        self.log_time = None # Whether log scale of time is taken in evolution
+        self.ent_cal = None # Whether entropy calculation is performed
 
 class RunTime(object):
     """
@@ -79,6 +87,9 @@ class RunTime(object):
         self.min = "00"
         self.mem = "500mb"
 
+value_table = {} # Convert some strings to corresponding values
+value_table["true"] = True
+value_table["false"] = False
 
 def para_gen(filename, tasks_models, data, count, modify_words = None):
     """
@@ -100,6 +111,8 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
     else:
         f_old = open("./parameters/" + filename + ".dat",'r')
 
+    para_temp_data = PARA_TEMP_DATA()
+
     f_new = open("./parameters/" + filename + "_" + str(count) + ".dat",'w')
     print bcolors.BOLD + '\n' + filename.upper() + bcolors.ENDC
     print bcolors.FAIL + "By directly pressing enter, default/previous values will be used.\n" + bcolors.ENDC
@@ -118,9 +131,15 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
             valid_var = False
             var_option = None
 
-            if exception(name, data): # This variable can be skipped
+            choice = exception(name,data, para_temp_data)
+            if choice is not None: # This variable may be skipped
                 valid_var = True
-                var_temp = var
+                if choice == "Previous":
+                    var_temp = var
+                else:
+                    var_temp = choice
+
+            valid_var, var_option = para_check(name, var, var_temp, tasks_models)
 
             if modify_words is not None:
                 if name not in modify_words:
@@ -144,6 +163,10 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
                 data.num_threads = var_temp
             elif name == "size":
                 data.size = var_temp
+            elif name == "log_time":
+                para_temp_data.log_time = value_table[var_temp]
+            elif name == "Entropy_Per_Model":
+                para_temp_data.log_time = value_table[var_temp]
 
             f_new.write(name + " " + var_temp + " // " + comment + '\n')
 
@@ -259,18 +282,44 @@ def qsub_file_gen(data, run_time, count):
 
     return filename
 
-def exception(name, data):
+def exception(name, data, para_temp_data):
     """
-    Exception in asking for input according to tasks and models. If it returns true, then this
-    variable will be skipped when process parameter files, and previous values are used.
+    Exception in asking for input according to tasks and models. If it returns not None, then this
+    variable will be skipped when process parameter files, and the output value is used.
     :param name: The variable name
     :param data: Data structure which holds tasks and models
-    :return: Whether this variable is an exception
+    :param para_temp_data: Recording of some parameters used for decision making
+    :return: The possible choice for this value. If it is None, then it cannot be skipped. If it
+    is "Previous", then the previous value should be used. Otherwise the returned value should be used.
     """
-    exc = False
+    exc = None
     if data.task is not None:
         if (data.task == "Disorder_Transition") and (name == "J"):
-            exc = True
+            exc = "Previous"
+    if data.size is not None:
+        if name == "left_size":
+            if para_temp_data is False:
+                exc = "Previous"
+            elif para_temp_data is True:
+                half_size_choice = None
+                while not half_size_choice:
+                    ans = raw_input("Compute entanglement entropy for half chain?\n")
+                    if ans == "Yes" or ans == "yes" or ans == "Y" or ans == "y" or ans == '':
+                        half_size_choice = True
+                    elif ans == "No" or ans == "no" or ans == "N" or ans == "n":
+                        half_size_choice = False
+                    else:
+                        print bcolors.FAIL + "Answer must be Yes(Y) or No(N)." + bcolors.ENDC
+                if half_size_choice:
+                    exc = int(data.size)/2
+    if data.model is not None:
+        if (name == "step_size") and (data.model.find("Flo") != -1):
+            exc = 1
+    if (name == "log_time_jump") and (para_temp_data.log_time is False):
+        exc = "Previous"
+    elif (name == "jump") and (para_temp_data.log_time is True):
+        exc = "Previous"
+
     return exc
 
 def count_obtain():
