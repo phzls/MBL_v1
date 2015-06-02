@@ -24,8 +24,6 @@ EvolInfo::EvolInfo(const AllPara& parameters) {
     log_time_jump = parameters.evolution.log_time_jump;
 
     left_size = parameters.evolution.left_size;
-
-    
 }
 
 EvolData::EvolData(const AllPara& parameters): size_(parameters.generic.size), evol_info(parameters) {
@@ -131,7 +129,7 @@ void EvolData::Data_Func_Map_Init_(){
     map<string, Data_Out>::iterator out_it;
 
     // Entropy Per Model data
-    string name1 = "Entropy Per Model";
+    string name1 = "Entropy_Per_Model";
     Data_Init init_func1 = &EvolData::Entropy_Per_Model_Init_;
     Data_Cal cal_func1 = &EvolData::Entropy_Per_Model_Cal_;
     Data_Cal_C cal_C_func1 = &EvolData::Entropy_Per_Model_Cal_C_;
