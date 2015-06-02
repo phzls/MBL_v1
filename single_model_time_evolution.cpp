@@ -19,7 +19,7 @@ using namespace std;
  **/
 
 extern TasksModels tasks_models; // Record all the tasks and methods. Defined in main.
-void state_evol(EvolOP*, const InitObj&, EvolData&); // Evolve using state vectors. The last integer is model
+void state_evol(EvolOP*, const InitObj&, EvolData&, int n=0); // Evolve using state vectors. The last integer is model
 // number, whichby default is 0
 
 void single_model_time_evolution(const AllPara& parameters){
