@@ -209,7 +209,7 @@ void Single_Model_Time_Evolution_Para(AllPara& parameters, string count){
 
 // For multi_model_time_evolution_para
 void Multi_Model_Time_Evolution_Para(AllPara& parameters, string count){
-    string filename = "single_model_time_evolution_" + count;
+    string filename = "multi_model_time_evolution_" + count;
     vector<vector<string> > content;
 
     para_file_read(filename, content);
