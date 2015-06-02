@@ -79,7 +79,7 @@ void InitObj::map_init_(){
     map<string, init_func>::const_iterator it;
     map<string, init_func_C>::const_iterator it_C;
 
-    string name1 = "Random Product";
+    string name1 = "Random_Product";
     init_func func1 = random_product;
     init_func_C func_C1 = random_product;
 
@@ -97,7 +97,7 @@ void InitObj::map_init_(){
     }
     init_func_C_map_[name1] = func_C1;
 
-    string name2 = "Product Random";
+    string name2 = "Product_Random";
     init_func func2 = product_random;
 
     it = init_func_map_.find(name2);
@@ -107,7 +107,7 @@ void InitObj::map_init_(){
     }
     init_func_map_[name2] = func2;
 
-    string name3 = "Random Pure";
+    string name3 = "Random_Pure";
     init_func_C func_C3 = random_pure;
 
     it_C = init_func_C_map_.find(name3);
