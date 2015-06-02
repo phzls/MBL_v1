@@ -33,6 +33,16 @@ void TasksModels::Map_Construct_(){
     task_function2 = &single_model_time_evolution;
     Task_Map_Insert(task_name2, task_type2, task_function2);
 
+    // Study time evolution of a multiple identical models
+    string task_name3;
+    string task_type3;
+    task_func task_function3;
+
+    task_name3 = "Multi_Model_Time_Evolution";
+    task_type3 = "All";
+    task_function3 = &multi_model_time_evolution;
+    Task_Map_Insert(task_name3, task_type3, task_function3);
+
     // Random Simple Ising Floquet Operator
     string model_name1;
     string model_type1;

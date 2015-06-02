@@ -21,4 +21,9 @@ void disorder_transition(const AllPara&);
  */
 void single_model_time_evolution(const AllPara&);
 
+/*
+ * Study time evolution with multiple identical models
+ */
+void multi_model_time_evolution(const AllPara&);
+
 #endif //MBL_V1_TASK_FUNC_H
