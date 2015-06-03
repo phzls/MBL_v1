@@ -205,6 +205,7 @@ void Single_Model_Time_Evolution_Para(AllPara& parameters, string count){
     para_get(filename, content, keyword, parameters.evolution.sample_detail);
 
     parameters.evolution.model_num = 1;
+    parameters.evolution.markov_jump = false;
 }
 
 // For multi_model_time_evolution_para
@@ -245,5 +246,7 @@ void Multi_Model_Time_Evolution_Para(AllPara& parameters, string count){
 
     keyword = "model_num";
     para_get(filename, content, keyword, parameters.evolution.model_num);
+
+    parameters.evolution.markov_jump = false;
 }
 
