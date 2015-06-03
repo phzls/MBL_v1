@@ -69,7 +69,7 @@ void InitObj::Print() const {
 void InitObj::Print_C() const {
     map<string, init_func_C>::const_iterator it;
 
-    cout << "Initial State Construction Functions: "<< endl;
+    cout << "Initial Density Construction Functions: "<< endl;
     for (it = init_func_C_map_.begin(); it != init_func_C_map_.end(); it++){
         cout << it -> first << endl;
     }
