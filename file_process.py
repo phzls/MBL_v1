@@ -42,6 +42,13 @@ def para_check(name, var, var_temp, tasks_models):
             if n == var_temp:
                 valid_var = True
             var_option += n + '\n'
+    elif name == "init_func_name":
+        valid_var = False
+        var_option = "Initial state function name not found\n" + "Possible initial state names:\n"
+        for n in tasks_models.inits:
+            if n == var_temp:
+                valid_var = True
+            var_option += n + '\n'
     elif (var == "true") or (var == "false"):
         if (var_temp != "true") and (var_temp != "false"):
             valid_var = False
@@ -67,6 +74,8 @@ class DATA(object):
         self.model = None
         self.num_threads = None
         self.size = None
+        self.task_para = "" # String for task parameters
+        self.model_para = "" # String for model parameters
 
 class PARA_TEMP_DATA(object):
     """
@@ -113,6 +122,14 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
 
     para_temp_data = PARA_TEMP_DATA()
 
+    task_file = False # Whether this is a task file
+    model_file = False # Whether this is a model file
+
+    if (data.task is not None) and (filename == data.task.lower()):
+        task_file = True
+    elif (data.model is not None) and (filename == data.model.lower()):
+        model_file = True
+
     f_new = open("./parameters/" + filename + "_" + str(count) + ".dat",'w')
     print bcolors.BOLD + '\n' + filename.upper() + bcolors.ENDC
     print bcolors.FAIL + "By directly pressing enter, default/previous values will be used.\n" + bcolors.ENDC
@@ -131,19 +148,20 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
             valid_var = False
             var_option = None
 
-            choice = exception(name,data, para_temp_data)
-            if choice is not None: # This variable may be skipped
-                valid_var = True
-                if choice == "Previous":
-                    var_temp = var
-                else:
-                    var_temp = choice
-                    valid_var, var_option = para_check(name, var, var_temp, tasks_models)
-
-            if modify_words is not None:
+            if modify_words is not None: # Check whether it needs modification
                 if name not in modify_words:
                     valid_var = True
                     var_temp = var
+
+            if valid_var is False:
+                choice = exception(name,data, para_temp_data)
+                if choice is not None: # This variable may be skipped
+                    valid_var = True
+                    if choice == "Previous":
+                        var_temp = var
+                    else:
+                        var_temp = choice
+                        valid_var, var_option = para_check(name, var, var_temp, tasks_models)
 
             while valid_var is not True:
                 var_temp = raw_input(name+": (previous: " + var +" )  " + bcolors.OKBLUE +
@@ -167,6 +185,21 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
             elif name == "Entropy_Per_Model":
                 para_temp_data.ent_cal = value_table[var_temp]
 
+            # Obtain strings for parameters
+            if (model_file is True):
+                if (data.model.find("Flo") > -1) and (name == "J"):
+                    data.model_para += "_J_" + str(var_temp)
+            elif (task_file is True):
+                if data.task.find("Time_Evolution") > -1:
+                    if name == "time_step":
+                        data.task_para += "_time_step_" + str(var_temp)
+                    elif name == "init_func_name":
+                        data.task_para += "_init_" + var_temp
+                    if data.task.find("Multi") > -1:
+                        if name == "model_num":
+                            data.task_para += "_model_num_" + str(var_temp)
+
+
             f_new.write(name + " " + var_temp + " // " + comment + '\n')
 
     f_old.close()
@@ -183,7 +216,8 @@ def slurm_file_gen(data, run_time, count):
     """
     f_old = open("submit_template.run",'r')
 
-    filename = data.model.lower() + "_" + data.size + "_" + data.task.lower()
+    filename = data.model.lower() + "_" + data.size + data.model_para + "_" \
+               + data.task.lower() + data.task_para
     f_new = open(filename + ".run",'w')
 
     threads = "--ntasks-per-node="
@@ -236,7 +270,8 @@ def qsub_file_gen(data, run_time, count):
     """
     f_old = open("submit_template.run",'r')
 
-    filename = data.model.lower() + "_" + data.size + "_" + data.task.lower()
+    filename = data.model.lower() + "_" + data.size + data.model_para + "_" \
+               + data.task.lower() + data.task_para
     f_new = open(filename + ".run",'w')
 
 
