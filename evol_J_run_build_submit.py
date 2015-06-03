@@ -96,7 +96,8 @@ if system == "Darwin\n":
 
 elif system == "Linux\n":
     # Make the program
-    progname = data.model.lower() + "_" + data.size + "_" + data.task.lower()
+    progname = data.model.lower() + "_" + data.size + data.model_para + "_" \
+               + data.task.lower() + data.task_para
     make_process = subprocess.Popen("make auto OUT=" + progname
                                     + " -j4",stderr=subprocess.STDOUT, shell=True)
     if make_process.wait() != 0:
