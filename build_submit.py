@@ -68,7 +68,7 @@ try:
     while output_a is False:
         answer = raw_input("Modify output parameters?\n")
         if (answer == "Yes") or (answer == "yes") or (answer == "Y") or (answer == "y"):
-            fp.para_gen("output_para", tasks_models, data)
+            fp.para_gen("output_para", tasks_models, data, count)
             output_a = True
             file_modify["output_para"] = True
         elif (answer == 'No') or (answer == 'no') or (answer == 'N') or (answer == 'n'):
@@ -113,7 +113,8 @@ try:
 
     elif system == "Linux\n":
         # Make the program
-        progname = data.model.lower() + "_" + data.size + "_" + data.task.lower()
+        progname = data.model.lower() + "_" + data.size + data.model_para + "_" \
+                   + data.task.lower() + data.task_para
         make_process = subprocess.Popen("make auto OUT=" + progname
                                         + " -j4",stderr=subprocess.STDOUT, shell=True)
         if make_process.wait() != 0:
@@ -136,7 +137,7 @@ try:
                 valid_choice = True
                 success_run = True
 
-            elif choice.startswith("v") or choice.startswith("R"):
+            elif choice.startswith("v") or choice.startswith("V"):
                 if int(data.num_threads) > 1:
                     print "Valgrind has problems handling multi-thread."
                 else:
