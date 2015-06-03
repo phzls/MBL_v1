@@ -85,6 +85,7 @@ class PARA_TEMP_DATA(object):
     def __init__(self):
         self.log_time = None # Whether log scale of time is taken in evolution
         self.ent_cal = None # Whether entropy calculation is performed
+        self.ent_half_chain = False # Whether need to ask about the half chain size
 
 class RunTime(object):
     """
@@ -184,6 +185,9 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
                 para_temp_data.log_time = value_table[var_temp]
             elif name == "Entropy_Per_Model":
                 para_temp_data.ent_cal = value_table[var_temp]
+            elif (name == "left_size") and (name not in modify_words):
+                if para_temp_data.ent_cal:
+                    para_temp_data.ent_half_chain = True
 
             # Obtain strings for parameters
             if (model_file is True):
@@ -337,7 +341,9 @@ def exception(name, data, para_temp_data):
                 exc = "Previous"
             elif para_temp_data.ent_cal is True:
                 half_size_choice = None
-                while not half_size_choice:
+                if para_temp_data.ent_half_chain:
+                    half_size_choice = True
+                while half_size_choice is None:
                     ans = raw_input("Compute entanglement entropy for half chain?\n")
                     if ans == "Yes" or ans == "yes" or ans == "Y" or ans == "y" or ans == '':
                         half_size_choice = True
@@ -347,7 +353,8 @@ def exception(name, data, para_temp_data):
                         print bcolors.FAIL + "Answer must be Yes(Y) or No(N)." + bcolors.ENDC
                 if half_size_choice:
                     exc = str(int(data.size)/2)
-                    print "Half chain size: " + exc
+                    if para_temp_data.ent_half_chain is not True:
+                        print "Half chain size: " + exc
     if data.model is not None:
         if (name == "step_size") and (data.model.find("Flo") != -1):
             exc = str(1)
