@@ -134,6 +134,7 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
     f_new = open("./parameters/" + filename + "_" + str(count) + ".dat",'w')
     print bcolors.BOLD + '\n' + filename.upper() + bcolors.ENDC
     print bcolors.FAIL + "By directly pressing enter, default/previous values will be used.\n" + bcolors.ENDC
+
     for line in f_old:
         if (line.startswith("//")) is True:
             f_new.write(line)
@@ -151,8 +152,9 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
 
             if modify_words is not None: # Check whether it needs modification
                 if name not in modify_words:
-                    valid_var = True
-                    var_temp = var
+                    if name != "left_size":
+                        valid_var = True
+                        var_temp = var
 
             if valid_var is False:
                 choice = exception(name,data, para_temp_data)
@@ -185,8 +187,7 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
                 para_temp_data.log_time = value_table[var_temp]
             elif name == "Entropy_Per_Model":
                 para_temp_data.ent_cal = value_table[var_temp]
-            elif (name == "left_size") and (name not in modify_words):
-                if para_temp_data.ent_cal:
+                if (modify_words is not None) and ("left_size" not in modify_words):
                     para_temp_data.ent_half_chain = True
 
             # Obtain strings for parameters
