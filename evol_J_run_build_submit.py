@@ -10,7 +10,7 @@ import fnmatch
 data = fp.DATA()
 tasks_models = tm.TASK_MODEL()
 
-modify_words = ["size", "num_realizations", "J"]
+modify_words = ["size", "num_realizations", "J", "init_func_name", "time_step", "log_time"]
 
 success_run = False # Check whether the program has successfully run
 
@@ -48,6 +48,10 @@ file_modify["generic_para"] = True
 # Generate Model data
 fp.para_gen(data.model.lower(), tasks_models, data, count, modify_words)
 file_modify[data.model.lower()] = True
+
+# Generate Task data
+fp.para_gen(data.task.lower(), tasks_models, data, count, modify_words)
+file_modify[data.task.lower()] = True
 
 print fp.bcolors.BOLD, "System size is " + str(data.size) + "\n", fp.bcolors.ENDC
 
