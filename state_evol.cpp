@@ -63,7 +63,7 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, i
         {
             #pragma omp for
             for (int t=0; t < evol_data.evol_info.time_step; t++){
-                long long int power = t*evol_data.evol_info.jump;
+                double power = t*evol_data.evol_info.jump;
 
                 // If time changes logarithmically
                 if (evol_data.evol_info.log_time){
@@ -79,10 +79,14 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, i
                 VectorXcd state_basic(init_state.size()); // Current state in binary basis
 
                 int index = 0;
+                // Here assumes the eigenvalues are eigenvalues from the unitary time evolution matrix
                 for (int j=0; j < eval.size(); j++){
                     for (int k=0; k < eval[j].rows(); k++){
                         complex<double> eigenvalue = eval[j](k);
-                        state_evec(index) = pow(eigenvalue, power) * init_state(index);
+                        double phase = arg(eigenvalue);
+                        complex<double> factor = complex<double>(cos(phase*power), sin(phase*power));
+
+                        state_evec(index) = factor * init_state(index);
                         index ++;
                     }
                 }
