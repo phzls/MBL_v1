@@ -124,7 +124,7 @@ void EvolData::Entropy_Per_Model_Cal_C_(const MatrixXcd& density_matrix, const S
     for (int i=0; i<density_eigen.eigenvalues().rows();i++){
         double eval = density_eigen.eigenvalues()(i);
 
-        if (abs(eval)>1.0e-6)
+        if (abs(eval)>1.0e-8)
         {
             if ( eval*log2(eval) != eval*log2(eval) ){
                 cout << "Significant negative eigenvalues of density matrix." << endl;
