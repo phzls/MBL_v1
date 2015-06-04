@@ -34,8 +34,8 @@ int main() {
     parameters.generic.model = "Ising_Random_Simp_Shift_Real_Flo";
 
     parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 2; // Number of realizations
-    parameters.generic.threads_N = 4; // Number of threads in openmp
+    parameters.generic.num_realizations = 1; // Number of realizations
+    parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
@@ -59,11 +59,11 @@ int main() {
 
 
 
-    parameters.evolution.time_step = 10; // Number of time steps
+    parameters.evolution.time_step = 20; // Number of time steps
     parameters.evolution.step_size = parameters.floquet.tau; // Time step size
-    parameters.evolution.init_func_name = "Random Product"; // Initial state name
+    parameters.evolution.init_func_name = "Random_Product"; // Initial state name
 
-    parameters.evolution.evol_compute["Entropy Per Model"] = true;
+    parameters.evolution.evol_compute["Entropy_Per_Model"] = true;
 
     parameters.evolution.sample_detail = true; // Determine whether print out all sample values
 
