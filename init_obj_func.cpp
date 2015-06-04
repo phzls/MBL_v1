@@ -57,7 +57,6 @@ void norm_check(const VectorXcd& state, double delta, const string& state_type){
  * This function creates a vector of random complex amplitudes which can be used for random
  * pure state
  */
-
 void random_pure_amplitude(vector<complex<double> >& amplitude){
     double sum = 0;
     for (int i=0;i<amplitude.size();i++)
