@@ -7,6 +7,7 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include "evol_op.h"
 #include "evol_data.h"
 #include "init_obj.h"
@@ -83,15 +84,17 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, i
                 for (int j=0; j < eval.size(); j++){
                     for (int k=0; k < eval[j].rows(); k++){
                         complex<double> eigenvalue = eval[j](k);
-                        double phase = arg(eigenvalue);
-                        complex<double> factor = complex<double>(cos(phase*power), sin(phase*power));
+                        eigenvalue /= abs(eigenvalue);
+                        complex<double> factor = pow(eigenvalue, power);
 
-                        state_evec(index) = factor * init_state(index);
+                        state_evec(index) = (factor/abs(factor)) * init_state(index);
                         index ++;
                     }
                 }
 
                 state_basic = transition.Matrix("Basic_Full") * state_evec;
+
+                norm_check(state_basic, 1.0e-5, "state_basic");
 
                 if (state_basic.size() != init_state.size()){
                     cout << "Size of current state in binary basis is wrong." << endl;
