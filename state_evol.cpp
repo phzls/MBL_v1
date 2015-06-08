@@ -94,7 +94,6 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, i
 
                 state_basic = transition.Matrix("Basic_Full") * state_evec;
 
-                norm_check(state_basic, 1.0e-5, "state_basic");
 
                 if (state_basic.size() != init_state.size()){
                     cout << "Size of current state in binary basis is wrong." << endl;
