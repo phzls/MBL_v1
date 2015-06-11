@@ -15,7 +15,7 @@
 
 using namespace std;
 
-void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, int model = 0){
+void density_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, int model = 0){
 
     TransitionMatrix transition;
     MatrixXcd init_density; // Initial density matrix
