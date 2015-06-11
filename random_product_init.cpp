@@ -100,7 +100,8 @@ VectorXcd& init_state){
  ** state. Specifically, the 1/2 spin pointing random direction on Bloch sphere at each site.
  **/
 
-void random_product(const InitInfo& init_info, MatrixXcd& init_state_density){
+void random_product(const InitInfo& init_info, const TransitionMatrix& transition,
+                    MatrixXcd& init_state_density){
 	const int size = init_info.size; // System size
 	const int total_rank = (1<<size); // Total dimension of Hilbert space
 	const double delta = init_info.norm_delta; // A small quantity
@@ -147,6 +148,25 @@ void random_product(const InitInfo& init_info, MatrixXcd& init_state_density){
 		complex_matrix_write(init_basic);
 		cout << endl;
 	}
+
+	// Convert to evolution eigenstate basis
+    VectorXcd init_state;
+    init_state = transition.Matrix("Basic_Full").adjoint() * init_basic;
+
+    if (init_state.size() != total_rank){
+        cout << "init_state size is wrong." << endl;
+        cout << "Expected size: " << total_rank << endl;
+        cout << "Obtained size: " << init_state.size() << endl;
+        abort();
+    }
+
+    norm_check(init_state, delta, "Initial state");
+
+    if (init_info.debug){
+        cout << "Initial state in evec basis:" << endl;
+        complex_matrix_write(init_state);
+        cout << endl;
+    }
 
 	state_to_density(init_basic, init_state_density);
 
