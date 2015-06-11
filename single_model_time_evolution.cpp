@@ -21,12 +21,15 @@ using namespace std;
 extern TasksModels tasks_models; // Record all the tasks and methods. Defined in main.
 void state_evol(EvolOP*, const InitObj&, EvolData&, int n=0); // Evolve using state vectors. The last integer is model
 // number, whichby default is 0
+void density_evol(EvolOP*, const InitObj&, EvolData&, int n = 0); // Evolve using density matrix. The last integer is model
+// number, which by default is 0
 
 void single_model_time_evolution(const AllPara& parameters){
 
     const string model = parameters.generic.model;
     const bool debug = parameters.generic.debug; // Whether print debug information
     const string init_func_name = parameters.evolution.init_func_name;
+    const string evol_way = parameters.evolution.evol_way;
 
     if (parameters.evolution.model_num != 1){
         cout << "Single model time evolution should only have one model realization." << endl;
@@ -47,7 +50,12 @@ void single_model_time_evolution(const AllPara& parameters){
     tasks_models.Model(model, parameters, floquet);
     init_obj.init_info.dim = floquet -> Get_Dim();
 
-    state_evol(floquet, init_obj, evol_data);
+    if (evol_way == "vector") state_evol(floquet, init_obj, evol_data, n);
+    else if (evol_way == "matrix") density_evol(floquet, init_obj, evol_data, n);
+    else{
+        cout << "Evol way " << evol_way << " is not recognized." << endl;
+        abort();
+    }
 
     cout << "Output data." << endl;
 
