@@ -88,6 +88,8 @@ struct Evolution
 	bool sample_detail; // Whether output sample_to_sample detail data. If only one model is computed, sample
                         // refers to different initial condition; otherwise it refers to different realization
                         // of model
+
+	string evol_way; // How evolution is done. For now it can only be "vector" or "matrix"
 };
 
 /*
