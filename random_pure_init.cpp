@@ -10,7 +10,8 @@
 using namespace std;
 using namespace Eigen;
 
-void random_pure(const InitInfo& init_info, MatrixXcd& init_state_density){
+void random_pure(const InitInfo& init_info, const TransitionMatrix& transition,
+                 MatrixXcd& init_state_density){
     const int size = init_info.size; // System size
     const int total_rank = (1<<size); // Total dimension of Hilbert space
     const double delta = init_info.norm_delta; // A small quantity
@@ -26,10 +27,10 @@ void random_pure(const InitInfo& init_info, MatrixXcd& init_state_density){
 
     for (int i=0; i<total_rank;i++) init_basic(i) = amp[i];
 
-    norm_check(init_basic, delta, "Binary state");
+    norm_check(init_basic, delta, "Random pure state");
 
     if (init_info.debug){
-        cout << "Initial state in binary basis:" << endl;
+        cout << "Initial state in evolution eigenstate basis:" << endl;
         complex_matrix_write(init_basic);
         cout << endl;
     }
