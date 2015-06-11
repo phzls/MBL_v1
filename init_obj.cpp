@@ -39,7 +39,7 @@ void InitObj::Init_Func(const TransitionMatrix& transition, VectorXcd& init_stat
     else it -> second(init_info, transition, init_state);
 }
 
-void InitObj::Init_Func_C(MatrixXcd& density) const {
+void InitObj::Init_Func_C(const TransitionMatrix& transition, MatrixXcd& density) const {
 
     if (init_info.init_func_name == ""){
         cout << "Function name for initial density matrix construction has not been initialized." << endl;
@@ -54,7 +54,7 @@ void InitObj::Init_Func_C(MatrixXcd& density) const {
         cout << "Requested function: " << init_info.init_func_name << endl;
         abort();
     }
-    else it -> second(init_info, density);
+    else it -> second(init_info, transition, density);
 }
 
 void InitObj::Print() const {

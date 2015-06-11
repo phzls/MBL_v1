@@ -40,10 +40,12 @@ struct InitInfo
 };
 
 // Pointer to all possible initial state construction function which gives a state vector
+// in the basis of eigenstates
 typedef void (*init_func)(const InitInfo&, const TransitionMatrix&, VectorXcd&);
 
 // Pointer to all possible initial state construction function which gives a density matrix
-typedef void (*init_func_C)(const InitInfo&, MatrixXcd&);
+// in the basis of eigenstates
+typedef void (*init_func_C)(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
 
 class InitObj
 {
@@ -67,7 +69,7 @@ public:
     void Init_Func(const TransitionMatrix&, VectorXcd&) const;
 
     // Construct initial density matrix
-    void Init_Func_C(MatrixXcd&) const;
+    void Init_Func_C(const TransitionMatrix&, MatrixXcd&) const;
 
     // Print out all init_func
     void Print() const;
@@ -85,9 +87,9 @@ public:
 void product_random(const InitInfo&, const TransitionMatrix&, VectorXcd&);
 
 void random_product(const InitInfo&, const TransitionMatrix&, VectorXcd&);
-void random_product(const InitInfo&, MatrixXcd&);
+void random_product(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
 
-void random_pure(const InitInfo&, MatrixXcd&);
+void random_pure(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
 
 /*
  * Some useful functions for initial state construction
