@@ -50,8 +50,8 @@ void single_model_time_evolution(const AllPara& parameters){
     tasks_models.Model(model, parameters, floquet);
     init_obj.init_info.dim = floquet -> Get_Dim();
 
-    if (evol_way == "vector") state_evol(floquet, init_obj, evol_data, n);
-    else if (evol_way == "matrix") density_evol(floquet, init_obj, evol_data, n);
+    if (evol_way == "vector") state_evol(floquet, init_obj, evol_data);
+    else if (evol_way == "matrix") density_evol(floquet, init_obj, evol_data);
     else{
         cout << "Evol way " << evol_way << " is not recognized." << endl;
         abort();
