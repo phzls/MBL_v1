@@ -136,7 +136,11 @@ void density_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data,
                 info.left_size = evol_data.evol_info.left_size;
                 info.model = model;
 
+                info.basis_type = "Binary";
                 evol_data.Data_Compute(density_basic, info);
+
+                info.basis_type = "Evec";
+                evol_data.Data_Compute(density_evec, info);
             }
         }
 

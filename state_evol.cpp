@@ -120,7 +120,11 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, i
                 info.left_size = evol_data.evol_info.left_size;
                 info.model = model;
 
+                info.basis_type = "Binary";
                 evol_data.Data_Compute(state_basic, info);
+
+                info.basis_type = "Evec";
+                evol_data.Data_Compute(state_evec, info);
             }
         }
 
