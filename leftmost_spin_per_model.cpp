@@ -66,8 +66,8 @@ void EvolData::Leftmost_Spin_Per_Model_Cal_C_(const MatrixXcd& density_matrix, c
     const int time = info.time;
     const int model = info.model;
     const string basis_type = info.basis_type;
-    const total_rank = density_matrix.rows();
-    const rest_rank = total_rank >> 1;
+    const int total_rank = density_matrix.rows();
+    const int rest_rank = total_rank >> 1;
 
     if (realization == 1){
         if ((basis_type == "Binary") || (basis_type == "binary")){
