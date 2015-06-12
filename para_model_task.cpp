@@ -198,11 +198,19 @@ void Single_Model_Time_Evolution_Para(AllPara& parameters, string count){
     para_get(filename, content, keyword, choice);
     parameters.evolution.evol_compute["Entropy_Per_Model"] = choice;
 
+    keyword = "Leftmost_Spin_Per_Model";
+    choice;
+    para_get(filename, content, keyword, choice);
+    parameters.evolution.evol_compute["Leftmost_Spin_Per_Model"] = choice;
+
     keyword = "left_size";
     para_get(filename, content, keyword, parameters.evolution.left_size);
 
     keyword = "sample_detail";
     para_get(filename, content, keyword, parameters.evolution.sample_detail);
+
+    keyword = "evol_way";
+    para_get(filename, content, keyword, parameters.evolution.evol_way);
 
     parameters.evolution.model_num = 1;
     parameters.evolution.markov_jump = false;
@@ -238,6 +246,11 @@ void Multi_Model_Time_Evolution_Para(AllPara& parameters, string count){
     para_get(filename, content, keyword, choice);
     parameters.evolution.evol_compute["Entropy_Per_Model"] = choice;
 
+    keyword = "Leftmost_Spin_Per_Model";
+    choice;
+    para_get(filename, content, keyword, choice);
+    parameters.evolution.evol_compute["Leftmost_Spin_Per_Model"] = choice;
+
     keyword = "left_size";
     para_get(filename, content, keyword, parameters.evolution.left_size);
 
@@ -246,6 +259,9 @@ void Multi_Model_Time_Evolution_Para(AllPara& parameters, string count){
 
     keyword = "model_num";
     para_get(filename, content, keyword, parameters.evolution.model_num);
+
+    keyword = "evol_way";
+    para_get(filename, content, keyword, parameters.evolution.evol_way);
 
     parameters.evolution.markov_jump = false;
 }
