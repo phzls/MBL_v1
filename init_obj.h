@@ -91,6 +91,8 @@ void random_product(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
 
 void random_pure(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
 
+void left_spin_random(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
+
 /*
  * Some useful functions for initial state construction
  */
