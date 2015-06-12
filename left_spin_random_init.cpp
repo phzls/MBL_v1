@@ -16,7 +16,7 @@ using namespace Eigen;
  */
 
 void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transition,
-                      MatrixXcd& init_state_density){
+                      MatrixXcd& init_state_density, InitEvolData& init_evol_data){
     const int size = init_info.size; // System size
     const int total_rank = (1<<size); // Total dimension of Hilbert space
     const int rest_rank = (1<<(size-1)); // Total dimension of the system except the leftmost spin
@@ -51,9 +51,38 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
         }
     }
 
+    // Infinite time density matrix
+    MatrixXcd diag_state = MatrixXcd::Zero(total_rank, total_rank);
+    for (int i=0; i<total_rank; i++) diag_state(i,i) = init_state_density(i,i);
+
+    // Reuse inital_basic
+    init_basic = transition.Matrix("Basic_Full") * diag_state * transition.Matrix("Basic_Full").adjoint();
+
+    init_evol_data.infinite_time_leftmost_spin = 0;
+
+    for (int i=0; i<rest_rank;i++) {
+        if (abs(imag(init_basic(i,i))) > 1.0e-7){
+            cout << "Diagonal ensemble at " << i << "th diagonal in binary basis has imaginary part" << endl;
+            cout << "Imaginary part: " << imag(init_basic(i,i)) << endl;
+            abort();
+        }
+        init_evol_data.infinite_time_leftmost_spin -= real(init_basic(i,i));
+    }
+    for (int i=rest_rank; i<total_rank; i++) {
+        if (abs(imag(init_basic(i,i))) > 1.0e-7){
+            cout << "Diagonal ensemble at " << i << "th diagonal in binary basis has imaginary part" << endl;
+            cout << "Imaginary part: " << imag(init_basic(i,i)) << endl;
+            abort();
+        }
+        init_evol_data.infinite_time_leftmost_spin += real(init_basic(i,i));
+    }
+
     if (init_info.debug){
         cout << "Initial state in density matrix:" << endl;
         complex_matrix_write(init_state_density);
+        cout << endl;
+        cout << "Infinite time leftmost spin:" << endl;
+        cout << init_evol_data.infinite_time_leftmost_spin << endl;
         cout << endl;
     }
 
