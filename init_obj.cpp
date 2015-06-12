@@ -116,4 +116,14 @@ void InitObj::map_init_(){
         abort();
     }
     init_func_C_map_[name3] = func_C3;
+
+    string name4 = "Left_Spin_Random";
+    init_func_C func_C4 = left_spin_random;
+
+    it_C = init_func_C_map_.find(name4);
+    if (it_C != init_func_C_map_.end()){
+        cout << "init_func " << name4 << " already exists." << endl;
+        abort();
+    }
+    init_func_C_map_[name4] = func_C4;
 }
