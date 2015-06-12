@@ -88,7 +88,7 @@ void density_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data,
                 // Current density matrix in evec basis
                 MatrixXcd density_evec(init_density.rows(), init_density.cols());
                 // Current density matrix in binary basis
-                VectorXcd density_basic(init_density.rows(), init_density.cols());
+                MatrixXcd density_basic(init_density.rows(), init_density.cols());
 
                 vector< complex<double> > eval_power(floquet -> Get_Dim()); // power of eigenvalues
 
@@ -102,7 +102,6 @@ void density_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data,
                         index ++;
                     }
                 }
-
 
                 for (int j=0; j < init_density.rows(); j++){
                     for (int k=0; k < init_density.cols(); k++){
