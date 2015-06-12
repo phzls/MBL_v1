@@ -21,7 +21,7 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
     const int total_rank = (1<<size); // Total dimension of Hilbert space
     const int rest_rank = (1<<(size-1)); // Total dimension of the system except the leftmost spin
 
-    complex<double> diag = complex<double>(1.0/sqrt(rest_rank),0); // Diagonal elements
+    complex<double> diag = complex<double>(1.0/double(rest_rank),0); // Diagonal elements
 
     // The initial density matrix written in basic binary basis
     MatrixXcd init_basic = MatrixXcd::Zero(total_rank, total_rank);
@@ -41,7 +41,7 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
 
     for (int i=0; i< init_state_density.rows(); i++){
         for (int j=i; j<init_state_density.rows();j++){
-            if ( norm( init_state_density(i,j) - conj(init_state_density(j,i)) ) > 1.0e-7 ){
+            if ( norm( init_state_density(i,j) - conj(init_state_density(j,i)) ) > init_info.norm_delta ){
                 cout << "Initial density matrix for left_spin_random is not Hermitian at ("
                      << i << "," << j << ")." << endl;
                 cout << "At (" << i << "," << j << "): " << init_state_density(i,j) << endl;
@@ -61,7 +61,7 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
     init_evol_data.infinite_time_leftmost_spin = 0;
 
     for (int i=0; i<rest_rank;i++) {
-        if (abs(imag(init_basic(i,i))) > 1.0e-7){
+        if (abs(imag(init_basic(i,i))) > init_info.norm_delta){
             cout << "Diagonal ensemble at " << i << "th diagonal in binary basis has imaginary part" << endl;
             cout << "Imaginary part: " << imag(init_basic(i,i)) << endl;
             abort();
@@ -69,7 +69,7 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
         init_evol_data.infinite_time_leftmost_spin -= real(init_basic(i,i));
     }
     for (int i=rest_rank; i<total_rank; i++) {
-        if (abs(imag(init_basic(i,i))) > 1.0e-7){
+        if (abs(imag(init_basic(i,i))) > init_info.norm_delta){
             cout << "Diagonal ensemble at " << i << "th diagonal in binary basis has imaginary part" << endl;
             cout << "Imaginary part: " << imag(init_basic(i,i)) << endl;
             abort();
@@ -81,6 +81,8 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
         cout << "Initial state in density matrix:" << endl;
         complex_matrix_write(init_state_density);
         cout << endl;
+        cout << "Diagonal ensemble in binary basis:" << endl;
+        complex_matrix_write(init_basic);
         cout << "Infinite time leftmost spin:" << endl;
         cout << init_evol_data.infinite_time_leftmost_spin << endl;
         cout << endl;
