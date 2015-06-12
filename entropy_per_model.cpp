@@ -44,6 +44,16 @@ void EvolData::Entropy_Per_Model_Init_(const AllPara& parameters){
 }
 
 /*
+ * Use information from initial states for evolution. So far it is not used.
+ */
+void EvolData::Entropy_Per_Model_Evol_Init_(const InitEvolData& init_evol_data,
+                                            const InitEvolInfo& init_evol_info) {
+    if (init_evol_info.debug){
+        cout << "Init_evol_data is not used in entropy_per_model." << endl;
+    }
+}
+
+/*
  * Compute the entropy at a given time step and realization, given a state vector
  */
 void EvolData::Entropy_Per_Model_Cal_(const VectorXcd& state_basic, const StepInfo& info){
