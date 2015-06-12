@@ -69,7 +69,7 @@ void EvolData::Leftmost_Spin_Per_Model_Cal_C_(const MatrixXcd& density_matrix, c
     const int total_rank = density_matrix.rows();
     const int rest_rank = total_rank >> 1;
 
-    if (realization == 1){
+    if (realization == 0){
         if ((basis_type == "Binary") || (basis_type == "binary")){
             // Check whether density_matrix is Hermitian
             if (density_matrix.rows() != density_matrix.cols()){
@@ -85,6 +85,7 @@ void EvolData::Leftmost_Spin_Per_Model_Cal_C_(const MatrixXcd& density_matrix, c
                         cout << "Density matrix is not Hermitian at (" << i << "," << j << ")." << endl;
                         cout << "At (" << i << "," << j << "): " << density_matrix(i,j) << endl;
                         cout << "At (" << j << "," << i << "): " <<  density_matrix(j,i) << endl;
+                        cout << "Difference norm: " << norm( density_matrix(i,j) - conj(density_matrix(j,i))  ) << endl;
                         abort();
                     }
                 }
@@ -102,14 +103,16 @@ void EvolData::Leftmost_Spin_Per_Model_Cal_C_(const MatrixXcd& density_matrix, c
             leftmost_spin_per_model_[model][time][realization] = leftmost_spin;
 
             if (info.debug){
-                cout << "Leftmost spin per model:" << endl;
+                cout << "Leftmost spin per model with infinite time value not subtracted:" << endl;
                 cout << leftmost_spin_per_model_[model][time][realization] << endl;
                 cout << endl;
             }
         }
         else if ((basis_type == "Evec") || (basis_type == "evec")){
-            cout << "Density matrix in evolution eigenvector basis is not "
-            << "used for leftmost spin computation." << endl;
+            if (info.debug){
+                cout << "Density matrix in evolution eigenvector basis is not "
+                     << "used for leftmost spin computation." << endl;
+            }
         }
         else{
             cout << "Unknown basis type " << basis_type << endl;
@@ -201,12 +204,9 @@ void EvolData::Leftmost_Spin_Per_Model_Out_(const AllPara& parameters, const str
 
     // Subtract the infinite time value
     for (int i=0; i<model_num;i++){
-        for (int j=0; j<num_realizations; j++){
-            double inf_spin = leftmost_spin_infinite_time_per_model_[i][j];
-
-            for (int k=0; k<time_step; k++){
-                leftmost_spin_per_model_[i][j][k] -= inf_spin;
-            }
+        double inf_spin = leftmost_spin_infinite_time_per_model_[i][0];
+        for (int k=0; k<time_step; k++){
+            leftmost_spin_per_model_[i][k][0] -= inf_spin;
         }
     }
 
