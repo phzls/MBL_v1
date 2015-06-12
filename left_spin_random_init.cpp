@@ -85,5 +85,4 @@ void left_spin_random(const InitInfo& init_info, const TransitionMatrix& transit
         cout << init_evol_data.infinite_time_leftmost_spin << endl;
         cout << endl;
     }
-
 }
