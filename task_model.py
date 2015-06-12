@@ -58,7 +58,7 @@ def task_model(tasks_models):
             elif line.find("Initial Density Construction Functions") > -1:
                 find_model = False
                 find_task = False
-                find_init = False
+                find_init = True
             elif len(line) > 1:
                 # Not empty line
                 find_content = True
@@ -74,3 +74,4 @@ def task_model(tasks_models):
                     tasks_models.inits.append(content[0])
         else:
             break
+    tasks_models.inits = list(set(tasks_models.inits))
