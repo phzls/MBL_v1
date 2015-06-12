@@ -32,6 +32,8 @@ struct StepInfo{
     double delta; // A small number
 
     int left_size; // If partition the chain to two halves, the size of left part
+
+    string basis_type; // Record in which basis the given state is given
 };
 
 /*
@@ -106,8 +108,8 @@ public:
     // func_status will be computed.
     void Data_Compute(const VectorXcd&, const StepInfo&);
 
-    // Compute data at each step given a complex density matrix. The entry which is true in
-    // func_status will be computed.
+    // Compute data at each step given a complex density matrix. The entry which
+    // is true in func_status will be computed.
     void Data_Compute(const MatrixXcd&, const StepInfo&);
 
     // Output data to file. All the data that are computed will be outputted
