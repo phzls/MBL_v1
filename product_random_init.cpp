@@ -19,7 +19,7 @@ using namespace Eigen;
  **/
 
 void product_random(const InitInfo& init_info, const TransitionMatrix& transition,
-                    VectorXcd& init_state){
+                    VectorXcd& init_state, InitEvolData& init_evol_data){
     const int size = init_info.size; // System size
     const int total_rank = init_state.size(); // Total dimension of Hilbert space
     const double delta = init_info.norm_delta; // A small quantity

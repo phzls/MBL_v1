@@ -22,7 +22,7 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
  **/
 
 void random_product(const InitInfo& init_info, const TransitionMatrix& transition,
-VectorXcd& init_state){
+                    VectorXcd& init_state, InitEvolData& init_evol_data){
 	const int size = init_info.size; // System size
 	const int total_rank = init_state.size(); // Total dimension of Hilbert space
 	const double delta = init_info.norm_delta; // A small quantity
@@ -101,7 +101,7 @@ VectorXcd& init_state){
  **/
 
 void random_product(const InitInfo& init_info, const TransitionMatrix& transition,
-                    MatrixXcd& init_state_density){
+                    MatrixXcd& init_state_density, InitEvolData& init_evol_data){
 	const int size = init_info.size; // System size
 	const int total_rank = (1<<size); // Total dimension of Hilbert space
 	const double delta = init_info.norm_delta; // A small quantity
