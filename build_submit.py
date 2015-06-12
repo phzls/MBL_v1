@@ -144,14 +144,14 @@ try:
                     val = subprocess.Popen("valgrind --leak-check=full ./" + progname + " " + str(count),
                                            stdout=subprocess.PIPE, shell=True)
                     stdout = []
-                while True:
-                    line = val.stdout.readline()
-                    stdout.append(line)
-                    print line,
-                    if line == '' and val.poll() != None:
-                        break
-                    valid_choice = True
-                    success_run = True
+                    while True:
+                        line = val.stdout.readline()
+                        stdout.append(line)
+                        print line,
+                        if line == '' and val.poll() != None:
+                            break
+                        valid_choice = True
+                        success_run = True
 
             elif choice.startswith("e") or choice.startswith("E") or choice.startswith('q') or choice.startswith('Q'):
                 # Exit
