@@ -76,14 +76,17 @@ class EvolData
 private:
     map<string,bool> func_status_; // Determine whether a particular data type is calculated
 
-
     map<string, Data_Init> data_init_; // Correlate name with data_init function
     map<string, Data_Cal> data_cal_; // Correlate name with data_cal function
     map<string, Data_Cal_C> data_cal_C_; // Correlate name with data_cal_C function
     map<string, Data_Out> data_out_; // Correlate name with data_out function
+    map<string, Init_Evol> init_evol_; // Correlate name with init_evol function
 
     void Data_Func_Map_Init_(); // Initialize data_init_ and data_cal_;
     void Name_Check_() const; // Check names in different maps are consistent
+
+    // Output data
+    void General_Output_(const AllPara&, const vector<vector<vector<double> > >&, string);
 
     // Entropy per model. The outer index is for different model; the middle index is for time;
     // the inner index is for realization

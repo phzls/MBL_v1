@@ -2,7 +2,11 @@
 // Created by Liangsheng Zhang on 6/1/15.
 //
 
+#include <string>
+#include <fstream>
+#include <iomanip>
 #include "evol_data.h"
+#include "generic_func.h"
 
 using namespace std;
 
@@ -112,6 +116,12 @@ void EvolData::Data_Compute(const MatrixXcd& state_density, const StepInfo& info
     }
 }
 
+void EvolData::Init_Evol_Data(const InitEvolData& init_evol_data, const InitEvolInfo& init_evol_info) {
+    for (map<string, bool>::iterator it = func_status_.begin(); it != func_status_.end(); it++){
+        if (it -> second) ( this ->* (init_evol_[it -> first]) ) (init_evol_data, init_evol_info);
+    }
+}
+
 void EvolData::Data_Output(const AllPara& parameters, const string& type_name){
     for (map<string, bool>::iterator it = func_status_.begin(); it != func_status_.end(); it++){
         if (it -> second){
@@ -127,10 +137,12 @@ void EvolData::Data_Func_Map_Init_(){
     map<string, Data_Cal>::iterator cal_it;
     map<string, Data_Cal_C>::iterator cal_C_it;
     map<string, Data_Out>::iterator out_it;
+    map<string, Init_Evol>::iterator init_evol_it;
 
     // Entropy Per Model data
     string name1 = "Entropy_Per_Model";
     Data_Init init_func1 = &EvolData::Entropy_Per_Model_Init_;
+    Init_Evol init_evol_func1 = &EvolData::Entropy_Per_Model_Evol_Init_;
     Data_Cal cal_func1 = &EvolData::Entropy_Per_Model_Cal_;
     Data_Cal_C cal_C_func1 = &EvolData::Entropy_Per_Model_Cal_C_;
     Data_Out out_func1 = &EvolData::Entropy_Per_Model_Out_;
@@ -139,7 +151,9 @@ void EvolData::Data_Func_Map_Init_(){
     init_it = data_init_.find(name1);
     cal_it = data_cal_.find(name1);
     out_it = data_out_.find(name1);
-    if (init_it != data_init_.end() || cal_it != data_cal_.end() || out_it != data_out_.end()){
+    init_evol_it = init_evol_.find(name1);
+    if (init_it != data_init_.end() || cal_it != data_cal_.end() || out_it != data_out_.end()
+        || init_evol_it != init_evol_.end){
         cout << name1 << " for evolution has appeared before." << endl;
         abort();
     }
@@ -148,6 +162,24 @@ void EvolData::Data_Func_Map_Init_(){
     data_cal_[name1] = cal_func1;
     data_cal_C_[name1] = cal_C_func1;
     data_out_[name1] = out_func1;
+    init_evol_[name1] = init_evol_func1;
+
+    // Check data_init_ and init_evol_ have the same size
+    if (data_init_.size() != init_evol_.size()){
+        cout << "Number of initializations in evolution is not the same as number of init_evol."
+        << endl;
+        cout << "Registered initializations:" << endl;
+        for (init_it = data_init_.begin(); init_it != data_init_.end(); init_it ++){
+            cout << init_it -> first << endl;
+        }
+        cout << "Total Number: " << data_init_.size();
+
+        cout << "Registered init_evol:" << endl;
+        for (init_evol_it = init_evol_.begin(); init_evol_it != init_evol_.end(); init_evol_it ++){
+            cout << init_evol_it -> first << endl;
+        }
+        cout << "Total Number: " << init_evol_.size();
+    }
 
     // Check data_init_ and data_cal_ have the same size
     if (data_init_.size() != data_cal_.size()){
@@ -179,6 +211,63 @@ void EvolData::Data_Func_Map_Init_(){
         cout << "Registered output for each model:" << endl;
         for (out_it = data_out_.begin(); out_it != data_out_.end(); out_it ++){
             cout << out_it -> first << endl;
+        }
+    }
+}
+
+void EvolData::General_Output_(const AllPara& parameters, const vector<vector<vector<double> > >& data,
+                               string filename) {
+    const int time_step = parameters.evolution.time_step;
+    const int width = parameters.output.width;
+    const double step_size = parameters.evolution.step_size;
+    const bool log_time = parameters.evolution.log_time;
+    const int log_time_jump = parameters.evolution.log_time_jump;
+    const bool markov_jump = parameters.evolution.markov_jump;
+    const int markov_time_jump = parameters.evolution.markov_time_jump;
+    const int jump = parameters.evolution.jump;
+
+    ofstream fout( filename.c_str() );
+
+    for (int t=0; t<time_step; t++){
+        double time = t * step_size * jump; // An overflow still happens for entropy
+
+        if (markov_jump) time *= markov_time_jump;
+
+        if (log_time){
+            long long int power = pow(log_time_jump,t);
+            time = step_size * power;
+        }
+
+        if (parameters.evolution.sample_detail && (data.size() == 1)){
+            fout << setw(10) << time;
+
+            for (int i=0; i<data[0][t].size(); i++)
+                fout << setw(width) << data[0][t][i];
+            fout << endl;
+        }
+        else if (parameters.evolution.sample_detail){
+            fout << setw(10) << time;
+            for (int i=0; i < data.size(); i++){
+                double mean, sd;
+                generic_mean_sd(data[i][t], mean, sd);
+                // For now errors are not outputted
+                fout << setw(width) << mean;
+            }
+            fout << endl;
+        }
+        else{
+            const int model_num = data.size();
+            vector<double> mean(model_num);
+            vector<double> sd(model_num);
+
+            for (int i=0; i<model_num; i++){
+                generic_mean_sd(data[i][t], mean[i], sd[i]);
+            }
+
+            double final_mean, final_sd;
+            generic_mean_sd(mean, final_mean, final_sd);
+
+            fout << setw(10) << time << setw(width) << final_mean << setw(width) << final_sd << endl;
         }
     }
 }
