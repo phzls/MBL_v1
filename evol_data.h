@@ -11,6 +11,7 @@
 #include <utility>
 #include <Eigen/Dense>
 #include "parameters.h"
+#include "init_evol_data.h"
 
 using namespace std;
 using namespace Eigen;
@@ -57,6 +58,9 @@ class EvolData;
 // Functions that initialize data using parameters passed in
 typedef void (EvolData::*Data_Init)(const AllPara&);
 
+// Functions that use information from initial conditions
+typedef void (EvolData::*Init_Evol)(const InitEvolData&, const InitEvolInfo&);
+
 // Functions that compute data from a state vector and step information
 typedef void (EvolData::*Data_Cal)(const VectorXcd&, const StepInfo&);
 
@@ -81,15 +85,36 @@ private:
     void Data_Func_Map_Init_(); // Initialize data_init_ and data_cal_;
     void Name_Check_() const; // Check names in different maps are consistent
 
-    // Entropy per model. The outer index is for time; the inner index is for realization
+    // Entropy per model. The outer index is for different model; the middle index is for time;
+    // the inner index is for realization
     vector<vector<vector<double> > > entropy_per_model_;
     void Entropy_Per_Model_Init_(const AllPara&); // Initialize entropy_per_model
+    // Use information from initial condition for entropy_per_model
+    void Entropy_Per_Model_Evol_Init_(const InitEvolData&, const InitEvolInfo&);
     // Compute entropy_per_model given state vector
     void Entropy_Per_Model_Cal_(const VectorXcd&, const StepInfo&);
     // Compute entropy_per_model given complex density matrix
     void Entropy_Per_Model_Cal_C_(const MatrixXcd&, const StepInfo&);
     // Output entropy_per_model
     void Entropy_Per_Model_Out_(const AllPara&, const string&);
+
+    // leftmost spin per model. The outer index is for different model; the middle index is for time;
+    // the inner index is for realization
+    vector<vector<vector<double> > > leftmost_spin_per_model_;
+    // Infinite time leftmost spin per model. The outer index is for different model; the inner index
+    // is for different realization
+    vector<vector<double> > leftmost_spin_infinite_time_per_model_;
+    // Use information from initial condition for leftmost_spin_per_model
+    void Leftmost_Spin_Per_Model_Evol_Init_(const InitEvolData&, const InitEvolInfo&);
+    // Initialize leftmost_spin_per_model_ and leftmost_spin_infinite_time_per_model_
+    void Leftmost_Spin_Per_Model_Init_(const AllPara&);
+    // Compute leftmost_spin_per_model_ and leftmost_spin_infinite_time_per_model_ given state vector.
+    // Not implemented so far
+    void Leftmost_Spin_Per_Model_Cal_(const VectorXcd&, const StepInfo&);
+    // Compute leftmost_spin_per_model_ and leftmost_spin_infinite_time_per_model_ given complex density matrix
+    void Leftmost_Spin_Per_Model_Cal_C_(const MatrixXcd&, const StepInfo&);
+    // Output leftmost_spin_per_model_ minus leftmost_spin_infinite_time_per_model_
+    void Leftmost_Spin_Per_Model_Out_(const AllPara&, const string&);
 
     // More functions in old codes
 
@@ -103,6 +128,9 @@ public:
     void Print_All_Name() const; // Print all possible names of data type calculation
     void Print_All_Status() const; // Print all possible data type calculation, indicating
     // whether they will be calculated
+
+    // Use information from initial conditions
+    void Init_Evol_Data(const InitEvolData&, const InitEvolInfo&);
 
     // Compute data at each step given a state vector. The entry which is true in
     // func_status will be computed.

@@ -9,6 +9,7 @@
 #include <Eigen/Dense>
 #include "basis_transition.h"
 #include "parameters.h"
+#include "init_evol_data.h"
 
 using namespace std;
 using namespace Eigen;
@@ -41,11 +42,11 @@ struct InitInfo
 
 // Pointer to all possible initial state construction function which gives a state vector
 // in the basis of eigenstates
-typedef void (*init_func)(const InitInfo&, const TransitionMatrix&, VectorXcd&);
+typedef void (*init_func)(const InitInfo&, const TransitionMatrix&, VectorXcd&, InitEvolData&);
 
 // Pointer to all possible initial state construction function which gives a density matrix
 // in the basis of eigenstates
-typedef void (*init_func_C)(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
+typedef void (*init_func_C)(const InitInfo&, const TransitionMatrix&, MatrixXcd&, InitEvolData&);
 
 class InitObj
 {
@@ -66,10 +67,10 @@ public:
     InitObj(const InitInfo& info): init_info(info) {map_init_();}
 
     // Construct initial state vector
-    void Init_Func(const TransitionMatrix&, VectorXcd&) const;
+    void Init_Func(const TransitionMatrix&, VectorXcd&, InitEvolData&) const;
 
     // Construct initial density matrix
-    void Init_Func_C(const TransitionMatrix&, MatrixXcd&) const;
+    void Init_Func_C(const TransitionMatrix&, MatrixXcd&, InitEvolData&) const;
 
     // Print out all init_func
     void Print() const;
@@ -84,14 +85,14 @@ public:
  * Initial state functions (more in old codes)
  */
 
-void product_random(const InitInfo&, const TransitionMatrix&, VectorXcd&);
+void product_random(const InitInfo&, const TransitionMatrix&, VectorXcd&, InitEvolData&);
 
-void random_product(const InitInfo&, const TransitionMatrix&, VectorXcd&);
-void random_product(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
+void random_product(const InitInfo&, const TransitionMatrix&, VectorXcd&, InitEvolData&);
+void random_product(const InitInfo&, const TransitionMatrix&, MatrixXcd&, InitEvolData&);
 
-void random_pure(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
+void random_pure(const InitInfo&, const TransitionMatrix&, MatrixXcd&, InitEvolData&);
 
-void left_spin_random(const InitInfo&, const TransitionMatrix&, MatrixXcd&);
+void left_spin_random(const InitInfo&, const TransitionMatrix&, MatrixXcd&, InitEvolData&);
 
 /*
  * Some useful functions for initial state construction
