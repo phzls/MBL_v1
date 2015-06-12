@@ -42,7 +42,7 @@ void single_model_time_evolution(const AllPara& parameters){
     InitObj init_obj;
 
     init_obj.init_info.size = parameters.generic.size;
-    init_obj.init_info.norm_delta = 1.0e-15;
+    init_obj.init_info.norm_delta = 1.0e-10;
     init_obj.init_info.debug = debug;
     init_obj.init_info.init_func_name = init_func_name;
 
