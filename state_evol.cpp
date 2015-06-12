@@ -54,9 +54,18 @@ void state_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data, i
         cout << endl;
         cout << n << "th realization:" << endl;
 
+        InitEvolInfo init_evol_info;
+        InitEvolData init_evol_data;
+
         cout << "Construct Initial State." << endl;
         init_state = VectorXcd::Zero(floquet -> Get_Dim());
-        init_obj.Init_Func(transition, init_state);
+        init_obj.Init_Func(transition, init_state, init_evol_data);
+
+        init_evol_info.model = model;
+        init_evol_info.realization = n;
+        init_evol_info.debug = evol_data.evol_info.debug;
+
+        evol_data.Init_Evol_Data(init_evol_data, init_evol_info);
 
         cout << "Time evolution starts." << endl;
 
