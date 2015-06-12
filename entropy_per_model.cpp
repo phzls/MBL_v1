@@ -51,95 +51,121 @@ void EvolData::Entropy_Per_Model_Cal_(const VectorXcd& state_basic, const StepIn
     const int time = info.time;
     const int model = info.model;
     const int left_size = info.left_size;
+    const string basis_type = info.basis_type;
 
-    MatrixXcd reduced_density; // Reduced density matrix for the left part
-    reduced_density_left_2(state_basic, size_, left_size, reduced_density);
+    if ((basis_type == "Binary") || (basis_type == "binary")){
+        MatrixXcd reduced_density; // Reduced density matrix for the left part
+        reduced_density_left_2(state_basic, size_, left_size, reduced_density);
 
-    if (info.debug){
-        cout << "Reduced density matrix:" << endl;
-        complex_matrix_write(reduced_density);
-        cout << endl;
-    }
+        if (info.debug){
+            cout << "Reduced density matrix:" << endl;
+            complex_matrix_write(reduced_density);
+            cout << endl;
+        }
 
-    SelfAdjointEigenSolver<MatrixXcd> density_eigen; // Eigen for reduced density matrix
+        SelfAdjointEigenSolver<MatrixXcd> density_eigen; // Eigen for reduced density matrix
 
-    density_eigen.compute(reduced_density, false); // Eigenvectors not computed
+        density_eigen.compute(reduced_density, false); // Eigenvectors not computed
 
-    entropy_per_model_[model][time][realization] = 0;
+        entropy_per_model_[model][time][realization] = 0;
 
-    for (int i=0; i<density_eigen.eigenvalues().rows();i++){
-        double eval = density_eigen.eigenvalues()(i);
+        for (int i=0; i<density_eigen.eigenvalues().rows();i++){
+            double eval = density_eigen.eigenvalues()(i);
 
-        if (abs(eval)>1.0e-15)
-        {
-            if (eval<0){
-                cout << "Density matrix has significant negative eigenvalues." << endl;
-                cout << eval << endl;
-                abort();
+            if (abs(eval)>1.0e-15)
+            {
+                if (eval<0){
+                    cout << "Density matrix has significant negative eigenvalues." << endl;
+                    cout << eval << endl;
+                    abort();
+                }
+                entropy_per_model_[model][time][realization] += -eval*log2(eval);
             }
-            entropy_per_model_[model][time][realization] += -eval*log2(eval);
+        }
+
+        if (info.debug){
+            cout << "Entropy per model:" << endl;
+            cout << entropy_per_model_[model][time][realization] << endl;
+            cout << endl;
         }
     }
-
-    if (info.debug){
-        cout << "Entropy per model:" << endl;
-        cout << entropy_per_model_[model][time][realization] << endl;
-        cout << endl;
+    else if ((basis_type == "Evec") || (basis_type == "evec")){
+        if (info.debug){
+            cout << "State vector in evolution eigenvector basis"
+                 << " is not used for half-chain entropy computation." << endl;
+        }
+    }
+    else{
+        cout << "Unknown basis type " << basis_type << endl;
+        abort();
     }
 }
 
+
 /*
- * Compute the entropy at a given time step and realization, given a complex density matrix
+ * Compute the entropy at a given time step and realization, given a complex density matrix.
+ * Entropy is for the whole system.
  */
 void EvolData::Entropy_Per_Model_Cal_C_(const MatrixXcd& density_matrix, const StepInfo& info){
     const int realization = info.realization;
     const int time = info.time;
     const int model = info.model;
+    const string basis_type = info.basis_type;
 
-    // Check whether density_matrix is Hermitian
-    if (density_matrix.rows() != density_matrix.cols()){
-        cout << "Density matrix passed in entropy_per_model_cal_C is not square." << endl;
-        cout << "Rows: " << density_matrix.rows() << endl;
-        cout << "Cols: " << density_matrix.cols() << endl;
+    if ((basis_type == "Binary") || (basis_type == "binary")){
+        // Check whether density_matrix is Hermitian
+        if (density_matrix.rows() != density_matrix.cols()){
+            cout << "Density matrix passed in entropy_per_model_cal_C is not square." << endl;
+            cout << "Rows: " << density_matrix.rows() << endl;
+            cout << "Cols: " << density_matrix.cols() << endl;
+            abort();
+        }
+
+        for (int i=0; i< density_matrix.rows(); i++){
+            for (int j=i; j<density_matrix.rows();j++){
+                if ( norm( density_matrix(i,j) - conj(density_matrix(j,i)) ) > info.delta ){
+                    cout << "Density matrix is not Hermitian at (" << i << "," << j << ")." << endl;
+                    cout << "At (" << i << "," << j << "): " << density_matrix(i,j) << endl;
+                    cout << "At (" << j << "," << i << "): " <<  density_matrix(j,i) << endl;
+                    abort();
+                }
+            }
+        }
+
+        SelfAdjointEigenSolver<MatrixXcd> density_eigen; // Eigen for reduced density matrix
+
+        density_eigen.compute(density_matrix, false); // Eigenvectors not computed
+
+        entropy_per_model_[model][time][realization] = 0;
+
+        for (int i=0; i<density_eigen.eigenvalues().rows();i++){
+            double eval = density_eigen.eigenvalues()(i);
+
+            if (abs(eval)>1.0e-8)
+            {
+                if ( eval*log2(eval) != eval*log2(eval) ){
+                    cout << "Significant negative eigenvalues of density matrix." << endl;
+                    cout << "eval: " << eval << endl;
+                    cout << "Time: " << time << "  Realization: " << realization << endl;
+                    abort();
+                }
+                entropy_per_model_[model][time][realization] += -eval*log2(eval);
+            }
+        }
+
+        if (info.debug){
+            cout << "Entropy per model:" << endl;
+            cout << entropy_per_model_[model][time][realization] << endl;
+            cout << endl;
+        }
+    }
+    else if ((basis_type == "Evec") || (basis_type == "evec")){
+        cout << "Density matrix in evolution eigenvector basis is not "
+             << "used for full-chain entropy computation." << endl;
+    }
+    else{
+        cout << "Unknown basis type " << basis_type << endl;
         abort();
-    }
-
-    for (int i=0; i< density_matrix.rows(); i++){
-        for (int j=i; j<density_matrix.rows();j++){
-            if ( norm( density_matrix(i,j) - conj(density_matrix(j,i)) ) > info.delta ){
-                cout << "Density matrix is not Hermitian at (" << i << "," << j << ")." << endl;
-                cout << "At (" << i << "," << j << "): " << density_matrix(i,j) << endl;
-                cout << "At (" << j << "," << i << "): " <<  density_matrix(j,i) << endl;
-                abort();
-            }
-        }
-    }
-
-    SelfAdjointEigenSolver<MatrixXcd> density_eigen; // Eigen for reduced density matrix
-
-    density_eigen.compute(density_matrix, false); // Eigenvectors not computed
-
-    entropy_per_model_[model][time][realization] = 0;
-
-    for (int i=0; i<density_eigen.eigenvalues().rows();i++){
-        double eval = density_eigen.eigenvalues()(i);
-
-        if (abs(eval)>1.0e-8)
-        {
-            if ( eval*log2(eval) != eval*log2(eval) ){
-                cout << "Significant negative eigenvalues of density matrix." << endl;
-                cout << "eval: " << eval << endl;
-                cout << "Time: " << time << "  Realization: " << realization << endl;
-                abort();
-            }
-            entropy_per_model_[model][time][realization] += -eval*log2(eval);
-        }
-    }
-
-    if (info.debug){
-        cout << "Entropy per model:" << endl;
-        cout << entropy_per_model_[model][time][realization] << endl;
-        cout << endl;
     }
 }
 
