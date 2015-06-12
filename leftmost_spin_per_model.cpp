@@ -10,7 +10,6 @@
 #include <iomanip>
 #include "evol_data.h"
 #include "methods.h"
-#include "generic_func.h"
 #include "screen_output.h"
 
 using namespace std;
@@ -122,7 +121,7 @@ void EvolData::Leftmost_Spin_Per_Model_Cal_C_(const MatrixXcd& density_matrix, c
 /*
  * Compute the leftmost spin at a given time step and realization, given a state vector
  */
-void EvolData::Leftmost_Spin_Per_Model_Cal_C_(const VectorXcd& state, const StepInfo& info){
+void EvolData::Leftmost_Spin_Per_Model_Cal_(const VectorXcd& state, const StepInfo& info){
     cout << "Not implemented yet." << endl;
     abort();
 }
@@ -141,10 +140,7 @@ void EvolData::Leftmost_Spin_Per_Model_Out_(const AllPara& parameters, const str
     const int num_realizations = parameters.generic.num_realizations;
     const int jump = parameters.evolution.jump;
     const bool output = parameters.output.filename_output;
-    const int width = parameters.output.width;
-    const double step_size = parameters.evolution.step_size;
     const bool log_time = parameters.evolution.log_time;
-    const int log_time_jump = parameters.evolution.log_time_jump;
     const bool markov_jump = parameters.evolution.markov_jump;
     const int markov_time_jump = parameters.evolution.markov_time_jump;
     const int version = parameters.generic.version;
@@ -203,8 +199,6 @@ void EvolData::Leftmost_Spin_Per_Model_Out_(const AllPara& parameters, const str
 
     if (output) cout << filename.str() <<endl;
 
-    ofstream fout( filename.str().c_str() );
-
     // Subtract the infinite time value
     for (int i=0; i<model_num;i++){
         for (int j=0; j<num_realizations; j++){
@@ -216,48 +210,7 @@ void EvolData::Leftmost_Spin_Per_Model_Out_(const AllPara& parameters, const str
         }
     }
 
-    for (int t=0; t<time_step; t++){
-        double time = t * step_size * jump; // An overflow still happens for entropy
-
-        if (markov_jump) time *= markov_time_jump;
-
-        if (log_time){
-            long long int power = pow(log_time_jump,t);
-            time = step_size * power;
-        }
-
-        if (parameters.evolution.sample_detail && (leftmost_spin_per_model_.size() == 1)){
-            fout << setw(10) << time;
-
-            for (int i=0; i<leftmost_spin_per_model_[0][t].size(); i++)
-                fout << setw(width) << leftmost_spin_per_model_[0][t][i];
-            fout << endl;
-        }
-        else if (parameters.evolution.sample_detail){
-            fout << setw(10) << time;
-            for (int i=0; i < leftmost_spin_per_model_.size(); i++){
-                double mean, sd;
-                generic_mean_sd(leftmost_spin_per_model_[i][t], mean, sd);
-                // For now errors are not outputted
-                fout << setw(width) << mean;
-            }
-            fout << endl;
-        }
-        else{
-            const int model_num = leftmost_spin_per_model_.size();
-            vector<double> mean(model_num);
-            vector<double> sd(model_num);
-
-            for (int i=0; i<model_num; i++){
-                generic_mean_sd(leftmost_spin_per_model_[i][t], mean[i], sd[i]);
-            }
-
-            double final_mean, final_sd;
-            generic_mean_sd(mean, final_mean, final_sd);
-
-            fout << setw(10) << time << setw(width) << final_mean << setw(width) << final_sd << endl;
-        }
-    }
+    General_Output_(parameters, leftmost_spin_per_model_, filename.str());
 }
 
 
