@@ -143,6 +143,7 @@ void density_evol(EvolOP* floquet, const InitObj& init_obj, EvolData& evol_data,
                 info.debug = evol_data.evol_info.debug;
                 info.left_size = evol_data.evol_info.left_size;
                 info.model = model;
+                info.delta = 1.0e-10;
 
                 info.basis_type = "Binary";
                 evol_data.Data_Compute(density_basic, info);
