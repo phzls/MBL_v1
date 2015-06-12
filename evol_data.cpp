@@ -152,8 +152,9 @@ void EvolData::Data_Func_Map_Init_(){
     cal_it = data_cal_.find(name1);
     out_it = data_out_.find(name1);
     init_evol_it = init_evol_.find(name1);
+    cal_C_it = data_cal_C_.find(name1);
     if (init_it != data_init_.end() || cal_it != data_cal_.end() || out_it != data_out_.end()
-        || init_evol_it != init_evol_.end){
+        || init_evol_it != init_evol_.end() || cal_C_it != data_cal_C_.end()){
         cout << name1 << " for evolution has appeared before." << endl;
         abort();
     }
@@ -177,8 +178,9 @@ void EvolData::Data_Func_Map_Init_(){
     cal_it = data_cal_.find(name2);
     out_it = data_out_.find(name2);
     init_evol_it = init_evol_.find(name2);
+    cal_C_it = data_cal_C_.find(name2);
     if (init_it != data_init_.end() || cal_it != data_cal_.end() || out_it != data_out_.end()
-        || init_evol_it != init_evol_.end){
+        || init_evol_it != init_evol_.end() || cal_C_it != data_cal_C_.end()){
         cout << name2 << " for evolution has appeared before." << endl;
         abort();
     }
