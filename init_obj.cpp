@@ -21,7 +21,8 @@ void InitInfo::Copy(const InitInfo & init_info) {
     init_func_name = init_info.init_func_name;
 }
 
-void InitObj::Init_Func(const TransitionMatrix& transition, VectorXcd& init_state) const {
+void InitObj::Init_Func(const TransitionMatrix& transition, VectorXcd& init_state,
+                        InitEvolData& init_evol_data) const {
 
     if (init_info.init_func_name == ""){
         cout << "Function name for initial state construction has not been initialized." << endl;
@@ -36,10 +37,11 @@ void InitObj::Init_Func(const TransitionMatrix& transition, VectorXcd& init_stat
         cout << "Requested function: " << init_info.init_func_name << endl;
         abort();
     }
-    else it -> second(init_info, transition, init_state);
+    else it -> second(init_info, transition, init_state, init_evol_data);
 }
 
-void InitObj::Init_Func_C(const TransitionMatrix& transition, MatrixXcd& density) const {
+void InitObj::Init_Func_C(const TransitionMatrix& transition, MatrixXcd& density,
+                          InitEvolData& init_evol_data) const {
 
     if (init_info.init_func_name == ""){
         cout << "Function name for initial density matrix construction has not been initialized." << endl;
@@ -54,7 +56,7 @@ void InitObj::Init_Func_C(const TransitionMatrix& transition, MatrixXcd& density
         cout << "Requested function: " << init_info.init_func_name << endl;
         abort();
     }
-    else it -> second(init_info, transition, density);
+    else it -> second(init_info, transition, density, init_evol_data);
 }
 
 void InitObj::Print() const {
