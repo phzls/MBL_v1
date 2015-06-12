@@ -33,7 +33,7 @@ int main() {
     parameters.generic.task = "Multi_Model_Time_Evolution";
     parameters.generic.model = "Ising_Random_Simp_Shift_Real_Flo";
 
-    parameters.generic.size = 2; // System size
+    parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 1; // Number of realizations
     parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
@@ -59,7 +59,7 @@ int main() {
 
 
 
-    parameters.evolution.time_step = 20; // Number of time steps
+    parameters.evolution.time_step = 10; // Number of time steps
     parameters.evolution.step_size = parameters.floquet.tau; // Time step size
     parameters.evolution.init_func_name = "Left_Spin_Random"; // Initial state name
 
@@ -82,7 +82,7 @@ int main() {
         parameters.evolution.markov_jump = false;
     }
 
-    parameters.evolution.log_time = false; // whehter time changes logarithmically
+    parameters.evolution.log_time = true; // whehter time changes logarithmically
     parameters.evolution.log_time_jump = 2; // The base for time change logarithmically
 
     // The number gives the index of leftmost spin z value
