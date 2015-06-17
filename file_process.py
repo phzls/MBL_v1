@@ -211,12 +211,13 @@ def para_gen(filename, tasks_models, data, count, modify_words = None):
     f_new.close()
 
 
-def slurm_file_gen(data, run_time, count):
+def slurm_file_gen(data, run_time, count, exe_folder = None):
     """
     Generate a slurm submitting file.
     :param data: Data structure which gives parameters in the submitting script
     :param run_time: Data structure which gives estimated running time
     :param count: The current count of running, which needs to be passed into main program
+    :param exe_folder: Executable folder in which the executable lies
     :return: program name
     """
     f_old = open("submit_template.run",'r')
@@ -249,8 +250,12 @@ def slurm_file_gen(data, run_time, count):
         elif time_start > -1:
             new_line = line[:time_start + len(time)] + run_time.hour + ":" + run_time.min + ":00\n"
         elif prog_start > -1:
-            new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
-                       + " > " + filename + ".out\n"
+            if exe_folder is None:
+                new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
+                           + " > " + filename + ".out\n"
+            else:
+                new_line = line[:prog_start + len(prog)] + exe_folder + '/' + filename + " " + str(count) \
+                           + " > " + filename + ".out\n"
         elif dir_start > -1:
             new_line = line[:dir_start + len(dire)] + address + '\n'
         elif server_start > -1:
@@ -265,12 +270,13 @@ def slurm_file_gen(data, run_time, count):
     return filename
 
 
-def qsub_file_gen(data, run_time, count):
+def qsub_file_gen(data, run_time, count, exe_folder = None):
     """
     Generate a qsub submitting file.
     :param data: Data structure which gives parameters in the submitting script
     :param run_time: Data structure which gives estimated running time and memory
     :param count: The current count of running, which needs to be passed into main program
+    :param exe_folder: Executable folder in which the executable lies
     :return: program name
     """
     f_old = open("submit_template.run",'r')
@@ -304,8 +310,12 @@ def qsub_file_gen(data, run_time, count):
             new_line = line[:threads_start + len(threads)] + data.num_threads + \
                        ",cput=" + run_time.hour + ":" + run_time.min + ":00\n"
         elif prog_start > -1:
-            new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
-                       + " > " + filename + ".out\n"
+            if exe_folder is None:
+                new_line = line[:prog_start + len(prog)] + filename + " " + str(count) \
+                           + " > " + filename + ".out\n"
+            else:
+                new_line = line[:prog_start + len(prog)] + exe_folder + '/' + filename + " " + str(count) \
+                           + " > " + filename + ".out\n"
         elif dir_start > -1:
             new_line = line[:dir_start + len(dire)] + address + '\n'
         elif server_start > -1:
