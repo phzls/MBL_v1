@@ -9,6 +9,7 @@ import fnmatch
 
 data = fp.DATA()
 tasks_models = tm.TASK_MODEL()
+exe_folder = "executables" # The folder name for executables
 
 success_run = False # Check whether the program has successfully run
 
@@ -18,6 +19,10 @@ system = proc.communicate()[0]
 
 if system == "Linux\n":
     subprocess.call("module load intel", stdout=subprocess.PIPE, shell=True)
+
+    # Construct a folder for executables if it does not exist
+    if os.path.isdir("./" + exe_folder) is False:
+        subprocess.call("mkdir " + exe_folder, stdout=subprocess.PIPE, shell=True)
 
 # Obtain count and update count file
 count = None
@@ -121,12 +126,16 @@ try:
             fp.file_clean(count, file_modify)
             raise Exception("Make Error")
 
+        # Move the executable to the folder
+        subprocess.call("mv " + progname + "./" + exe_folder, stdout=subprocess.PIPE, shell=True)
+
         valid_choice = False
         while valid_choice is False:
             choice = raw_input("Submit (s), Direct Run (r), Valgrind (v) or Exit (e)?\n")
 
             if choice.startswith("r") or choice.startswith("R"):
-                run = subprocess.Popen("./" + progname + " " + str(count), stdout=subprocess.PIPE, shell=True)
+                run = subprocess.Popen("./" + exe_folder+ '/' + progname + " " + str(count),
+                                       stdout=subprocess.PIPE, shell=True)
                 stdout = []
                 while True:
                     line = run.stdout.readline()
@@ -141,8 +150,8 @@ try:
                 if int(data.num_threads) > 1:
                     print "Valgrind has problems handling multi-thread."
                 else:
-                    val = subprocess.Popen("valgrind --leak-check=full ./" + progname + " " + str(count),
-                                           stdout=subprocess.PIPE, shell=True)
+                    val = subprocess.Popen("valgrind --leak-check=full ./" + exe_folder + '/' + progname
+                                           + " " + str(count), stdout=subprocess.PIPE, shell=True)
                     stdout = []
                     while True:
                         line = val.stdout.readline()
@@ -170,10 +179,10 @@ try:
                         break
 
                 if (server == "Adroit") or (server == "adroit"):
-                    sb.adroit_submit(data, progname, count)
+                    sb.adroit_submit(data, progname, count, exe_folder)
 
                 elif (server == "Feynman") or (server == "feynman"):
-                    sb.feynman_submit(data, progname, count)
+                    sb.feynman_submit(data, progname, count, exe_folder)
 
                 valid_choice = True
                 success_run = True
