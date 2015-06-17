@@ -1,11 +1,8 @@
 __author__ = 'liangshengzhang'
 
 import subprocess
-import task_model as tm
 import file_process as fp
 import submit as sb
-import os
-import fnmatch
 
 def core(system, count, file_modify, exe_folder, data):
     """
