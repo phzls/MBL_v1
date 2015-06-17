@@ -46,7 +46,7 @@ def core(system, count, file_modify, exe_folder, data):
             raise Exception("Make Error")
 
         # Move the executable to the folder
-        subprocess.call("mv " + progname + "./" + exe_folder, stdout=subprocess.PIPE, shell=True)
+        subprocess.call("mv " + progname + " ./" + exe_folder, stdout=subprocess.PIPE, shell=True)
 
         valid_choice = False
         while valid_choice is False:
