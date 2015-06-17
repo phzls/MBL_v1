@@ -147,7 +147,7 @@ try:
                     while True:
                         line = val.stdout.readline()
                         stdout.append(line)
-                        print line,
+                        print line
                         if line == '' and val.poll() != None:
                             break
                         valid_choice = True
