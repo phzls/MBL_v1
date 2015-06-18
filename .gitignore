@@ -50,3 +50,6 @@ Thumbs.db
 /Distribution
 *.dat
 .idea/
+/executables
+/All_distance
+/time_evolution
