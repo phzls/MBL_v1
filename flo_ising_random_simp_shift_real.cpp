@@ -175,9 +175,3 @@ void FloEvolIsingRandomSimpShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
         evol_z(i,i) = exp( - Complex_I * complex<double>(value,0) );
     }
 }
-
-
-
-
-
-
