@@ -19,6 +19,7 @@ using namespace Eigen;
 /**
  ** This file contains functions related to ent_var, which is the entropy variance for all eigenstates given a
  ** model. The entropy is half chain entanglement entropy, so the spin chain must have even length.
+ ** It may also keep mean values of entropy for each realization for other calculations
  **/
 
 /*
@@ -50,6 +51,8 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
 
     const int dim = model -> Get_Dim();
     const int size = model -> Get_Size(); // Size of the chain
+
+    model_data_.model_dim = dim; // Obtain the number of eigenstates
 
     vector<double> ent(dim); // Entropy of all eigenstates
 
@@ -150,10 +153,17 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
     generic_mean_sd(ent, mean, sd);
     model_data_.ent_var[local_info.J_index][local_info.realization_index] = sd * sd;
 
+    if(ent_mean_keep_){ // Keep entropy mean for each realization
+        model_data_.ent_mean[local_info.J_index][local_info.realization_index] = mean;
+    }
+
 
     if (debug){
         cout << "Realization " << local_info.realization_index << " entropy variance: "
-        << model_data_.ent_var[local_info.J_index][local_info.realization_index] << endl;
+        << model_data_.ent_var[local_info.J_index][local_info.realization_index];
+        if(ent_mean_keep_){
+            cout << " entropy mean: " << model_data_.ent_mean[local_info.J_index][local_info.realization_index];
+        }
         cout << endl;
     }
 }
