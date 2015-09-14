@@ -65,7 +65,7 @@ void DisorderModelTransition::Ent_var_all_mean_compute_(AllPara const & paramete
  * "local" variance is w for each realization, then the "variance" with mean y for each realization is
  * x + N/(N-1)*(x-y)^z, where N is the number of eigenstates for each realization
  */
-void DisorderModelTransition::Ent_var_out_(AllPara const & parameters, const string& name) {
+void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, const string& name) {
     const double J_min = parameters.floquet.J_min;
     const double J_max = parameters.floquet.J_max;
     const int J_N = parameters.floquet.J_N;
