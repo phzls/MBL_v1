@@ -30,8 +30,8 @@ int main() {
 
 
 
-    parameters.generic.task = "Multi_Model_Time_Evolution";
-    parameters.generic.model = "Ising_Random_Simp_Shift_Real_Flo";
+    parameters.generic.task = "Disorder_Transition";
+    parameters.generic.model = "Ising_Random_Simp_Shift_Cos_Real_Flo";
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 1; // Number of realizations
@@ -122,12 +122,12 @@ int main() {
 
 
     // Methods to be called for studying transition of floquet systems from thermal to localization
-    parameters.transition.flo_transition_compute["ZZ_Correlation_Square"] = true; // End-to-end sigma_z X sigma_z
+    parameters.transition.flo_transition_compute["ZZ_Correlation_Square"] = false; // End-to-end sigma_z X sigma_z
     // correlation square
 
-    parameters.transition.flo_transition_compute["Entropy_Variance"] = true; // Entropy variance for all eigenstates
+    parameters.transition.flo_transition_compute["Entropy_Variance"] = false; // Entropy variance for all eigenstates
 
-    parameters.transition.flo_transition_compute["ZZ_Time_Correlation"] = true; // End-to-end sigma_z X sigma_z
+    parameters.transition.flo_transition_compute["ZZ_Time_Correlation"] = false; // End-to-end sigma_z X sigma_z
     // time correlation
 
     parameters.transition.flo_transition_compute["ZZ_Time_Correlation_Components"] = false; // End-to-end
@@ -150,6 +150,9 @@ int main() {
 
     parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = false; // zz time correlation at all
     // distances
+
+    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = true; // entropy variance for all
+    // eigenstates using single mean
 
 
 
