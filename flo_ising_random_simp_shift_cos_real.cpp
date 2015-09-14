@@ -23,7 +23,7 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
  */
 void FloEvolIsingRandomSimpShiftCosReal::Repr_Init_(){
     repr_ << "Ising_Random_Simp_Shift_Cos_Real_Floquet_L=" << size_ << ",W=" << W_;
-    type_ = "Ising_Quasi_Simp_Shift_Cos_Real_Floquet";
+    type_ = "Ising_Random_Simp_Shift_Cos_Real_Floquet";
 }
 
 /*
