@@ -61,9 +61,8 @@ def structure(file_reading):
                 file_modify[key] = True
 
         # Handle the executable
-        temp_success_run = core.core(system=system, count=count, file_modify=file_modify,
+        success_run = core.core(system=system, count=count, file_modify=file_modify,
                                      exe_folder=exe_folder, data=data)
-        success_run = success_run and temp_success_run
 
     except Exception:
         print "An error occurred."
