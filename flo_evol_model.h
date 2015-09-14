@@ -45,7 +45,6 @@ public:
     // Construct evolutionary operator
     void Evol_Construct();
 
-    // No parameter to initialize
     void Evol_Para_Init();
 
     virtual ~FloEvolIsingRandomSimp() {};
@@ -94,7 +93,7 @@ public:
     // Construct evolutionary operator
     void Evol_Construct();
 
-    // No parameter to initialize
+    // Initialize random fields
     void Evol_Para_Init();
 
     virtual ~FloEvolIsingRandomSimpShiftReal() {};
@@ -143,7 +142,7 @@ public:
     // Construct evolutionary operator
     void Evol_Construct();
 
-    // No parameter to initialize
+    // Initialize quasi-periodic fields
     void Evol_Para_Init();
 
     virtual ~FloEvolIsingQuasiSimpShiftReal() {};
@@ -198,7 +197,7 @@ public:
     // Construct evolutionary operator
     void Evol_Construct();
 
-    // No parameter to initialize
+    // Initialize random fields
     void Evol_Para_Init();
 
     virtual ~FloEvolIsingAllRandomSimpShiftReal() {};
@@ -254,10 +253,64 @@ public:
     // Construct evolutionary operator
     void Evol_Construct();
 
-    // No parameter to initialize
+    // Initialize quasi-periodic fields
     void Evol_Para_Init();
 
     virtual ~FloEvolIsingAllQuasiSimpShiftReal() {};
+};
+
+
+
+
+
+
+
+
+
+
+//=============================================================================================================
+
+
+
+
+
+
+
+
+
+
+/*
+ * This operator constructs the shifted version of flo_evol_xxz_random_simp but using a cosine with
+ * phases as the longitude field
+ */
+class FloEvolIsingRandomSimpShiftCosReal : public FloEvolVanillaReal
+{
+private:
+    const double W_; // Disorder strength
+
+    // Construct x part of time evolution operator
+    void Evol_X_Construct_(MatrixXcd&);
+
+    // Construct z part of time evolution operator
+    void Evol_Z_Construct_(MatrixXcd&);
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_h_; // Random longitude field
+
+public:
+    FloEvolIsingRandomSimpShiftCosReal(int size, double W, bool debug = false):
+            FloEvolVanillaReal(size), W_(W), debug_(debug) { Repr_Init_();}
+
+    // Construct evolutionary operator
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    virtual ~FloEvolIsingRandomSimpShiftCosReal() {};
 };
 
 
