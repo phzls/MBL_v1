@@ -34,8 +34,8 @@ int main() {
     parameters.generic.model = "Ising_Random_Simp_Shift_Cos_Real_Flo";
 
     parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 1; // Number of realizations
-    parameters.generic.threads_N = 1; // Number of threads in openmp
+    parameters.generic.num_realizations = 10; // Number of realizations
+    parameters.generic.threads_N = 4; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
