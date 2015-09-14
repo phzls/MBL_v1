@@ -4,7 +4,7 @@ models = flo_evol.o flo_ising_random_simp.o flo_ising_random_simp_shift_real.o f
 
 tasks = disorder_transition.o single_model_time_evolution.o state_evol.o multi_model_time_evolution.o density_evol.o
 
-disorder_transition = zz_corr_square.o disorder_model_transition.o zz_time_corr.o zz_all_corr_square.o zz_time_corr_component.o ent_var.o zz_corr_square_all_sample.o zz_time_corr_all_sample.o log_zz_all_corr_square.o log_zz_corr_square.o zz_all_time_corr.o
+disorder_transition = zz_corr_square.o disorder_model_transition.o zz_time_corr.o zz_all_corr_square.o zz_time_corr_component.o ent_var.o zz_corr_square_all_sample.o zz_time_corr_all_sample.o log_zz_all_corr_square.o log_zz_corr_square.o zz_all_time_corr.o ent_var_all_mean.o
 
 model_evolution = init_obj.o evol_data.o random_pure_init.o product_random_init.o random_product_init.o entropy_per_model.o init_obj_func.o left_spin_random_init.o leftmost_spin_per_model.o
 
