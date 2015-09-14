@@ -92,6 +92,16 @@ void TasksModels::Map_Construct_(){
     model_type5 = "Ising_All_Quasi_Simp_Shift_Real_Floquet";
     model_function5 = &Flo_Evol_Ising_All_Quasi_Simp_Shift_Real_Func;
     Model_Map_Insert(model_name5, model_type5, model_function5);
+
+    // Random Simple Shift Cos Real Ising Floquet Operator
+    string model_name6;
+    string model_type6;
+    model_func model_function6;
+
+    model_name6 = "Ising_Random_Simp_Shift_Cos_Real_Flo";
+    model_type6 = "Ising_Random_Simp_Shift_Cos_Real_Floquet";
+    model_function6 = &Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Func;
+    Model_Map_Insert(model_name6, model_type6, model_function6);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
