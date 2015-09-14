@@ -34,8 +34,8 @@ int main() {
     parameters.generic.model = "Ising_Random_Simp_Shift_Cos_Real_Flo";
 
     parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 10; // Number of realizations
-    parameters.generic.threads_N = 4; // Number of threads in openmp
+    parameters.generic.num_realizations = 2; // Number of realizations
+    parameters.generic.threads_N = 2; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
@@ -43,8 +43,8 @@ int main() {
     parameters.output.width = 30; // Width for spacing in output files
     parameters.output.filename_output = true; // Whether print out file names
 
-    parameters.floquet.J_N = 30; // Number of points of coupling strength
-    parameters.floquet.J_min = 0.1; // Minimum J
+    parameters.floquet.J_N = 1; // Number of points of coupling strength
+    parameters.floquet.J_min = 0.6; // Minimum J
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
     parameters.floquet.J = 0.6;
