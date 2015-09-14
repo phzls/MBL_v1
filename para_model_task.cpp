@@ -61,6 +61,16 @@ void Ising_All_Quasi_Simp_Shift_Real_Flo_Para(AllPara& parameters, string count)
     para_get(filename, content, keyword, parameters.floquet.J);
 }
 
+// For Ising random simple shift cosine real floquet operator
+void Ising_Random_Simp_Shift_Cos_Real_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_random_simp_shift_cos_real_flo_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+}
+
 
 //=================================== TASKS =====================================================
 
@@ -166,6 +176,10 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     keyword = "ZZ_All_Time_Correlation";
     para_get(filename, content, keyword, choice);
     parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = choice;
+
+    keyword = "Entropy_Variance_All_Mean";
+    para_get(filename, content, keyword, choice);
+    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = choice;
 }
 
 // For single_model_time_evolution_para
