@@ -180,6 +180,10 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     keyword = "Entropy_Variance_All_Mean";
     para_get(filename, content, keyword, choice);
     parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = choice;
+
+    keyword = "Flo_Level_Stats_Ave";
+    para_get(filename, content, keyword, choice);
+    parameters.transition.flo_transition_compute[keyword] = choice;
 }
 
 // For single_model_time_evolution_para
