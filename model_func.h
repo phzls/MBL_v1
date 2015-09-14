@@ -30,4 +30,7 @@ string Flo_Evol_Ising_All_Random_Simp_Shift_Real_Func(const AllPara&, EvolOP*&);
 // For Ising all quasi-periodic simple shift real floquet operator
 string Flo_Evol_Ising_All_Quasi_Simp_Shift_Real_Func(const AllPara&, EvolOP*&);
 
+// For Ising random simple shift cos real floquet operator
+string Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Func(const AllPara&, EvolOP*&);
+
 #endif //MBL_V1_MODEL_FUNC_H
