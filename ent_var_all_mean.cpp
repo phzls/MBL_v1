@@ -74,6 +74,7 @@ void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, 
     const int width = parameters.output.width;
     const bool output = parameters.output.filename_output;
     const int size = parameters.generic.size;
+    const bool debug = parameters.generic.debug;
 
     const int dim = model_data_.model_dim; // Number of eigenstates for each realization
 
@@ -133,7 +134,15 @@ void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, 
         // Compute entropy variance use single mean for each realization
         for(int j=0; j<num_realizations; j++){
             double local_mean = model_data_.ent_mean[i][j];
-            var[i] = model_data_.ent_var[i][j] + double(dim)*(mean-local_mean)*(mean-local_mean)*(dim-1);
+            var[j] = model_data_.ent_var[i][j] + double(dim)*(mean-local_mean)*(mean-local_mean)/(dim-1);
+        }
+
+        if(debug){
+            cout << "At J: " << J << endl;
+            cout << "Single Mean: " << mean << endl;
+            cout << "Variances for all realizations:"<< endl;
+            for(int k=0; k<var.size(); k++) cout << var[k] << endl;
+            cout << endl;
         }
 
         // Obtain average variance and its sd across all realizations for single J
