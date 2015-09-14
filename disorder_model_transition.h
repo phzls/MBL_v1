@@ -45,6 +45,12 @@ struct DisorderModelData
 
     // zz time correlation at different distances with configuration symmetric w.r.t the center
     vector< vector<vector<double> > > zz_all_time_corr;
+
+    // Mean value of entropy for each realization
+    vector< vector<double> > ent_mean;
+
+    // Number of eigenstates, assuming it's the same across the calculation
+    int model_dim;
 };
 
 /*
@@ -168,9 +174,17 @@ private:
     void ZZ_all_time_corr_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void ZZ_all_time_corr_out_(const AllPara&, const string&);
 
+    // For "variance" of entropy among eigenstates, where the mean used in variance calculation is
+    // the mean from all samples of all realizations.
+    void Ent_var_all_mean_init_(const AllPara&);
+    void Ent_var_all_mean_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void Ent_var_all_mean_out_(const AllPara&, const string&);
+    bool ent_mean_keep_; // Whether keep mean values of entropy for each realization
+
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
-                                                         op_keep_(false), op_diag_(false), op_dial_evec_keep_(false)
+                                                         op_keep_(false), op_diag_(false), op_dial_evec_keep_(false),
+                                                         ent_mean_keep_(false)
     {
         map_initialize_(parameters);
 
@@ -185,7 +199,7 @@ public:
 
     bool Op_Keep() const {return op_keep_;} // Whether evolution operator will be kept
     bool Op_Diag() const {return op_diag_;} // Whether evolution operator will be diagonalized
-    bool Op_Evec_Kepp() const {return op_dial_evec_keep_;} // Whether evec will be computed
+    bool Op_Evec_Keep() const {return op_dial_evec_keep_;} // Whether evec will be computed
 
     ~DisorderModelTransition() {};
 };

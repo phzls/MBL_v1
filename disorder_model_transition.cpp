@@ -211,6 +211,25 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_func_map_[name10] = cal_func10;
     flo_out_map_[name10] = out_func10;
 
+    // entropy "variance" using one mean at each J
+    string name11 = "Entropy_Variance_All_Mean";
+    Flo_init init_func11 = &DisorderModelTransition::Ent_var_all_mean_init_;
+    Flo_func cal_func11 = &DisorderModelTransition::Ent_var_all_mean_compute_;
+    Flo_out out_func11 = &DisorderModelTransition::Ent_var_all_mean_out_;
+
+    // Make sure the name has not been used before
+    init_it = flo_init_map_.find(name11);
+    cal_it = flo_func_map_.find(name11);
+    out_it = flo_out_map_.find(name11);
+    if (init_it != flo_init_map_.end() || cal_it != flo_func_map_.end() || out_it != flo_out_map_.end()){
+        cout << name11 << " for disorder transition has appeared before." << endl;
+        abort();
+    }
+
+    flo_init_map_[name11] = init_func11;
+    flo_func_map_[name11] = cal_func11;
+    flo_out_map_[name11] = out_func11;
+
     // Check the number of function
     if ( flo_init_map_.size() != flo_func_map_.size() ){
 
