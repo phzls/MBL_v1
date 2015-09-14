@@ -85,6 +85,7 @@ void DisorderModelTransition::Flo_level_stats_ave_compute_(AllPara const & param
             index ++;
         }
     }
+    index --; // Get rid of the last ++
     if(index != dim-1){
         cout << "Incorrect number of eigenvalues" << endl;
         cout << "Expected: " << dim << endl;
