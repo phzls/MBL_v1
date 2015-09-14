@@ -51,6 +51,9 @@ struct DisorderModelData
 
     // Number of eigenstates, assuming it's the same across the calculation
     int model_dim;
+
+    // Level statistics average
+    vector< vector<double> > level_stat_ave;
 };
 
 /*
@@ -180,6 +183,11 @@ private:
     void Ent_var_all_mean_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void Ent_var_all_mean_out_(const AllPara&, const string&);
     bool ent_mean_keep_; // Whether keep mean values of entropy for each realization
+
+    // For average (consecutive) level statistics for each realization from floquet system
+    void Flo_level_stats_ave_init_(const AllPara&);
+    void Flo_level_stats_ave_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void Flo_level_stats_ave_out_(const AllPara&, const string&);
 
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),

@@ -230,6 +230,25 @@ void DisorderModelTransition::map_initialize_(const AllPara& parameters) {
     flo_func_map_[name11] = cal_func11;
     flo_out_map_[name11] = out_func11;
 
+    // Average level statistics for Floquet system
+    string name12 = "Flo_Level_Stats_Ave";
+    Flo_init init_func12 = &DisorderModelTransition::Flo_level_stats_ave_init_;
+    Flo_func cal_func12 = &DisorderModelTransition::Flo_level_stats_ave_compute_;
+    Flo_out out_func12 = &DisorderModelTransition::Flo_level_stats_ave_out_;
+
+    // Make sure the name has not been used before
+    init_it = flo_init_map_.find(name12);
+    cal_it = flo_func_map_.find(name12);
+    out_it = flo_out_map_.find(name12);
+    if (init_it != flo_init_map_.end() || cal_it != flo_func_map_.end() || out_it != flo_out_map_.end()){
+        cout << name12 << " for disorder transition has appeared before." << endl;
+        abort();
+    }
+
+    flo_init_map_[name12] = init_func12;
+    flo_func_map_[name12] = cal_func12;
+    flo_out_map_[name12] = out_func12;
+
     // Check the number of function
     if ( flo_init_map_.size() != flo_func_map_.size() ){
 
