@@ -70,7 +70,7 @@ void disorder_transition(const AllPara& parameters){
 
                 if (disorder_model_transition.Op_Diag()) {
                     // Diagonalize the matrix
-                    models[k] -> Evol_Diag(disorder_model_transition.Op_Evec_Kepp());
+                    models[k] -> Evol_Diag(disorder_model_transition.Op_Evec_Keep());
 
                     if (disorder_model_transition.Eval_Real() && (models[k]->Eval_Type() == "Real")) {
                         models[k] -> Eval(local_info.eval_real);
@@ -81,7 +81,7 @@ void disorder_transition(const AllPara& parameters){
                         local_info.eval_type_real = false;
                     }
 
-                    if (disorder_model_transition.Op_Evec_Kepp()){
+                    if (disorder_model_transition.Op_Evec_Keep()){
                         // Keep eigenvectors
                         if (disorder_model_transition.Evec_Real() && (models[k]->Evec_Type() == "Real")) {
                             models[k] -> Evec(local_info.evec_real);
@@ -119,7 +119,7 @@ void disorder_transition(const AllPara& parameters){
                             }
                         }
 
-                        if (disorder_model_transition.Op_Evec_Kepp()){
+                        if (disorder_model_transition.Op_Evec_Keep()){
                             cout << "Eigenvectors:" << endl;
 
                             if (disorder_model_transition.Evec_Real() && (models[k]->Evec_Type() == "Real")){
