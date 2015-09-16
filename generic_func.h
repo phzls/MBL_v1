@@ -37,7 +37,6 @@ int generic_norm(int);
 
 /*
  * Given a vector of data, compute its sample mean and the standard deviation from sample variance
- * ddof is the degree of freedom taken out
  */
 template<class T>
 void generic_mean_sd(const vector<T>& data, T& mean, T& sd){
