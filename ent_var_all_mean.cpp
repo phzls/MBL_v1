@@ -19,7 +19,7 @@ using namespace Eigen;
 /**
  ** This file contains functions related to ent_var_all_mean, which is the entropy "variance"
  ** for all eigenstates given a model. Here the mean used in calculation is the man from all
- ** realizations.
+ ** realizations. An biased estimator is used for such "variance"
  ** The entropy is half chain entanglement entropy, so the spin chain must have even length.
  **/
 
@@ -63,7 +63,8 @@ void DisorderModelTransition::Ent_var_all_mean_compute_(AllPara const & paramete
  * To get the desired result, we use the following formula:
  * Assume "local" mean for each realization is x, the mean of all x at one J for all realizations is y
  * "local" variance is w for each realization, then the "variance" with mean y for each realization is
- * x + N/(N-1)*(x-y)^z, where N is the number of eigenstates for each realization
+ * w*N/(N-1) + (x-y)^z, where N is the number of eigenstates for each realization
+ * Here w is computed as unbiased, but in the end we use a biased as we only use 1 ddof for estimating y
  */
 void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, const string& name) {
     const double J_min = parameters.floquet.J_min;
@@ -134,7 +135,7 @@ void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, 
         // Compute entropy variance use single mean for each realization
         for(int j=0; j<num_realizations; j++){
             double local_mean = model_data_.ent_mean[i][j];
-            var[j] = model_data_.ent_var[i][j] + double(dim)*(mean-local_mean)*(mean-local_mean)/(dim-1);
+            var[j] = double(dim-1)*model_data_.ent_var[i][j]/dim + (mean-local_mean)*(mean-local_mean);
         }
 
         if(debug){
@@ -146,7 +147,7 @@ void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, 
         }
 
         // Obtain average variance and its sd across all realizations for single J
-        generic_mean_sd(var, mean, sd);
+        generic_mean_sd(var, mean, sd, 0);
 
         fout << setw(10) << J << setw(width) << mean << setw(width) << sd << endl;
     }

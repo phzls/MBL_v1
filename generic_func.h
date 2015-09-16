@@ -40,7 +40,7 @@ int generic_norm(int);
  * ddof is the degree of freedom taken out
  */
 template<class T>
-void generic_mean_sd(const vector<T>& data, T& mean, T& sd, int dof = 1){
+void generic_mean_sd(const vector<T>& data, T& mean, T& sd){
     mean = 0;
     sd = 0;
 
@@ -52,7 +52,7 @@ void generic_mean_sd(const vector<T>& data, T& mean, T& sd, int dof = 1){
     }
 
     mean /= double(N);
-    sd = sqrt( double(N) / double(N-dof) * (sd/double(N) - mean*mean) );
+    sd = sqrt( double(N) / double(N-1) * (sd/double(N) - mean*mean) );
 }
 
 #endif //MBL_V1_GENERIC_FUNC_H
