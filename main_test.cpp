@@ -35,7 +35,7 @@ int main() {
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 2; // Number of realizations
-    parameters.generic.threads_N = 2; // Number of threads in openmp
+    parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
@@ -151,10 +151,10 @@ int main() {
     parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = false; // zz time correlation at all
     // distances
 
-    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = false; // entropy variance for all
+    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = true; // entropy variance for all
     // eigenstates using single mean
 
-    parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = true; // Level statistics average for
+    parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = false; // Level statistics average for
     // floquet system
 
 
