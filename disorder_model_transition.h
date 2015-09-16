@@ -54,6 +54,9 @@ struct DisorderModelData
 
     // Level statistics average
     vector< vector<double> > level_stat_ave;
+
+    // Scaled entropy average for each realization
+    vector< vector<double> > ent_scaled_mean;
 };
 
 /*
@@ -188,6 +191,11 @@ private:
     void Flo_level_stats_ave_init_(const AllPara&);
     void Flo_level_stats_ave_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void Flo_level_stats_ave_out_(const AllPara&, const string&);
+
+    // For scaled average entropy for each realization
+    void Ent_scaled_mean_init_(const AllPara&);
+    void Ent_scaled_mean_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void Ent_scaled_mean_out_(const AllPara&, const string&);
 
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
