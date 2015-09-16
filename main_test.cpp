@@ -31,10 +31,10 @@ int main() {
 
 
     parameters.generic.task = "Disorder_Transition";
-    parameters.generic.model = "Ising_Random_Simp_Shift_Cos_Real_Flo";
+    parameters.generic.model = "Ising_Quasi_Simp_Shift_Real_Flo";
 
     parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 2; // Number of realizations
+    parameters.generic.num_realizations = 1; // Number of realizations
     parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
@@ -151,11 +151,13 @@ int main() {
     parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = false; // zz time correlation at all
     // distances
 
-    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = true; // entropy variance for all
+    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = false; // entropy variance for all
     // eigenstates using single mean
 
     parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = false; // Level statistics average for
     // floquet system
+
+    parameters.transition.flo_transition_compute["Ent_Scaled_Mean"] = true; // Scaled average entropy
 
 
 
