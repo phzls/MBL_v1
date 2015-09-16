@@ -135,6 +135,8 @@ void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, 
         // Compute entropy variance use single mean for each realization
         for(int j=0; j<num_realizations; j++){
             double local_mean = model_data_.ent_mean[i][j];
+
+            // Use correct mean and convert to biased estimation
             var[j] = double(dim-1)*model_data_.ent_var[i][j]/dim + (mean-local_mean)*(mean-local_mean);
         }
 
@@ -147,7 +149,8 @@ void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, 
         }
 
         // Obtain average variance and its sd across all realizations for single J
-        generic_mean_sd(var, mean, sd, 0);
+        // The variance here is still the unbiased one
+        generic_mean_sd(var, mean, sd);
 
         fout << setw(10) << J << setw(width) << mean << setw(width) << sd << endl;
     }
