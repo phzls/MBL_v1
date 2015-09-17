@@ -49,7 +49,7 @@ void FloEvolVanilla::Transition_Compute(TransitionMatrix& transition, const stri
 }
 
 void FloEvolVanilla::Evec(vector<MatrixXcd>& evec) const {
-    if (eigen_ == NULL){
+    if (eigen_ == NULL || !eigen_info_){
         cout << Repr() << " has not been diagonalized with eigenvectors." << endl;
     }
     evec.resize(1);
