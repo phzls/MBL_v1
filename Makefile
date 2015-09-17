@@ -1,6 +1,6 @@
 INC = ~/
 
-models = flo_evol.o flo_ising_random_simp.o flo_ising_random_simp_shift_real.o flo_ising_quasi_simp_shift_real.o flo_ising_all_random_simp_shift_real.o flo_ising_all_quasi_simp_shift_real.o flo_ising_random_simp_shift_cos_real.o
+models = flo_evol.o flo_ising_random_simp.o flo_ising_random_simp_shift_real.o flo_ising_quasi_simp_shift_real.o flo_ising_all_random_simp_shift_real.o flo_ising_all_quasi_simp_shift_real.o flo_ising_random_simp_shift_cos_real.o ham_evol.o ham_evol_heisen_random_cos_sz_sector.o
 
 tasks = disorder_transition.o single_model_time_evolution.o state_evol.o multi_model_time_evolution.o density_evol.o
 
@@ -10,7 +10,7 @@ model_evolution = init_obj.o evol_data.o random_pure_init.o product_random_init.
 
 controls = tasks_models.o model_func.o
 
-small_methods = matrix_algebra.o screen_output.o mersenne.o evec_to_basic.o reduced_density_left_2.o generic_func.o
+small_methods = matrix_algebra.o screen_output.o mersenne.o evec_to_basic.o reduced_density_left_2.o generic_func.o combinatorics.o
 
 transitions = basis_transition.o basic_full.o basic_parity.o parity_full.o
 
