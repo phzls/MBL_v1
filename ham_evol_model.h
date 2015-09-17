@@ -27,7 +27,7 @@ class HamEvolHeisenRandomCosSzSector : public HamEvolVanillaReal
 private:
     const double h_; // Disorder strength
 
-    const total_spin_z_; // Total spin z value, where up spin is 1 and down spin is -1
+    const int total_spin_z_; // Total spin z value, where up spin is 1 and down spin is -1
 
     // Spin Configuration. It gives the number in full basic basis for each index in
     // our restricted basic basis. The numbers will be sorted in ascending order
