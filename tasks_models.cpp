@@ -102,6 +102,16 @@ void TasksModels::Map_Construct_(){
     model_type6 = "Ising_Random_Simp_Shift_Cos_Real_Floquet";
     model_function6 = &Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Func;
     Model_Map_Insert(model_name6, model_type6, model_function6);
+
+    // Random Heisenberg Cos Total Z Spin Hamiltonian Operator
+    string model_name7;
+    string model_type7;
+    model_func model_function7;
+
+    model_name7 = "Heisen_Random_Cos_Sz_Sector_Ham";
+    model_type7 = "Heisen_Random_Cos_Sz_Sector_Hamiltonian";
+    model_function7 = &Ham_Evol_Heisen_Random_Cos_Sz_Sector_Func;
+    Model_Map_Insert(model_name7, model_type7, model_function7);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
