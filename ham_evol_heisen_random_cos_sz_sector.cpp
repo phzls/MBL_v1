@@ -108,14 +108,22 @@ void HamEvolHeisenRandomCosSzSector::Spin_Config_() {
  * Construct the Hamiltonian only for the sector of given total Z spin
  */
 void HamEvolHeisenRandomCosSzSector::Evol_Construct() {
+
+    if (!constructed_){
+        ham_op_ = MatrixXd::Zero(dim_,dim_);
+        constructed_ = true;
+    }
+
+    else{
+        cout << "Evolution operator has been constructed." << endl;
+        abort();
+    }
     if(size_ < 1) {
         cout << "Cannot construct Hamiltonian with " << size_ << " number of spins for " << type_ << endl;
         abort();
     }
 
     Spin_Config_();
-
-    ham_op_ = MatrixXd::Zero(dim_,dim_);
 
     // Change config_ to a map for easy lookup of basic states to restricted states
     map<int, int> config_map;
@@ -161,9 +169,27 @@ void HamEvolHeisenRandomCosSzSector::Evol_Construct() {
                 flip_state = flip_state ^ pos; // flip spin
 
                 restricted_flip_state = config_map[flip_state];
-                ham_op_(restricted_flip_state, state) += 2;
+                ham_op_(restricted_flip_state, i) += 2;
             }
-            ham_op_(state, state) = z_val;
+            ham_op_(i, i) = z_val;
         }
+    }
+
+    // Check if the matrix is Hermitian
+    for (int i=0; i<ham_op_.cols(); i++){
+        for (int j=i+1; j< ham_op_.rows();j++){
+            if (abs(ham_op_(j,i) - ham_op_(i,j)) > 1.0e-10){
+                cout << "Hamiltonian is not Hermitian at row " << j <<" and col " << i << endl;
+                cout << "(i,j): " << ham_op_(i,j) << endl;
+                cout << "(j,i): " << ham_op_(j,i) << endl;
+                abort();
+            }
+        }
+    }
+
+    if (debug_){
+        cout << "Hamiltonian matrix:" << endl;
+        matrix_write(ham_op_);
+        cout << endl;
     }
 }
