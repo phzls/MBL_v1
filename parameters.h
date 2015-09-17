@@ -57,6 +57,19 @@ struct FloPara
 	double tau; // Time step
 };
 
+/*
+ * Parameters that are related to Hamiltonian models
+ */
+struct HamPara
+{
+	double h_min; // Minimum h in a loop
+	double h_max; // Maximum h in a loop
+	int h_N; // Number of points for different field strength, including h_min
+		     // and h_max
+	double h; // Random field strength
+	int total_spin_z; // Total Z spin for a sector
+};
+
 struct MatrixPara
 {
 	string type; // Determine the representation type of the matrix
@@ -156,6 +169,9 @@ struct AllPara
 
 	// Floquet parameters
 	FloPara floquet;
+
+	// Hamiltonian parameters
+	HamPara hamiltonian;
 
 	// Matrix relevant parameters
 	MatrixPara matrix_para;
