@@ -57,7 +57,10 @@ public:
         if (constructed_){
             if (eigen_ == NULL){
                 eigen_ = new SelfAdjointEigenSolver<MatrixXd>;
-                eigen_ -> compute(ham_op_, keep);
+                int evec_flag = Eigen::EigenvaluesOnly;
+                if(keep) evec_flag = Eigen::ComputeEigenvectors;
+
+                eigen_ -> compute(ham_op_, evec_flag);
                 eigen_info_ = keep;
                 eigen_name[0] = "Full";
             }
