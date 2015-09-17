@@ -14,7 +14,7 @@ using namespace std;
  *
  * It is done by recursively choosing the largest number.
  */
-void comb_num(int min, int max, int m, vector<int>& comb, int offset = 0) {
+void comb_num(int min, int max, int m, vector<int>& comb, int offset ) {
 
     if(offset < 0){
         cout << "Offset must be non-negative." << endl;
