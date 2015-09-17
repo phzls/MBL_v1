@@ -6,6 +6,7 @@
 #include <string>
 #include "model_func.h"
 #include "flo_evol_model.h"
+#include "ham_evol_model.h"
 
 using namespace std;
 
@@ -87,6 +88,21 @@ string Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Func(const AllPara& parameters,
     const bool debug = parameters.generic.debug;
 
     model = new FloEvolIsingRandomSimpShiftCosReal(size, W, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
+
+// For Heisen random cos sz sector Hamiltonian operator
+string Ham_Evol_Heisen_Random_Cos_Sz_Sector_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double h = parameters.hamiltonian.h; // random field strength
+    const int total_spin_z = parameters.hamiltonian.total_spin_z;
+
+    const bool debug = parameters.generic.debug;
+
+    model = new HamEvolHeisenRandomCosSzSector(size, h, total_spin_z, debug);
 
     string type = model -> Type();
 
