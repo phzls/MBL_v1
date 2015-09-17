@@ -27,7 +27,7 @@ class EvolOP
 {
 protected:
     const int size_; // Size of the system
-    const int dim_; // Dimension of the space given size
+    int dim_; // Dimension of the space given size
     const int local_dim_; // Local dimension of the Hilber space
     const bool iso_keep_; // Whether keep another EvolOP pointer which points
                           // to the isolated part of a model coupled to the bath
