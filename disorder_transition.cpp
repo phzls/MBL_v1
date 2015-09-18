@@ -9,6 +9,8 @@
 #include "disorder_model_transition.h"
 #include "screen_output.h"
 #include "evol_op.h"
+#include "sort_comparator.h"
+#include "disorder_transition_func.h"
 
 using namespace std;
 
@@ -22,12 +24,14 @@ void disorder_transition(const AllPara& parameters){
     const int J_N = parameters.floquet.J_N; // Number of points for J
     const double J_max = parameters.floquet.J_max; // Maximum J
     const double J_min = parameters.floquet.J_min; // Minimum J
+    const int total_spin_z = parameters.floquet.total_spin_z; // Total Spin Z; for now only used for Hamiltonian
     const int num_realization = parameters.generic.num_realizations;
     const int threads_N = parameters.generic.threads_N;
     const string model_name = parameters.generic.model;
     const bool debug = parameters.generic.debug;
     const bool time = parameters.generic.time;
     string name;
+    bool is_ham; // Whether the model is Hamiltonian
 
     DisorderModelTransition disorder_model_transition(parameters);
 
@@ -42,6 +46,7 @@ void disorder_transition(const AllPara& parameters){
         else J = J_min;
 
         local_parameters.floquet.J = J;
+        local_parameters.floquet.total_spin_z = total_spin_z;
 
         vector<EvolOP*> models(num_realization);
 
@@ -50,7 +55,10 @@ void disorder_transition(const AllPara& parameters){
             models[k] -> Evol_Para_Init();
         }
 
-        if (i == 0) name = models[0] -> Type();
+        if (i == 0) {
+            name = models[0] -> Type();
+            is_ham = (name.find("Hamiltonian") != string::npos);
+        }
 
         cout << "J: " << local_parameters.floquet.J << endl;
         cout << "Start computation." << endl;
@@ -94,6 +102,57 @@ void disorder_transition(const AllPara& parameters){
                     }
 
                     models[k] -> Eigen_Erase();
+
+                    // If it's Hamiltonian, then I need to only take center half in each sector
+                    if( is_ham ){
+                        if(!local_info.eval_type_real){
+                            cout << "Eigenvalues of Hamiltonian must be real" << endl;
+                        }
+
+                        if(debug) cout << "Original Eigenvalues and Eigenvectors:" << endl;
+                        for(int l=0; l<local_info.eval_real.size(); l++){
+                            // Second entry acts as an index
+                            const int sec_size = local_info.eval_real[l].size();
+
+                            vector< pair<double, int> > pair_index(sec_size);
+                            for(int m=0; m < sec_size; m++){
+                                pair_index[m] = pair<double, int>(local_info.eval_real[l](m), m);
+                            }
+
+                            if(debug){
+                                cout << "Sector " << l << endl;
+                                cout << "Eigenvalues:" << endl;
+                                real_matrix_write(local_info.eval_real[l]);
+                                cout << endl;
+                            }
+
+                            sort(pair_index.begin(), pair_index.end(), pair_first_less_comparator<double, int>);
+
+                            // Take only the middle half eigenvalues
+                            Middle_Half_Extract(pair_index, local_info.eval_real[l]);
+
+                            // Take only the middle half eigenvectors if they are computed
+                            if(disorder_model_transition.Op_Evec_Keep()){
+                                if(debug) cout << "Eigenvectors:" << endl;
+                                if(local_info.evec_type_real){
+                                    if(debug){
+                                        real_matrix_write(local_info.evec_real[l]);
+                                        cout << endl;
+                                    }
+
+                                    Middle_Half_Extract(pair_index, local_info.evec_real[l]);
+                                }
+                                else{
+                                    if(debug){
+                                        complex_matrix_write(local_info.evec_complex[l]);
+                                        cout << endl;
+                                    }
+
+                                    Middle_Half_Extract(pair_index, local_info.evec_complex[l]);
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (!disorder_model_transition.Op_Keep()) models[k] -> OP_Erase();
