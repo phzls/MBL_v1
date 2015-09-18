@@ -112,6 +112,16 @@ void TasksModels::Map_Construct_(){
     model_type7 = "Heisen_Random_Cos_Sz_Sector_Hamiltonian";
     model_function7 = &Ham_Evol_Heisen_Random_Cos_Sz_Sector_Func;
     Model_Map_Insert(model_name7, model_type7, model_function7);
+
+    // Quasi-periodic Heisenberg Total Z Spin Hamiltonian Operator
+    string model_name8;
+    string model_type8;
+    model_func model_function8;
+
+    model_name8 = "Heisen_Quasi_Sz_Sector_Ham";
+    model_type8 = "Heisen_Quasi_Sz_Sector_Hamiltonian";
+    model_function8 = &Ham_Evol_Heisen_Quasi_Sz_Sector_Func;
+    Model_Map_Insert(model_name8, model_type8, model_function8);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
