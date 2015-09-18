@@ -2,9 +2,9 @@
 // Created by Liangsheng Zhang on 9/17/15.
 //
 
-/*
- * Implementation of HamEvolHeisenRandomCosSzSector class
- */
+/**
+ ** Implementation of HamEvolHeisenRandomCosSzSector class
+ **/
 
 #include <complex>
 #include <iostream>
