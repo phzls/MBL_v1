@@ -31,7 +31,7 @@ int main() {
 
 
     parameters.generic.task = "Disorder_Transition";
-    parameters.generic.model = "Ising_Quasi_Simp_Shift_Real_Flo";
+    parameters.generic.model = "Heisen_Random_Cos_Sz_Sector_Ham";
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 1; // Number of realizations
@@ -48,6 +48,7 @@ int main() {
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
     parameters.floquet.J = 0.6;
+    parameters.floquet.total_spin_z = 0;
 
     parameters.markov.K = 0.8; // Coupling strength to the bath in markov models
 
