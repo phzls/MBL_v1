@@ -97,12 +97,28 @@ string Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Func(const AllPara& parameters,
 // For Heisen random cos sz sector Hamiltonian operator
 string Ham_Evol_Heisen_Random_Cos_Sz_Sector_Func(const AllPara& parameters, EvolOP*& model){
     const int size = parameters.generic.size; // System Size
-    const double h = parameters.hamiltonian.h; // random field strength
-    const int total_spin_z = parameters.hamiltonian.total_spin_z;
+    const double h = parameters.floquet.J; // random field strength
+    const int total_spin_z = parameters.floquet.total_spin_z;
 
     const bool debug = parameters.generic.debug;
 
     model = new HamEvolHeisenRandomCosSzSector(size, h, total_spin_z, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
+
+
+// For Heisen quasi-periodic sz sector Hamiltonian operator
+string Ham_Evol_Heisen_Quasi_Sz_Sector_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double h = parameters.floquet.J; // random field strength
+    const int total_spin_z = parameters.floquet.total_spin_z;
+
+    const bool debug = parameters.generic.debug;
+
+    model = new HamEvolHeisenQuasiSzSector(size, h, total_spin_z, debug);
 
     string type = model -> Type();
 
