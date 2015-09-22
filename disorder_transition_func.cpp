@@ -81,29 +81,31 @@ void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
     std::vector<bool> index_bool(mid_half_size, false);
 
-    // Sort matrix columns according to pair_index
-    for(int index=0; index<size;){
-        int pos = pair_index[index].second;
+    for(int index=0; index<mid_half_size;){
+        int pos = pair_index[(index + size/4)%size].second;
         matrix.col(index).swap( matrix.col(pos) );
         index_bool[index] = true;
 
-        int next = pair_index[pos].second;
+        int next = pair_index[(pos+size/4)%size].second;
+        int init_obj_pos = pos;
 
         while(next != index){
-            matrix.col(pos).swap(matrix.col(next));
-            index_bool[pos] = true;
+            if(pos<mid_half_size){
+                matrix.col(pos).swap(matrix.col(next));
+                init_obj_pos = next;
+                index_bool[pos] = true;
+            }
+            else if(next < mid_half_size){
+                matrix.col(next).swap( matrix.col(init_obj_pos) );
+                init_obj_pos = next;
+                index_bool[next] = true;
+            }
 
             pos = next;
-            next = pair_index[pos].second;
+            next = pair_index[(pos+size/4)%size].second;
         }
 
-        index_bool[pos] = true;
         while(index_bool[index]) ++index;
-    }
-
-    // Move middle half to first part
-    for(int index=0; index<mid_half_size;index++){
-        matrix.col(index).swap(matrix.col(index+size/4));
     }
 
     matrix.resize(Eigen::NoChange , mid_half_size);
