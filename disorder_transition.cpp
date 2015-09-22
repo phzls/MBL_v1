@@ -73,6 +73,7 @@ void disorder_transition(const AllPara& parameters){
                 DisorderLocalInfo local_info;
                 local_info.J_index = i;
                 local_info.realization_index = k;
+                local_info.is_ham = is_ham;
 
                 models[k] -> Evol_Construct();
 
@@ -128,6 +129,10 @@ void disorder_transition(const AllPara& parameters){
 
                             sort(pair_index.begin(), pair_index.end(), pair_first_less_comparator<double, int>);
 
+                            // Obtain the eigenvalue above and below the middle half
+                            local_info.lower_eval = pair_index[sec_size/4-1].first;
+                            local_info.upper_eval = pair_index[sec_size-sec_size/4].first;
+
                             // Take only the middle half eigenvalues
                             Middle_Half_Extract(pair_index, local_info.eval_real[l]);
 
@@ -176,6 +181,12 @@ void disorder_transition(const AllPara& parameters){
                                 complex_matrix_write(local_info.eval_complex[l]);
                                 cout << endl;
                             }
+                        }
+
+                        if(is_ham){
+                            cout << "Lower eval: " << local_info.lower_eval << endl;
+                            cout << "Upper eval: " << local_info.upper_eval << endl;
+                            cout << endl;
                         }
 
                         if (disorder_model_transition.Op_Evec_Keep()){
