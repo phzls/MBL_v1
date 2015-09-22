@@ -33,8 +33,8 @@ int main() {
     parameters.generic.task = "Disorder_Transition";
     parameters.generic.model = "Heisen_Random_Cos_Sz_Sector_Ham";
 
-    parameters.generic.size = 8; // System size
-    parameters.generic.num_realizations = 10; // Number of realizations
+    parameters.generic.size = 10; // System size
+    parameters.generic.num_realizations = 2; // Number of realizations
     parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = false; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
