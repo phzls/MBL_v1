@@ -12,6 +12,7 @@
 #include "methods.h"
 #include "generic_func.h"
 #include "screen_output.h"
+#include "ham_evol_model.h"
 
 using namespace std;
 using namespace Eigen;
@@ -62,7 +63,80 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
         abort();
     }
 
-    if (local_info.evec_type_real){
+    if ( model -> Eigen_Basis_Type() == "Restricted Basic" && local_info.evec_type_real && local_info.is_ham){
+        // This is just a temporary workaround
+
+        int half_mid_size = dim - 2*(dim/4);
+        ent.resize(half_mid_size);
+        model_data_.model_dim = half_mid_size;
+
+        int full_dim = 1 << size; // Full dimension of the spin chain
+
+        vector<int> spin_config;
+        VectorXd evec(full_dim); // Used to store one eigenvector
+        MatrixXd reduced_d; // Reduced density matrix
+
+        if( dynamic_cast<const HamEvolHeisenRandomCosSzSector*>(model) ){
+            const HamEvolHeisenRandomCosSzSector* down_cast_model = dynamic_cast<const HamEvolHeisenRandomCosSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
+        else if( dynamic_cast<const HamEvolHeisenQuasiSzSector*>(model) ){
+            const HamEvolHeisenQuasiSzSector* down_cast_model = dynamic_cast<const HamEvolHeisenQuasiSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
+
+        int index = 0;
+        for(int i=0; i<local_info.evec_real.size(); i++){
+            for (int j=0; j<local_info.evec_real[i].cols(); j++){
+                if(index >= half_mid_size){
+                    cout << "Too many eigenvectors for middle half spectrum." << endl;
+                    cout << "Expected: " << half_mid_size << endl;
+                    cout << "Current index: " << index << endl;
+                    abort();
+                }
+
+                ent[index] = 0;
+                evec.setZero();
+
+                for(int k=0; k<local_info.evec_real[i].rows(); k++){
+                    int pos = spin_config[k];
+                    evec(pos) = local_info.evec_real[i](k,j);
+                }
+
+                // Compute left reduce density matrix
+                reduced_density_left_2(evec, size, size/2, reduced_d);
+
+                SelfAdjointEigenSolver<MatrixXd> density_eigen; // Eigen for reduced density matrix
+                density_eigen.compute(reduced_d, false); // Eigenvectors not computed
+
+                // Compute entropy for this state
+                for (int l=0; l<density_eigen.eigenvalues().rows();l++){
+                    double eval = density_eigen.eigenvalues()(l);
+                    if (abs(eval)>1.0e-10)
+                    {
+                        if (eval<0){
+                            cout << "Density matrix has significant negative eigenvalues." << endl;
+                            cout << eval << endl;
+                            abort();
+                        }
+                        ent[index] += -eval*log2(eval);
+                    }
+                }
+
+                if (debug){
+                    cout << "Realization " << local_info.realization_index << " eigenstate " << index << ":" << endl;
+                    cout << "Full Eigenvector:" << endl;
+                    real_matrix_write(evec);
+                    cout << endl;
+                    cout << "Reduced Density Matrix: " << endl;
+                    real_matrix_write(reduced_d);
+                    cout << "Entropy: " << ent[index] << endl;
+                }
+                ++index;
+            }
+        }
+    }
+    else if (local_info.evec_type_real){
         // Vector for eigenvectors in basic binary basis
         vector<vector<double > > evec_basic(dim);
         for (int i=0; i<dim;i++) evec_basic[i].resize(dim);
