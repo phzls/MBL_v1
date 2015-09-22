@@ -12,7 +12,7 @@ using namespace std;
 void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,  Eigen::VectorXd& vec){
     const int size = pair_index.size();
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
-    std::vector<bool> index_bool(mid_half_size, false);
+    std::vector<bool> index_bool(size, false);
 
     // Sort the vector according to pair_index
     for(int index=0; index<size;){
@@ -46,7 +46,7 @@ void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,
 void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,  Eigen::MatrixXd& matrix){
     const int size = pair_index.size();
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
-    std::vector<bool> index_bool(mid_half_size, false);
+    std::vector<bool> index_bool(size, false);
 
     // Sort matrix columns according to pair_index
     for(int index=0; index<size;){
@@ -79,7 +79,7 @@ void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,
 void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,  Eigen::MatrixXcd& matrix){
     const int size = pair_index.size();
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
-    std::vector<bool> index_bool(mid_half_size, false);
+    std::vector<bool> index_bool(size, false);
 
     // Sort matrix columns according to pair_index
     for(int index=0; index<size;){
