@@ -44,12 +44,12 @@ protected:
 
 public:
     // When local dimension is not given
-    HamEvolVanillaReal(int size): EvolOP(size), constructed_(false), eigen_info_(false)
+    HamEvolVanillaReal(int size): EvolOP(size), constructed_(false), eigen_info_(false), eigen_(NULL)
     {eigen_name.resize(1,"");}
 
     // When local dimension is given
-    HamEvolVanillaReal(int size, int local_dim): EvolOP(size, local_dim), constructed_(false), eigen_info_(false)
-                                                 {eigen_name.resize(1,"");}
+    HamEvolVanillaReal(int size, int local_dim): EvolOP(size, local_dim), constructed_(false), eigen_info_(false),
+                                                 eigen_(NULL) {eigen_name.resize(1,"");}
 
     // Diagnolize Hamiltonian matrix, user can determine whether eigenvectors are kept
     // False is not kept; True is kept
