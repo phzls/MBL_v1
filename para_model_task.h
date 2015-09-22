@@ -34,6 +34,12 @@ void Ising_All_Quasi_Simp_Shift_Real_Flo_Para(AllPara&, string);
 // FOr Ising random simple shift cosine real floquet operator
 void Ising_Random_Simp_Shift_Cos_Real_Flo_Para(AllPara&, string);
 
+// For Heisenberg random cosine Sz sector Hamiltonian Operator
+void Heisen_Random_Cos_Sz_Sector_Ham_Para(AllPara&, string);
+
+// For Heisenberg quasi-periodic cosine Sz sector Hamiltonian Operator
+void Heisen_Quasi_Cos_Sz_Sector_Ham_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 

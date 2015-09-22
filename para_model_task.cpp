@@ -71,6 +71,33 @@ void Ising_Random_Simp_Shift_Cos_Real_Flo_Para(AllPara& parameters, string count
     para_get(filename, content, keyword, parameters.floquet.J);
 }
 
+// For Heisenberg random cosine Sz sector Hamiltonian Operator
+void Heisen_Random_Cos_Sz_Sector_Ham_Para(AllPara& parameters, string count){
+    string filename = "heisen_random_cos_sz_sector_ham_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "Total_Spin_Z";
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
+// For Heisenberg quasi-periodic cosine Sz sector Hamiltonian Operator
+void Heisen_Quasi_Cos_Sz_Sector_Ham_Para(AllPara& parameters, string count){
+    string filename = "heisen_quasi_cos_sz_sector_ham_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "Total_Spin_Z";
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
+
 
 //=================================== TASKS =====================================================
 
@@ -186,6 +213,10 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     parameters.transition.flo_transition_compute[keyword] = choice;
 
     keyword = "Ent_Scaled_Mean";
+    para_get(filename, content, keyword, choice);
+    parameters.transition.flo_transition_compute[keyword] = choice;
+
+    keyword = "Ham_Level_Stats_Ave";
     para_get(filename, content, keyword, choice);
     parameters.transition.flo_transition_compute[keyword] = choice;
 }
