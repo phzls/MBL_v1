@@ -38,7 +38,7 @@ void Ising_Random_Simp_Shift_Cos_Real_Flo_Para(AllPara&, string);
 void Heisen_Random_Cos_Sz_Sector_Ham_Para(AllPara&, string);
 
 // For Heisenberg quasi-periodic cosine Sz sector Hamiltonian Operator
-void Heisen_Quasi_Cos_Sz_Sector_Ham_Para(AllPara&, string);
+void Heisen_Quasi_Sz_Sector_Ham_Para(AllPara&, string);
 
 
 //=================================== TASKS =====================================================

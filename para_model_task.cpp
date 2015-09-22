@@ -85,7 +85,7 @@ void Heisen_Random_Cos_Sz_Sector_Ham_Para(AllPara& parameters, string count){
 }
 
 // For Heisenberg quasi-periodic cosine Sz sector Hamiltonian Operator
-void Heisen_Quasi_Cos_Sz_Sector_Ham_Para(AllPara& parameters, string count){
+void Heisen_Quasi_Sz_Sector_Ham_Para(AllPara& parameters, string count){
     string filename = "heisen_quasi_cos_sz_sector_ham_" + count;
     vector<vector<string> > content;
     string keyword = "J";
