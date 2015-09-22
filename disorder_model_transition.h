@@ -14,7 +14,7 @@
 using namespace std;
 
 /*
- * The data class used in flo_transition. It contains all possible outputs.
+ * The data class used in disorder_transition. It contains all possible outputs.
  */
 
 struct DisorderModelData
@@ -75,6 +75,12 @@ struct DisorderLocalInfo
 
     vector<VectorXcd> eval_complex; // Eigenvalues
     vector<VectorXd> eval_real; // Eigenvalues
+
+    // Eigenvalue above and below the middle half for Hamiltonian systems
+    double upper_eval;
+    double lower_eval;
+
+    bool is_ham; // Whether the model is Hamiltonian
 };
 
 class DisorderModelTransition;
@@ -82,7 +88,7 @@ class DisorderModelTransition;
 // Pointer to functions initializing data
 typedef  void (DisorderModelTransition::*Flo_init)(const AllPara&);
 
-// Pointer to functions studying properties of a given floquet system
+// Pointer to functions studying properties of a given model
 typedef void (DisorderModelTransition::*Flo_func)(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
 
 // Pointer to functions outputting data. The string gives the first part of filename
@@ -196,6 +202,11 @@ private:
     void Ent_scaled_mean_init_(const AllPara&);
     void Ent_scaled_mean_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void Ent_scaled_mean_out_(const AllPara&, const string&);
+
+    // For average (consecutive) level statistics for each realization from Hamiltonian system
+    void Ham_level_stats_ave_init_(const AllPara&);
+    void Ham_level_stats_ave_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void Ham_level_stats_ave_out_(const AllPara&, const string&);
 
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
