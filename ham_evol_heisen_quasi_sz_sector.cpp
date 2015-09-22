@@ -191,4 +191,3 @@ void HamEvolHeisenQuasiSzSector::Evol_Construct() {
     }
 }
 
-
