@@ -74,6 +74,10 @@ public:
         abort();
     }
 
+    // Return config_ so that one can map from restricted binary basis to full binary basis
+    // This is introduced as a hack as it doesn't fit into Transition_Compute paragon
+    vector<int> Get_Spin_Config() const {return config_;}
+
     string Eigen_Basis_Type() const {return "Restricted Basic";}
 
     virtual ~HamEvolHeisenRandomCosSzSector() {};
@@ -152,6 +156,10 @@ public:
         cout << "Not implemented yet." << endl;
         abort();
     }
+
+    // Return config_ so that one can map from restricted binary basis to full binary basis
+    // This is introduced as a hack as it doesn't fit into Transition_Compute paragon
+    vector<int> Get_Spin_Config() const {return config_;}
 
     string Eigen_Basis_Type() const {return "Restricted Basic";}
 
