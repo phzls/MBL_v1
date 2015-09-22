@@ -9,41 +9,38 @@
 
 using namespace std;
 
-void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,  Eigen::VectorXd& vector){
+void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,  Eigen::VectorXd& vec){
     const int size = pair_index.size();
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
     std::vector<bool> index_bool(mid_half_size, false);
 
-    int step = 0;
-    for(int index=0; index<mid_half_size;){
-        int pos = pair_index[(index + size/4)%size].second;
+    // Sort the vector according to pair_index
+    for(int index=0; index<size;){
+        int pos = pair_index[index].second;
 
-        swap(vector(index), vector(pos));
+        swap(vec(index), vec(pos));
         index_bool[index] = true;
 
-        int next = pair_index[(pos+size/4)%size].second;
-        int init_obj_pos = pos;
+        int next = pair_index[pos].second;
 
         while(next != index){
-            if(pos<mid_half_size){
-                swap(vector(pos), vector(next));
-                init_obj_pos = next;
-                index_bool[pos] = true;
-            }
-            else if(next < mid_half_size){
-                swap(vector(next), vector(init_obj_pos));
-                init_obj_pos = next;
-                index_bool[next] = true;
-            }
+            swap(vec(pos), vec(next));
+            index_bool[pos] = true;
 
             pos = next;
-            next = pair_index[(pos+size/4)%size].second;
+            next = pair_index[pos].second;
         }
 
-        while(index_bool[index]) ++index;
+        index_bool[pos] = true;
+        while(index < size && index_bool[index]) ++index;
     }
 
-    vector.conservativeResize(mid_half_size);
+    // Move middle half to first part
+    for(int index=0; index<mid_half_size;index++){
+        swap(vec(index), vec(index+size/4));
+    }
+
+    vec.conservativeResize(mid_half_size);
 }
 
 void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,  Eigen::MatrixXd& matrix){
@@ -51,31 +48,29 @@ void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
     std::vector<bool> index_bool(mid_half_size, false);
 
-    for(int index=0; index<mid_half_size;){
-        int pos = pair_index[(index + size/4)%size].second;
+    // Sort matrix columns according to pair_index
+    for(int index=0; index<size;){
+        int pos = pair_index[index].second;
         matrix.col(index).swap( matrix.col(pos) );
         index_bool[index] = true;
 
-        int next = pair_index[(pos+size/4)%size].second;
-        int init_obj_pos = pos;
+        int next = pair_index[pos].second;
 
         while(next != index){
-            if(pos<mid_half_size){
-                matrix.col(pos).swap(matrix.col(next));
-                init_obj_pos = next;
-                index_bool[pos] = true;
-            }
-            else if(next < mid_half_size){
-                matrix.col(next).swap( matrix.col(init_obj_pos) );
-                init_obj_pos = next;
-                index_bool[next] = true;
-            }
+            matrix.col(pos).swap(matrix.col(next));
+            index_bool[pos] = true;
 
             pos = next;
-            next = pair_index[(pos+size/4)%size].second;
+            next = pair_index[pos].second;
         }
 
+        index_bool[pos] = true;
         while(index_bool[index]) ++index;
+    }
+
+    // Move middle half to first part
+    for(int index=0; index<mid_half_size;index++){
+        matrix.col(index).swap(matrix.col(index+size/4));
     }
 
     matrix.conservativeResize(Eigen::NoChange , mid_half_size);
@@ -86,31 +81,29 @@ void Middle_Half_Extract(const std::vector< std::pair<double,int> >& pair_index,
     const int mid_half_size = size - 2*(size/4); // It is at least size/2
     std::vector<bool> index_bool(mid_half_size, false);
 
-    for(int index=0; index<mid_half_size;){
-        int pos = pair_index[(index + size/4)%size].second;
+    // Sort matrix columns according to pair_index
+    for(int index=0; index<size;){
+        int pos = pair_index[index].second;
         matrix.col(index).swap( matrix.col(pos) );
         index_bool[index] = true;
 
-        int next = pair_index[(pos+size/4)%size].second;
-        int init_obj_pos = pos;
+        int next = pair_index[pos].second;
 
         while(next != index){
-            if(pos<mid_half_size){
-                matrix.col(pos).swap(matrix.col(next));
-                init_obj_pos = next;
-                index_bool[pos] = true;
-            }
-            else if(next < mid_half_size){
-                matrix.col(next).swap( matrix.col(init_obj_pos) );
-                init_obj_pos = next;
-                index_bool[next] = true;
-            }
+            matrix.col(pos).swap(matrix.col(next));
+            index_bool[pos] = true;
 
             pos = next;
-            next = pair_index[(pos+size/4)%size].second;
+            next = pair_index[pos].second;
         }
 
+        index_bool[pos] = true;
         while(index_bool[index]) ++index;
+    }
+
+    // Move middle half to first part
+    for(int index=0; index<mid_half_size;index++){
+        matrix.col(index).swap(matrix.col(index+size/4));
     }
 
     matrix.resize(Eigen::NoChange , mid_half_size);
