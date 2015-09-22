@@ -33,17 +33,17 @@ int main() {
     parameters.generic.task = "Disorder_Transition";
     parameters.generic.model = "Heisen_Random_Cos_Sz_Sector_Ham";
 
-    parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 1; // Number of realizations
+    parameters.generic.size = 8; // System size
+    parameters.generic.num_realizations = 10; // Number of realizations
     parameters.generic.threads_N = 1; // Number of threads in openmp
-    parameters.generic.debug = true; // Whether output debug information
+    parameters.generic.debug = false; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
 
     parameters.output.width = 30; // Width for spacing in output files
     parameters.output.filename_output = true; // Whether print out file names
 
-    parameters.floquet.J_N = 1; // Number of points of coupling strength
+    parameters.floquet.J_N = 2; // Number of points of coupling strength
     parameters.floquet.J_min = 0.6; // Minimum J
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
@@ -152,13 +152,16 @@ int main() {
     parameters.transition.flo_transition_compute["ZZ_All_Time_Correlation"] = false; // zz time correlation at all
     // distances
 
-    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = false; // entropy variance for all
+    parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = true; // entropy variance for all
     // eigenstates using single mean
 
     parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = false; // Level statistics average for
     // floquet system
 
     parameters.transition.flo_transition_compute["Ent_Scaled_Mean"] = true; // Scaled average entropy
+
+    parameters.transition.flo_transition_compute["Ham_Level_Stats_Ave"] = true; // Level statistics average for
+    // hamiltonian system
 
 
 
