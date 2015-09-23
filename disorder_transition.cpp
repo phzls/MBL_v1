@@ -30,6 +30,7 @@ void disorder_transition(const AllPara& parameters){
     const string model_name = parameters.generic.model;
     const bool debug = parameters.generic.debug;
     const bool time = parameters.generic.time;
+    const bool mid_half_spectrum = parameters.transition.mid_half_spectrum; // Whether only use middle half spectrum
     string name;
     bool is_ham; // Whether the model is Hamiltonian
 
@@ -58,6 +59,10 @@ void disorder_transition(const AllPara& parameters){
         if (i == 0) {
             name = models[0] -> Type();
             is_ham = (name.find("Hamiltonian") != string::npos);
+            if(is_ham){
+                if(mid_half_spectrum) name += ",mid_half_spec";
+                else name += ",full_spec";
+            }
         }
 
         cout << "J: " << local_parameters.floquet.J << endl;
@@ -74,6 +79,7 @@ void disorder_transition(const AllPara& parameters){
                 local_info.J_index = i;
                 local_info.realization_index = k;
                 local_info.is_ham = is_ham;
+                local_info.mid_half_spectrum = mid_half_spectrum;
 
                 models[k] -> Evol_Construct();
 
@@ -105,7 +111,7 @@ void disorder_transition(const AllPara& parameters){
                     models[k] -> Eigen_Erase();
 
                     // If it's Hamiltonian, then I need to only take center half in each sector
-                    if( is_ham ){
+                    if( is_ham && mid_half_spectrum ){
                         if(!local_info.eval_type_real){
                             cout << "Eigenvalues of Hamiltonian must be real" << endl;
                         }
