@@ -358,7 +358,7 @@ public:
     // Initialize random fields
     void Evol_Para_Init();
 
-    virtual ~FloEvolIsingRandomSimpShiftCosReal() {};
+    virtual ~FloEvolIsingRandomSimpShiftCosRealTau() {};
 };
 
 
