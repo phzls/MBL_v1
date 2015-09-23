@@ -66,6 +66,10 @@ void DisorderModelTransition::Ent_scaled_mean_compute_(AllPara const & parameter
         // This is just a temporary workaround
 
         int half_mid_size = dim - 2*(dim/4);
+
+        // May choose to use all eigenstates
+        if(!local_info.mid_half_spectrum) half_mid_size = dim;
+
         ent.resize(half_mid_size);
 
         int full_dim = 1 << size; // Full dimension of the spin chain
@@ -123,12 +127,22 @@ void DisorderModelTransition::Ent_scaled_mean_compute_(AllPara const & parameter
 
                 if (debug){
                     cout << "Realization " << local_info.realization_index << " eigenstate " << index << ":" << endl;
+                    cout << "Full Eigenvector:" << endl;
+                    cout << endl;
+                    real_matrix_write(evec);
                     cout << "Reduced Density Matrix: " << endl;
                     real_matrix_write(reduced_d);
                     cout << "Entropy: " << ent[index] << endl;
                 }
                 ++ index;
             }
+        }
+
+        if(index != half_mid_size){
+            cout << "Incorrect number of eigenstates in entropy calculation." << endl;
+            cout << "Expected: " << half_mid_size << endl;
+            cout << "Obtained: " << index << endl;
+            abort();
         }
     }
     else if (local_info.evec_type_real){
