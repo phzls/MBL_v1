@@ -81,6 +81,7 @@ struct DisorderLocalInfo
     double lower_eval;
 
     bool is_ham; // Whether the model is Hamiltonian
+    bool mid_half_spectrum; // Whether only middle half spectrum is used
 };
 
 class DisorderModelTransition;
