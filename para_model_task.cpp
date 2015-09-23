@@ -163,6 +163,9 @@ void Disorder_Transition_Para(AllPara& parameters, string count){
     keyword = "J_min";
     para_get(filename, content, keyword, parameters.floquet.J_min);
 
+    keyword = "mid_half_spectrum";
+    para_get(filename, content, keyword, parameters.transition.mid_half_spectrum);
+
     keyword = "ZZ_Correlation_Square";
     bool choice;
     para_get(filename, content, keyword, choice);
