@@ -28,7 +28,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolIsingRandomSimpShiftCosRealTau(4, 0.6, 0.8, true);
+    floquet = new FloEvolIsingRandomSimpShiftCosRealTau(4, 0.7, 0.7, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
@@ -39,7 +39,7 @@ int main(){
     floquet -> Evol_Diag();
 
     vector<MatrixXd> evec;
-    vector<VectorXd> eval;
+    vector<VectorXcd> eval;
 
     floquet -> Evec(evec);
     floquet -> Eval(eval);
