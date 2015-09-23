@@ -78,40 +78,59 @@ void DisorderModelTransition::Ham_level_stats_ave_compute_(AllPara const & param
         abort();
     }
 
-    int mid_half_size = local_info.eval_real[0].size();
-
-    if(mid_half_size != dim-2*(dim/4)){
-        cout << "Incorrect number of middle half eigenvalues" << endl;
-        cout << "Expected: " << dim - 2*(dim/4) << endl;
-        cout << "Obtained: " << mid_half_size << endl;
-        abort();
-    }
-
     double stats_ave = 0; // level statistics
 
-    // Lower boundary case
-    double s1 = local_info.eval_real[0][0] - local_info.lower_eval;
-    double s2 = local_info.upper_eval - local_info.eval_real[0][0];
-    if(mid_half_size > 1) s2 = local_info.eval_real[0][1] - local_info.eval_real[0][0];
-    if(s1<s2) stats_ave = s1/s2;
-    else stats_ave = s2/s1;
+    if(local_info.mid_half_spectrum){ // Only middle half of the spectrum is used
+        int mid_half_size = local_info.eval_real[0].size();
 
-    for(int i=1; i<mid_half_size-1; i++){
-        s1 = local_info.eval_real[0][i] - local_info.eval_real[0][i-1];
-        s2 = local_info.eval_real[0][i+1] - local_info.eval_real[0][i];
-        if(s1<s2) stats_ave += s1/s2;
-        else stats_ave += s2/s1;
+        if(mid_half_size != dim-2*(dim/4)){
+            cout << "Incorrect number of middle half eigenvalues" << endl;
+            cout << "Expected: " << dim - 2*(dim/4) << endl;
+            cout << "Obtained: " << mid_half_size << endl;
+            abort();
+        }
+
+        // Lower boundary case
+        double s1 = local_info.eval_real[0][0] - local_info.lower_eval;
+        double s2 = local_info.upper_eval - local_info.eval_real[0][0];
+        if(mid_half_size > 1) s2 = local_info.eval_real[0][1] - local_info.eval_real[0][0];
+        if(s1<s2) stats_ave = s1/s2;
+        else stats_ave = s2/s1;
+
+        for(int i=1; i<mid_half_size-1; i++){
+            s1 = local_info.eval_real[0][i] - local_info.eval_real[0][i-1];
+            s2 = local_info.eval_real[0][i+1] - local_info.eval_real[0][i];
+            if(s1<s2) stats_ave += s1/s2;
+            else stats_ave += s2/s1;
+        }
+
+        // Upper boundary case
+        if(mid_half_size>1){
+            s1 = local_info.eval_real[0][mid_half_size-1] - local_info.eval_real[0][mid_half_size-2];
+            s2 = local_info.upper_eval - local_info.eval_real[0][mid_half_size-1];
+            if(s1<s2) stats_ave += s1/s2;
+            else stats_ave += s2/s1;
+        }
+
+        stats_ave /= double(mid_half_size);
     }
+    else{ // All eigenvalues are taken
+        if( local_info.eval_real[0].size() != dim ){
+            cout << "Incorrect number of eigenvalues for ham_level_stats" << endl;
+            cout << "Expected: " << dim << endl;
+            cout << "Obtained: " << local_info.eval_real[0].size() << endl;
+            abort();
+        }
 
-    // Upper boundary case
-    if(mid_half_size>1){
-        s1 = local_info.eval_real[0][mid_half_size-1] - local_info.eval_real[0][mid_half_size-2];
-        s2 = local_info.upper_eval - local_info.eval_real[0][mid_half_size-1];
-        if(s1<s2) stats_ave += s1/s2;
-        else stats_ave += s2/s1;
+        for(int i=1; i<dim-1; i++){
+            double s1 = local_info.eval_real[0][i] - local_info.eval_real[0][i-1];
+            double s2 = local_info.eval_real[0][i+1] - local_info.eval_real[0][i];
+            if(s1<s2) stats_ave += s1/s2;
+            else stats_ave += s2/s1;
+        }
+
+        stats_ave /= double(dim-2);
     }
-
-    stats_ave /= double(mid_half_size);
 
     model_data_.level_stat_ave[J][r] = stats_ave;
 
