@@ -139,8 +139,8 @@ void FloEvolIsingRandomSimpShiftCosRealTau::Evol_X_Construct_(MatrixXcd & evol_h
     sin_prod[0] = 1;
 
     for (int i=1; i<dim_+1; i++){
-        cos_prod[i] = cos_prod[i-1] * cos((1-W_)/2);
-        sin_prod[i] = sin_prod[i-1] * ( - sin((1-W_)/2) );
+        cos_prod[i] = cos_prod[i-1] * cos((1-W_)*tau_/2);
+        sin_prod[i] = sin_prod[i-1] * ( - sin((1-W_)*tau_/2) );
     }
 
     for (int i=0; i<dim_; i++){
@@ -152,7 +152,7 @@ void FloEvolIsingRandomSimpShiftCosRealTau::Evol_X_Construct_(MatrixXcd & evol_h
             else if (flip % 4 == 3) sign = -Complex_I;
             else sign = Complex_one;
 
-            evol_half_x(j,i) = sign * complex<double>(tau_ * cos_prod[size_ - flip] * sin_prod[flip], 0);
+            evol_half_x(j,i) = sign * complex<double>(cos_prod[size_ - flip] * sin_prod[flip], 0);
             if (i != j) evol_half_x(i,j) = evol_half_x(j,i);
         }
     }
