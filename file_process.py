@@ -104,7 +104,7 @@ value_table["false"] = False
 def para_gen(filename, tasks_models, data, count, modify_words = None):
     """
     Generate parameters from command line. Possible parameters are first read from file with filename.
-    Then these parameters are asked, with default values being the values given in the file. If use
+    Then these parameters are asked, with default values being the values given in the file. If user
     directly presses enter, then this default value is used. These parameters are then updated with
     same filename.
     :param filename: Filename for the file
@@ -345,6 +345,9 @@ def exception(name, data, para_temp_data):
     if data.task is not None:
         if (data.task == "Disorder_Transition") and (name == "J"):
             exc = "Previous"
+        if data.model is not None:
+           if (data.task == "Disorder_Transition") and (data.model.find("Flo") != -1) and (name == "mid_half_spectrum"):
+               exc = "Previous"
 
     if data.size is not None:
         if name == "left_size":
@@ -366,6 +369,7 @@ def exception(name, data, para_temp_data):
                     exc = str(int(data.size)/2)
                     if para_temp_data.ent_half_chain is not True:
                         print "Half chain size: " + exc
+
     if data.model is not None:
         if (name == "step_size") and (data.model.find("Flo") != -1):
             exc = str(1)
