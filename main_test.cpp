@@ -33,17 +33,17 @@ int main() {
     parameters.generic.task = "Disorder_Transition";
     parameters.generic.model = "Heisen_Random_Cos_Sz_Sector_Ham";
 
-    parameters.generic.size = 10; // System size
+    parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 2; // Number of realizations
-    parameters.generic.threads_N = 1; // Number of threads in openmp
-    parameters.generic.debug = false; // Whether output debug information
+    parameters.generic.threads_N = 2; // Number of threads in openmp
+    parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
 
     parameters.output.width = 30; // Width for spacing in output files
     parameters.output.filename_output = true; // Whether print out file names
 
-    parameters.floquet.J_N = 2; // Number of points of coupling strength
+    parameters.floquet.J_N = 1; // Number of points of coupling strength
     parameters.floquet.J_min = 0.6; // Minimum J
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
@@ -122,6 +122,9 @@ int main() {
 
 
 
+    // Whether only middle half spectrum is used. For now only for Hamiltonian
+    parameters.transition.mid_half_spectrum = true;
+
     // Methods to be called for studying transition of floquet systems from thermal to localization
     parameters.transition.flo_transition_compute["ZZ_Correlation_Square"] = false; // End-to-end sigma_z X sigma_z
     // correlation square
@@ -158,9 +161,9 @@ int main() {
     parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = false; // Level statistics average for
     // floquet system
 
-    parameters.transition.flo_transition_compute["Ent_Scaled_Mean"] = true; // Scaled average entropy
+    parameters.transition.flo_transition_compute["Ent_Scaled_Mean"] = false; // Scaled average entropy
 
-    parameters.transition.flo_transition_compute["Ham_Level_Stats_Ave"] = true; // Level statistics average for
+    parameters.transition.flo_transition_compute["Ham_Level_Stats_Ave"] = false; // Level statistics average for
     // hamiltonian system
 
 
