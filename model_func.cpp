@@ -124,3 +124,18 @@ string Ham_Evol_Heisen_Quasi_Sz_Sector_Func(const AllPara& parameters, EvolOP*& 
 
     return type;
 }
+
+// For Ising random simple shift cos real tau floquet operator
+string Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Tau_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double W = parameters.floquet.J; // Disorder strength
+    const double tau = parameters.floquet.tau; // Period
+
+    const bool debug = parameters.generic.debug;
+
+    model = new FloEvolIsingRandomSimpShiftCosRealTau(size, W, tau, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
