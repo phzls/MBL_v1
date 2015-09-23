@@ -80,7 +80,6 @@ void Heisen_Random_Cos_Sz_Sector_Ham_Para(AllPara& parameters, string count){
     para_get(filename, content, keyword, parameters.floquet.J);
 
     keyword = "Total_Spin_Z";
-    para_file_read(filename, content);
     para_get(filename, content, keyword, parameters.floquet.total_spin_z);
 }
 
@@ -93,8 +92,20 @@ void Heisen_Quasi_Sz_Sector_Ham_Para(AllPara& parameters, string count){
     para_get(filename, content, keyword, parameters.floquet.J);
 
     keyword = "Total_Spin_Z";
-    para_file_read(filename, content);
     para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
+// For Ising random simple shift cosine real tau floquet operator
+void Ising_Random_Simp_Shift_Cos_Real_Tau_Flo_Para(AllPara& parameters, string count){
+    string filename = "ising_random_simp_shift_cos_real_tau_flo_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "tau";
+    para_get(filename, content, keyword, parameters.floquet.tau);
 }
 
 
