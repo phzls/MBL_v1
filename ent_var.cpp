@@ -67,6 +67,10 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
         // This is just a temporary workaround
 
         int half_mid_size = dim - 2*(dim/4);
+
+        // May choose to use all eigenstates
+        if(!local_info.mid_half_spectrum) half_mid_size = dim;
+
         ent.resize(half_mid_size);
         model_data_.model_dim = half_mid_size;
 
@@ -134,6 +138,13 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
                 }
                 ++index;
             }
+        }
+
+        if(index != half_mid_size){
+            cout << "Incorrect number of eigenstates in entropy calculation." << endl;
+            cout << "Expected: " << half_mid_size << endl;
+            cout << "Obtained: " << index << endl;
+            abort();
         }
     }
     else if (local_info.evec_type_real){
