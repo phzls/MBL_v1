@@ -314,4 +314,52 @@ public:
 };
 
 
+
+
+
+
+
+
+// ========================================================================================
+
+
+
+
+
+/*
+ * This operator constructs the shifted version of flo_evol_xxz_random_simp using a cosine with
+ * phases as the longitude field. The period can also be veried
+ */
+class FloEvolIsingRandomSimpShiftCosRealTau : public FloEvolVanillaReal
+{
+private:
+    const double W_; // Disorder strength
+    const double tau_; // Period
+
+    // Construct x part of time evolution operator
+    void Evol_X_Construct_(MatrixXcd&);
+
+    // Construct z part of time evolution operator
+    void Evol_Z_Construct_(MatrixXcd&);
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_h_; // Random longitude field
+
+public:
+    FloEvolIsingRandomSimpShiftCosRealTau(int size, double W, double tau, bool debug = false):
+            FloEvolVanillaReal(size), W_(W), tau_(tau), debug_(debug) { Repr_Init_();}
+
+    // Construct evolutionary operator
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    virtual ~FloEvolIsingRandomSimpShiftCosReal() {};
+};
+
+
 #endif //MBL_V1_FLO_EVOL_MODEL_H
