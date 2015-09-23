@@ -135,6 +135,7 @@ struct SingleModel
  */
 struct Transition
 {
+	bool mid_half_spectrum; // Whether only using middle half spectrum for Hamiltonian systems
 	map<string,bool> flo_transition_compute; // Determine which method to be computed for floquet systems
 };
 
