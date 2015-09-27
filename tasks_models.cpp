@@ -43,6 +43,17 @@ void TasksModels::Map_Construct_(){
     task_function3 = &multi_model_time_evolution;
     Task_Map_Insert(task_name3, task_type3, task_function3);
 
+    // Study the autocorrelation of some operator.
+    // For now only under Floquet dynamics.
+    string task_name4;
+    string task_type4;
+    task_func task_function4;
+
+    task_name4 = "Flo_Op_Auto_Corr";
+    task_type4 = "Floquet";
+    task_function4 = &flo_op_auto_corr;
+    Task_Map_Insert(task_name4, task_type4, task_function4);
+
     // Random Simple Ising Floquet Operator
     string model_name1;
     string model_type1;
