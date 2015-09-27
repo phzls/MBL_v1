@@ -333,3 +333,38 @@ void Multi_Model_Time_Evolution_Para(AllPara& parameters, string count){
     parameters.evolution.markov_jump = false;
 }
 
+// For operator autocorrelation
+void Op_Auto_Corr_Para(AllPara& parameters, string count){
+    string filename = "op_auto_corr_" + count;
+    vector<vector<string> > content;
+
+    para_file_read(filename, content);
+
+    string keyword = "time_pts";
+    para_get(filename, content, keyword, parameters.flo_op_auto_corr.time_pts);
+
+    keyword = "para_pts";
+    para_get(filename, content, keyword, parameters.flo_op_auto_corr.para_pts);
+
+    keyword = "tau_choice";
+    para_get(filename, content, keyword, parameters.flo_op_auto_corr.tau_choice);
+
+    keyword = "tau_max";
+    para_get(filename, content, keyword, parameters.flo_op_auto_corr.tau_max);
+
+    keyword = "tau_min";
+    para_get(filename, content, keyword, parameters.flo_op_auto_corr.tau_min);
+
+    vector<string> op_corr_map;
+    vector<string>::iterator it;
+
+    op_corr_map.push_back("Energy");
+
+    for(it = op_corr_map.begin(); it != op_corr_map.end(); it++){
+        bool choice;
+        keyword = *it;
+        para_get(filename, content, keyword, choice);
+        parameters.flo_op_auto_corr.op_corr_map[keyword] = choice;
+    }
+}
+

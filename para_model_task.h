@@ -61,4 +61,7 @@ void Single_Model_Time_Evolution_Para(AllPara&, string);
 // For multi_model_time_evolution_para
 void Multi_Model_Time_Evolution_Para(AllPara&, string);
 
+// For operator autocorrelation. Now only working with Floquet dynamics
+void Op_Auto_Corr_Para(AllPara&, string);
+
 #endif //MBL_V1_PARA_MODEL_TASK_H
