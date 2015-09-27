@@ -125,7 +125,7 @@ public:
 
     // Construct and return a Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
-    virtual void Get_Ham(MatrixXcd&, string, string s = "") const {
+    virtual void Get_Ham(MatrixXcd&, string, string) const {
         cout << "Get_Ham is not implemented for " << Repr() << endl;
         abort();
     }
