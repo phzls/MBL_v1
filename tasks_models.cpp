@@ -49,7 +49,7 @@ void TasksModels::Map_Construct_(){
     string task_type4;
     task_func task_function4;
 
-    task_name4 = "Flo_Op_Auto_Corr";
+    task_name4 = "Op_Auto_Corr";
     task_type4 = "Floquet";
     task_function4 = &flo_op_auto_corr;
     Task_Map_Insert(task_name4, task_type4, task_function4);
