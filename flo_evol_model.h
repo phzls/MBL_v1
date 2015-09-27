@@ -96,6 +96,10 @@ public:
     // Initialize random fields
     void Evol_Para_Init();
 
+    // Construct the Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    void Get_Ham(MatrixXcd&, string, string s = "");
+
     virtual ~FloEvolIsingRandomSimpShiftReal() {};
 };
 
@@ -357,6 +361,10 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Construct the Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    void Get_Ham(MatrixXcd&, string, string s = "");
 
     virtual ~FloEvolIsingRandomSimpShiftCosRealTau() {};
 };
