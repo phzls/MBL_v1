@@ -8,6 +8,8 @@ disorder_transition = zz_corr_square.o disorder_model_transition.o zz_time_corr.
 
 model_evolution = init_obj.o evol_data.o random_pure_init.o product_random_init.o random_product_init.o entropy_per_model.o init_obj_func.o left_spin_random_init.o leftmost_spin_per_model.o
 
+op_auto_corr = flo_op_auto_corr.o op_auto_corr_func.o op_corr_local_para.o energy_auto_corr.o energy_auto_corr_func.o
+
 controls = tasks_models.o model_func.o
 
 small_methods = matrix_algebra.o screen_output.o mersenne.o evec_to_basic.o reduced_density_left_2.o generic_func.o combinatorics.o disorder_transition_func.o
@@ -16,11 +18,11 @@ transitions = basis_transition.o basic_full.o basic_parity.o parity_full.o
 
 para_get = para_read.o para_model_task.o
 
-test_objects = test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution)
-mbl_test_objects = main_test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution)
-mbl_objects = main.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution)
-task_model_objects = task_type_print.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution)
-auto_objects = main_auto.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(para_get) $(model_evolution)
+test_objects = test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution) $(op_auto_corr)
+mbl_test_objects = main_test.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution) $(op_auto_corr)
+mbl_objects = main.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution) $(op_auto_corr)
+task_model_objects = task_type_print.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution) $(op_auto_corr)
+auto_objects = main_auto.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(para_get) $(model_evolution) $(op_auto_corr)
 
 CXXFLAGS = -O3 -fopenmp
 CXX = g++
