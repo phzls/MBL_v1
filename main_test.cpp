@@ -31,11 +31,11 @@ int main() {
 
 
     parameters.generic.task = "Disorder_Transition";
-    parameters.generic.model = "Ising_Random_Simp_Shift_Cos_Real_Tau";
+    parameters.generic.model = "Heisen_Quasi_Sz_Sector_Ham";
 
     parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 2; // Number of realizations
-    parameters.generic.threads_N = 2; // Number of threads in openmp
+    parameters.generic.num_realizations = 1; // Number of realizations
+    parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
     parameters.generic.time = true; // Whether the program is timed
@@ -48,7 +48,7 @@ int main() {
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
     parameters.floquet.J = 0.6;
-    parameters.floquet.total_spin_z = 0;
+    parameters.floquet.total_spin_z = 2;
 
     parameters.markov.K = 0.8; // Coupling strength to the bath in markov models
 
@@ -178,6 +178,22 @@ int main() {
     // square
     parameters.eigenvec.flo_eigen_compute["Eigenvectors"] = true; // End-to-end sigma_z sigma_z correlation
     // square
+
+
+
+//============================================================================================
+
+
+
+    // Methods to be called for studying operator autocorrelation under Floquet dynamics
+    parameters.flo_op_auto_corr.time_pts = 1; // Number of time points
+    parameters.flo_op_auto_corr.para_pts = 1; // Number of parameters
+    parameters.flo_op_auto_corr.tau_choice = true; // tau is changed
+    parameters.flo_op_auto_corr.tau_max = 0.8; // Maximum tau
+    parameters.flo_op_auto_corr.tau_min = 0.8; // Minimum tau
+    parameters.flo_op_auto_corr.op_corr_map["Energy"] = true; // Energy autocorrelation
+
+
 
 
 
