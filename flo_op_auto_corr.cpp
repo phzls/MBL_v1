@@ -105,6 +105,14 @@ void flo_op_auto_corr(const AllPara& parameters){
 
     cout << "Output data." << endl;
     clock_t out_begin = clock();
+
+    // Add J to floquet name
+    if( name.find("Flo") != string::npos ){
+        stringstream new_name;
+        new_name << name << ",W=" << parameters.floquet.J;
+        name = new_name.str();
+    }
+
     op_auto_corr.Output(parameters, op_corr_local_para, name);
     clock_t out_end = clock();
 
