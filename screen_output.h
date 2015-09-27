@@ -13,6 +13,7 @@
 #include <complex>
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 using namespace Eigen;
@@ -81,6 +82,20 @@ string complex_write_return(const complex<T>& val){
     if(!re_out && !im_out) c_num << 0;
 
     return c_num.str();
+}
+
+/*
+ * Write out a vector of complex numbers. If the imaginary part has magnitude smaller than delta, then
+ * it is assumed to 0 and not written out. If the imaginary part has magnitude smaller than
+ * delta, then it is assumed to 0 and not written out. If both real and imaginary parts are
+ * not written out, then a 0 is outputted.
+ */
+template <class T>
+void complex_write(const vector< complex<T> >& vec){
+    for(int i=0; i<vec.size();i++){
+        complex_write(vec[i]);
+        cout << endl;
+    }
 }
 
 /*
