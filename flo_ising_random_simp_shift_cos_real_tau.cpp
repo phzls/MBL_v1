@@ -215,6 +215,12 @@ void FloEvolIsingRandomSimpShiftCosRealTau::Get_Ham(MatrixXcd& ham, string basis
         ham(i, i) = z_value;
     }
 
+    if(debug_){
+        cout << "Hamiltonian in basic basis:" << endl;
+        complex_matrix_write(ham);
+        cout << endl;
+    }
+
     if(basis == "Basic") return;
     else if (basis == "Eigen"){
         // Change to eigenvector basis
@@ -224,11 +230,23 @@ void FloEvolIsingRandomSimpShiftCosRealTau::Get_Ham(MatrixXcd& ham, string basis
             abort();
         }
 
+        if(debug_){
+            cout << "Eigenvector:" << endl;
+            real_matrix_write(evec_);
+            cout << endl;
+        }
+
         ham = evec_.adjoint() * ham * evec_;
     }
     else{
         cout << "Hamiltonion under " << basis << " cannot be established for " << repr_ << endl;
         abort();
+    }
+
+    if(debug_){
+        cout << "Hamiltonain under " << basis << " basis:" << endl;
+        complex_matrix_write(ham);
+        cout << endl;
     }
 }
 
