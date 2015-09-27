@@ -123,6 +123,13 @@ public:
     // Return the real Hamiltonian operator according to an integer
     virtual const MatrixXd& Get_Real(int) const = 0;
 
+    // Construct and return a Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    virtual void Get_Ham(MatrixXcd&, string, string s = "") const {
+        cout << "Get_Ham is not implemented for " << Repr() << endl;
+        abort();
+    }
+
     // Get the pointer to the complex isolated matrix
     void Get_Iso(EvolOP*& model) {model = model_iso_;}
 
