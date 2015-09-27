@@ -364,7 +364,7 @@ public:
 
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
-    void Get_Ham(MatrixXcd&, string, string s = "");
+    void Get_Ham(MatrixXcd&, string, string) const;
 
     virtual ~FloEvolIsingRandomSimpShiftCosRealTau() {};
 };
