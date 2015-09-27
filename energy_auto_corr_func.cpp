@@ -12,6 +12,6 @@ using namespace std;
 using namespace Eigen;
 
 void Ham_for_Ising_Random_Simp_Shift_Cos_Real_Flo(const EvolOP* floquet, MatrixXcd& ham){
-    floquet -> Get_Ham(ham, "Eigen");
+    floquet -> Get_Ham(ham, "Eigen", "");
 }
 
