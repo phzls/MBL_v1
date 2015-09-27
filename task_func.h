@@ -26,4 +26,10 @@ void single_model_time_evolution(const AllPara&);
  */
 void multi_model_time_evolution(const AllPara&);
 
+/*
+ * Study the autocorrelation of some operator.
+ * For now only under Floquet dynamics.
+ */
+void flo_op_auto_corr(const AllPara&);
+
 #endif //MBL_V1_TASK_FUNC_H
