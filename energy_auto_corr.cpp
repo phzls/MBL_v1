@@ -177,8 +177,8 @@ void OpAutoCorr::Energy_corr_out_(const AllPara& parameters, const OpCorrLocalPa
     sd_filename << ".txt";
 
     if (output){
-        cout << "Mean value file:" << endl << mean_filename << endl;
-        cout << "SD value file:" << endl << sd_filename << endl;
+        cout << "Mean value file:" << endl << mean_filename.str().c_str() << endl;
+        cout << "SD value file:" << endl << sd_filename.str().c_str() << endl;
     }
 
     ofstream fout_mean( mean_filename.str().c_str() );
