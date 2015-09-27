@@ -148,6 +148,20 @@ struct Eigenvec
 };
 
 /*
+ * Parameters used for studying operator autocorrelation under Floquet dynamics
+ */
+struct FloOpAutoCorr
+{
+    bool tau_choice; // Whether tau is varied in studying autocorrelation
+    double tau_min;
+    double tau_max;
+    int para_pts; // Number of points for the changing variable
+    int time_pts; // Number of time points
+
+    map<string, bool> op_corr_map; // Determines which operators are used for autocorrelation calculation
+};
+
+/*
  * All parameters.
  */
 struct AllPara
@@ -181,6 +195,9 @@ struct AllPara
 
 	// Eigenstates related properties
 	Eigenvec eigenvec;
+
+    // Parameters for operator autocorrelation under Floquet dynamics
+    FloOpAutoCorr flo_op_auto_corr;
 };
 
 #endif //MBL_V1_PARAMETERS_H
