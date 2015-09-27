@@ -182,6 +182,56 @@ void FloEvolIsingRandomSimpShiftCosRealTau::Evol_Z_Construct_(MatrixXcd & evol_z
     }
 }
 
+/*
+ * Construct the following Hamiltonian no matter what the input string is:
+ *
+ */
+void FloEvolIsingRandomSimpShiftCosRealTau::Get_Ham(MatrixXcd& ham, string basis, string s){
+    ham = MatrixXcd::Zero(dim_, dim_);
+
+    // Construct the matrix in basic basis
+    for(int i=0; i<dim_; i++){
+        int state = i;
+        int prev_spin = 0;
+        int spin = 0;
+        int x_state = 1; // Used to flip spin
+
+        double z_value = 0; // diagonal element
+
+        for (int j=0; j<size_;j++){
+            if (j>0) prev_spin = spin;
+            spin = 2*(state & 1) - 1;
+            state = state >> 1;
+
+            z_value += random_h_[j] * spin;
+            if (j>0) z_value += spin * prev_spin;
+
+            int flip_state = i ^ x_state; // Flip the spin
+            x_state = x_state << 1;
+
+            ham(flip_state, i) += 1 - W_;
+        }
+
+        ham(i, i) = z_value;
+    }
+
+    if(basis == "Basic") return;
+    else if (basis == "Eigen"){
+        // Change to eigenvector basis
+        if(!eigen_info_){
+            cout << "Hamiltonian under eigen basis for " << repr_
+            << " cannot be established if eigenvectors are not computed." << endl;
+            abort();
+        }
+
+        ham = evec_.adjoint() * ham * evec_;
+    }
+    else{
+        cout << "Hamiltonion under " << basis << " cannot be established for " << repr_ << endl;
+        abort();
+    }
+}
+
 
 
 
