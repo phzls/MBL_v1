@@ -164,9 +164,9 @@ void OpAutoCorr::Energy_corr_out_(const AllPara& parameters, const OpCorrLocalPa
     stringstream sd_filename; // For SD
     base_filename << name << ",size=" << size << ",para_N=" << para_pts << ",para_min=" << min_para
              << ",para_max=" << max_para << ",Run=" << num_realizations << ",N_time=" << time_pts
-             << "ene_auto_corr";
-    mean_filename << base_filename << "_mean";
-    sd_filename << base_filename << "_sd";
+             << ",ene_auto_corr";
+    mean_filename << base_filename.str() << "_mean";
+    sd_filename << base_filename.str() << "_sd";
 
     if (version > 0) {
         mean_filename <<",v" << version;
