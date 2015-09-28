@@ -31,7 +31,7 @@ int main() {
 
 
     parameters.generic.task = "Op_Auto_Corr";
-    parameters.generic.model = "Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Flo";
+    parameters.generic.model = "Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo";
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 1; // Number of realizations
