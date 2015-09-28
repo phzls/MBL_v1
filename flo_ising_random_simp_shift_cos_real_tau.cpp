@@ -184,7 +184,7 @@ void FloEvolIsingRandomSimpShiftCosRealTau::Evol_Z_Construct_(MatrixXcd & evol_z
 
 /*
  * Construct the following Hamiltonian no matter what the input string is:
- *
+ * sum_i { (1-W)*sigma_x^i + h_i*sigma_z^i + sigma_z^i*sigma_z^{i+1} }
  */
 void FloEvolIsingRandomSimpShiftCosRealTau::Get_Ham(MatrixXcd& ham, string basis, string s) const {
     ham = MatrixXcd::Zero(dim_, dim_);
