@@ -19,3 +19,7 @@ void Ham_for_Heisen_Random_Cos_Sz_Sector_Shift_Real_Flo(const EvolOP* floquet, M
     floquet -> Get_Ham(ham, "Eigen", "");
 }
 
+void Ham_for_Heisen_Quasi_Sz_Sector_Shift_Real_Flo(const EvolOP* floquet, MatrixXcd& ham){
+    floquet -> Get_Ham(ham, "Eigen", "");
+}
+

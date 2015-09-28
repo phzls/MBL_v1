@@ -12,4 +12,6 @@ void Ham_for_Ising_Random_Simp_Shift_Cos_Real_Flo(const EvolOP*, Eigen::MatrixXc
 
 void Ham_for_Heisen_Random_Cos_Sz_Sector_Shift_Real_Flo(const EvolOP* floquet, MatrixXcd&);
 
+void Ham_for_Heisen_Quasi_Sz_Sector_Shift_Real_Flo(const EvolOP* floquet, MatrixXcd&);
+
 #endif //MBL_V1_ENERGY_AUTO_CORR_FUNC_H
