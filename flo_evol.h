@@ -216,7 +216,7 @@ public:
     string Evec_Type() const {return "Real";}
 
     // Return the type of the basis that eigenstates are written in
-    string Eigen_Basis_Type() const {return "Basic";}
+    virtual string Eigen_Basis_Type() const {return "Basic";}
 
     // Return dimension of each sector. Here only 1 sector exists, so total dimension
     // is returned.
@@ -234,9 +234,9 @@ public:
     void Eigen_Erase() { eval_.resize(0); evec_.resize(0,0); diag_ = false; eigen_info_ = false;}
 
     // Construct Transition Matrix
-    void Transition_Compute(TransitionMatrix&, const string&) const;
-    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const;
-    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const;
+    virtual void Transition_Compute(TransitionMatrix&, const string&) const;
+    virtual void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const;
+    virtual void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const;
 
     // Return eigenvectors in a column_wise fashion at each index
     void Evec(vector<MatrixXd>&) const;
