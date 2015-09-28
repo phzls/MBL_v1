@@ -94,6 +94,11 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
                     dynamic_cast<const FloEvolHeisenRandomCosSzSectorShiftRealTau*>(model);
             spin_config = down_cast_model -> Get_Spin_Config();
         }
+        else if(dynamic_cast<const FloEvolHeisenQuasiSzSectorShiftRealTau*>(model) ){
+            const FloEvolHeisenQuasiSzSectorShiftRealTau* down_cast_model =
+                    dynamic_cast<const FloEvolHeisenQuasiSzSectorShiftRealTau*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
 
         int index = 0;
         for(int i=0; i<local_info.evec_real.size(); i++){
