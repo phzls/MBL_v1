@@ -108,6 +108,38 @@ void Ising_Random_Simp_Shift_Cos_Real_Tau_Flo_Para(AllPara& parameters, string c
     para_get(filename, content, keyword, parameters.floquet.tau);
 }
 
+// For Heisenberg random cos sz sector shift real tau floquet operator
+void Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Flo_Para(AllPara& parameters, string count){
+    string filename = "heisen_random_cos_sz_sector_shift_real_tau_flo_" + count;
+    vector< vector<string> > content;
+    para_file_read(filename, content);
+
+    string keyword = "J";
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "tau";
+    para_get(filename, content, keyword, parameters.floquet.tau);
+
+    keyword = "Total_Spin_Z";
+    para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
+// For Heisenberg quasi-periodic sz sector shift real tau floquet operator
+void Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo_Para(AllPara& parameters, string count){
+    string filename = "heisen_quasi_sz_sector_shift_real_tau_flo_" + count;
+    vector< vector<string> > content;
+    para_file_read(filename, content);
+
+    string keyword = "J";
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "tau";
+    para_get(filename, content, keyword, parameters.floquet.tau);
+
+    keyword = "Total_Spin_Z";
+    para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
 
 
 //=================================== TASKS =====================================================

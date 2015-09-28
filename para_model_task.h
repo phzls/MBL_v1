@@ -43,6 +43,12 @@ void Heisen_Quasi_Sz_Sector_Ham_Para(AllPara&, string);
 // For Ising random simple shift cosine real tau floquet operator
 void Ising_Random_Simp_Shift_Cos_Real_Tau_Flo_Para(AllPara&, string);
 
+// For Heisenberg random cos sz sector shift real tau floquet operator
+void Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Flo_Para(AllPara&, string);
+
+// For Heisenberg quasi-periodic sz sector shift real tau floquet operator
+void Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 
