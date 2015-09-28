@@ -40,8 +40,11 @@ void OpAutoCorr::Energy_corr_init_(const AllPara& parameters) {
     }
 
     // For now not checking duplicates
-    string type = "Ising_Random_Simp_Shift_Cos_Real_Tau_Floquet";
-    op_corr_data_.ham_construct_map_[type] = Ham_for_Ising_Random_Simp_Shift_Cos_Real_Flo;
+    string type1 = "Ising_Random_Simp_Shift_Cos_Real_Tau_Floquet";
+    op_corr_data_.ham_construct_map_[type1] = Ham_for_Ising_Random_Simp_Shift_Cos_Real_Flo;
+
+    string type2 = "Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Floquet";
+    op_corr_data_.ham_construct_map_[type2] = Ham_for_Heisen_Random_Cos_Sz_Sector_Shift_Real_Flo;
 }
 
 /*
