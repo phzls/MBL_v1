@@ -155,3 +155,19 @@ string Flo_Evol_Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Func(const AllPara& p
 
     return type;
 }
+
+// For Heisen quasi-periodic sz sector real shift tau floquet operator
+string Flo_Evol_Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double h = parameters.floquet.J; // Disorder strength
+    const double tau = parameters.floquet.tau; // Period
+    const int total_spin_z = parameters.floquet.total_spin_z;
+
+    const bool debug = parameters.generic.debug;
+
+    model = new FloEvolHeisenQuasiSzSectorShiftRealTau(size, h, tau, total_spin_z, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
