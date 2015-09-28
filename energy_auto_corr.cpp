@@ -45,6 +45,9 @@ void OpAutoCorr::Energy_corr_init_(const AllPara& parameters) {
 
     string type2 = "Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Floquet";
     op_corr_data_.ham_construct_map_[type2] = Ham_for_Heisen_Random_Cos_Sz_Sector_Shift_Real_Flo;
+
+    string type3 = "Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Floquet";
+    op_corr_data_.ham_construct_map_[type3] = Ham_for_Heisen_Quasi_Sz_Sector_Shift_Real_Flo;
 }
 
 /*
