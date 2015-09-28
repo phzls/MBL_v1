@@ -28,7 +28,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolHeisenRandomCosSzSectorShiftRealTau(4, 0.6, 0.8, 0, true);
+    floquet = new HamEvolHeisenQuasiSzSector(4, 0.6, 0, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
