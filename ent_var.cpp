@@ -13,6 +13,7 @@
 #include "generic_func.h"
 #include "screen_output.h"
 #include "ham_evol_model.h"
+#include "flo_evol_model.h"
 
 using namespace std;
 using namespace Eigen;
@@ -63,13 +64,13 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
         abort();
     }
 
-    if ( model -> Eigen_Basis_Type() == "Restricted Basic" && local_info.evec_type_real && local_info.is_ham){
+    if ( model -> Eigen_Basis_Type() == "Restricted Basic" && local_info.evec_type_real ){
         // This is just a temporary workaround
 
         int half_mid_size = dim - 2*(dim/4);
 
         // May choose to use all eigenstates
-        if(!local_info.mid_half_spectrum) half_mid_size = dim;
+        if(!local_info.is_ham || !local_info.mid_half_spectrum ) half_mid_size = dim;
 
         ent.resize(half_mid_size);
         model_data_.model_dim = half_mid_size;
@@ -86,6 +87,11 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
         }
         else if( dynamic_cast<const HamEvolHeisenQuasiSzSector*>(model) ){
             const HamEvolHeisenQuasiSzSector* down_cast_model = dynamic_cast<const HamEvolHeisenQuasiSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
+        else if(dynamic_cast<const FloEvolHeisenRandomCosSzSectorShiftRealTau*>(model) ){
+            const FloEvolHeisenRandomCosSzSectorShiftRealTau* down_cast_model =
+                    dynamic_cast<const FloEvolHeisenRandomCosSzSectorShiftRealTau*>(model);
             spin_config = down_cast_model -> Get_Spin_Config();
         }
 
