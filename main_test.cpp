@@ -30,8 +30,8 @@ int main() {
 
 
 
-    parameters.generic.task = "Flo_Op_Auto_Corr";
-    parameters.generic.model = "Ising_Random_Simp_Shift_Cos_Real_Tau_Flo";
+    parameters.generic.task = "Op_Auto_Corr";
+    parameters.generic.model = "Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Flo";
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 1; // Number of realizations
@@ -44,11 +44,11 @@ int main() {
     parameters.output.filename_output = true; // Whether print out file names
 
     parameters.floquet.J_N = 1; // Number of points of coupling strength
-    parameters.floquet.J_min = 0; // Minimum J
+    parameters.floquet.J_min = 0.6; // Minimum J
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
-    parameters.floquet.J = 0;
-    parameters.floquet.total_spin_z = 2;
+    parameters.floquet.J = 1;
+    parameters.floquet.total_spin_z = 0;
 
     parameters.markov.K = 0.8; // Coupling strength to the bath in markov models
 
