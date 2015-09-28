@@ -143,6 +143,16 @@ void TasksModels::Map_Construct_(){
     model_type9 = "Ising_Random_Simp_Shift_Cos_Real_Tau_Floquet";
     model_function9 = &Flo_Evol_Ising_Random_Simp_Shift_Cos_Real_Tau_Func;
     Model_Map_Insert(model_name9, model_type9, model_function9);
+
+    // Random Heisenberg Cos Sz Sector Shift Real Tau Floquet Operator
+    string model_name10;
+    string model_type10;
+    model_func model_function10;
+
+    model_name10 = "Heisen_Random_Cos_Sz_Sector_Simp_Shift_Real_Tau_Flo";
+    model_type10 = "Heisen_Random_Cos_Sz_Sector_Simp_Shift_Real_Tau_Floquet";
+    model_function10 = &Flo_Evol_Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Func;
+    Model_Map_Insert(model_name10, model_type10, model_function10);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
