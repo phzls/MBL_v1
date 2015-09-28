@@ -149,8 +149,8 @@ void TasksModels::Map_Construct_(){
     string model_type10;
     model_func model_function10;
 
-    model_name10 = "Heisen_Random_Cos_Sz_Sector_Simp_Shift_Real_Tau_Flo";
-    model_type10 = "Heisen_Random_Cos_Sz_Sector_Simp_Shift_Real_Tau_Floquet";
+    model_name10 = "Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Flo";
+    model_type10 = "Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Floquet";
     model_function10 = &Flo_Evol_Heisen_Random_Cos_Sz_Sector_Shift_Real_Tau_Func;
     Model_Map_Insert(model_name10, model_type10, model_function10);
 }
