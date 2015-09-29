@@ -161,7 +161,15 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
     else if (local_info.evec_type_real){
         // Vector for eigenvectors in basic binary basis
         vector<vector<double > > evec_basic(dim);
-        for (int i=0; i<dim;i++) evec_basic[i].resize(dim);
+
+        // For half spectrum in Hamiltonian
+        if(local_info.is_ham && local_info.mid_half_spectrum){
+            int half_mid_size = dim - 2*(dim/4);
+            evec_basic.resize(half_mid_size);
+            ent.resize(half_mid_size);
+            model_data_.model_dim = half_mid_size;
+        }
+        for (int i=0; i<evec_basic.size();i++) evec_basic[i].resize(dim);
 
         // Convert eigenvectors in basic basis
         evec_to_basic(model, local_info.evec_real, evec_basic);
@@ -204,7 +212,15 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
     else{
         // Vector for eigenvectors in basic binary basis
         vector<vector<complex<double> > > evec_basic(dim);
-        for (int i=0; i<dim;i++) evec_basic[i].resize(dim);
+
+        // For half spectrum in Hamiltonian
+        if(local_info.is_ham && local_info.mid_half_spectrum){
+            int half_mid_size = dim - 2*(dim/4);
+            evec_basic.resize(half_mid_size);
+            ent.resize(half_mid_size);
+            model_data_.model_dim = half_mid_size;
+        }
+        for (int i=0; i<evec_basic.size();i++) evec_basic[i].resize(dim);
 
         // Convert eigenvectors in basic basis
         evec_to_basic(model, local_info.evec_complex, evec_basic);
