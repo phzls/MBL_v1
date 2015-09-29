@@ -33,7 +33,7 @@ void OpAutoCorr::Energy_corr_init_(const AllPara& parameters) {
         op_corr_data_.ene_auto_corr[i].resize(num_realizations);
         for(int j=0; j<num_realizations;j++){
             op_corr_data_.ene_auto_corr[i][j].resize(time_pts);
-            for(int k=0; k<num_realizations;k++){
+            for(int k=0; k<time_pts;k++){
                 op_corr_data_.ene_auto_corr[i][j][k] = 0;
             }
         }
