@@ -28,7 +28,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new HamEvolIsingQuasiSimp(4, 0.6, true);
+    floquet = new HamEvolIsingRandomSimpCos(4, 0.6, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
@@ -39,7 +39,7 @@ int main(){
     floquet -> Evol_Diag();
 
     vector<MatrixXd> evec;
-    vector<VectorXcd> eval;
+    vector<VectorXd> eval;
 
     floquet -> Evec(evec);
     floquet -> Eval(eval);
@@ -51,7 +51,7 @@ int main(){
     cout << "Floquet time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
     cout << "Eigenvalues:" << endl;
-    complex_matrix_write(eval[0]);
+    real_matrix_write(eval[0]);
     cout << endl;
 
     cout << "Eigenvectors:" << endl;
@@ -62,7 +62,7 @@ int main(){
 
     cout << "After erasing:" << endl;
     cout << "Eigenvalues:" << endl;
-    complex_matrix_write(eval[0]);
+    real_matrix_write(eval[0]);
     cout << endl;
 
     cout << "Eigenvectors:" << endl;
