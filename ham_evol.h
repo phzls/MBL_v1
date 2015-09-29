@@ -144,6 +144,11 @@ public:
         abort();
     }
 
+    // Construct Transition Matrix
+    virtual void Transition_Compute(TransitionMatrix&, const string&) const;
+    virtual void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const;
+    virtual void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const;
+
     virtual ~HamEvolVanillaReal() { if (eigen_ != NULL) {delete eigen_; eigen_ = NULL;} };
 };
 
