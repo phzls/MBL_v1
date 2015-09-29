@@ -166,4 +166,103 @@ public:
     virtual ~HamEvolHeisenQuasiSzSector() {};
 };
 
+
+
+
+
+
+
+
+
+
+// =============================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * This operator constructs the Ising simple random Hamiltonian corresponding to
+ * FloEvolIsingRandomSimpShiftCosReal
+ */
+class HamEvolIsingRandomSimpCos : public HamEvolVanillaReal
+{
+private:
+    const double W_; // Disorder strength
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_h_; // Random longitude field
+
+public:
+    HamEvolIsingRandomSimpCos(int size, double W, bool debug = false): HamEvolVanillaReal(size), W_(W), debug_(debug)
+    { Repr_Init_();}
+
+    // Construct the Hamiltonian
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    string Eigen_Basis_Type() const {return "Basic";}
+
+    virtual ~HamEvolIsingRandomSimpCos() {};
+};
+
+
+
+
+
+
+
+
+
+// ===========================================================================================================
+
+
+
+
+
+
+
+
+
+/*
+ * This operator constructs the Ising simple quasi-periodic Hamiltonian corresponding to
+ * FloEvolIsingQuasiSimpShiftCosReal
+ */
+class HamEvolIsingQuasiSimp : public HamEvolVanillaReal
+{
+private:
+    const double W_; // Disorder strength
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_h_; // Random longitude field
+
+public:
+    HamEvolIsingQuasiSimp(int size, double W, bool debug = false): HamEvolVanillaReal(size), W_(W), debug_(debug)
+    { Repr_Init_();}
+
+    // Construct the Hamiltonian
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    string Eigen_Basis_Type() const {return "Basic";}
+
+    virtual ~HamEvolIsingQuasiSimp() {};
+};
+
 #endif //MBL_V1_HAM_EVOL_MODEL_H
