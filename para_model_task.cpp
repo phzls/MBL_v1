@@ -140,6 +140,26 @@ void Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo_Para(AllPara& parameters, string 
     para_get(filename, content, keyword, parameters.floquet.total_spin_z);
 }
 
+// For Ising random simple cosine hamiltonian operator
+void Ising_Random_Simp_Cos_Ham_Para(AllPara& parameters, string count){
+    string filename = "ising_random_simp_cos_ham_" + count;
+    vector< vector<string> > content;
+    para_file_read(filename, content);
+
+    string keyword = "J";
+    para_get(filename, content, keyword, parameters.floquet.J);
+}
+
+// For Ising quasi-periodic simple hamiltonian operator
+void Ising_Quasi_Simp_Ham_Para(AllPara& parameters, string count){
+    string filename = "ising_quasi_simp_ham_" + count;
+    vector< vector<string> > content;
+    para_file_read(filename, content);
+
+    string keyword = "J";
+    para_get(filename, content, keyword, parameters.floquet.J);
+}
+
 
 
 //=================================== TASKS =====================================================
