@@ -163,6 +163,26 @@ void TasksModels::Map_Construct_(){
     model_type11 = "Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Floquet";
     model_function11 = &Flo_Evol_Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Func;
     Model_Map_Insert(model_name11, model_type11, model_function11);
+
+    // Random Ising Simple Cosine Hamiltonian Operator
+    string model_name12;
+    string model_type12;
+    model_func model_function12;
+
+    model_name12 = "Ising_Random_Simp_Cos_Ham";
+    model_type12 = "Ising_Random_Simp_Cos_Hamiltonian";
+    model_function12 = &Ham_Evol_Ising_Random_Simp_Cos_Func;
+    Model_Map_Insert(model_name12, model_type12, model_function12);
+
+    // Quasi-periodic Ising Simple Hamiltonian Operator
+    string model_name13;
+    string model_type13;
+    model_func model_function13;
+
+    model_name13 = "Ising_Quasi_Simp_Ham";
+    model_type13 = "Ising_Quasi_Simp_Hamiltonian";
+    model_function13 = &Ham_Evol_Ising_Quasi_Simp_Func;
+    Model_Map_Insert(model_name13, model_type13, model_function13);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
