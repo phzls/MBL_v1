@@ -34,7 +34,7 @@ int main() {
     parameters.generic.model = "Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo";
 
     parameters.generic.size = 4; // System size
-    parameters.generic.num_realizations = 1; // Number of realizations
+    parameters.generic.num_realizations = 10; // Number of realizations
     parameters.generic.threads_N = 1; // Number of threads in openmp
     parameters.generic.debug = true; // Whether output debug information
     parameters.generic.version = 1; // Version of the output
