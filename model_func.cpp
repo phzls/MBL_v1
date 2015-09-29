@@ -171,3 +171,31 @@ string Flo_Evol_Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Func(const AllPara& parame
 
     return type;
 }
+
+// For Ising random simple cos hamiltonian operator
+string Ham_Evol_Ising_Random_Simp_Cos_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double W = parameters.floquet.J; // Disorder strength
+
+    const bool debug = parameters.generic.debug;
+
+    model = new HamEvolIsingRandomSimpCos(size, W, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
+
+// For Ising quasi-periodic simple hamiltonian operator
+string Ham_Evol_Ising_Quasi_Simp_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double W = parameters.floquet.J; // Disorder strength
+
+    const bool debug = parameters.generic.debug;
+
+    model = new HamEvolIsingQuasiSimp(size, W, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
