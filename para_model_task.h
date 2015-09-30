@@ -55,6 +55,12 @@ void Ising_Random_Simp_Cos_Ham_Para(AllPara&, string);
 // For Ising quasi-periodic simple hamiltonian operator
 void Ising_Quasi_Simp_Ham_Para(AllPara&, string);
 
+// For Heisenberg random cos sz sector modified tau floquet operator
+void Heisen_Random_Cos_Sz_Sector_Modified_Tau_Flo_Para(AllPara&, string);
+
+// For Heisenberg quasi-periodic sz sector modified tau floquet operator
+void Heisen_Quasi_Sz_Sector_Modified_Tau_Flo_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 
