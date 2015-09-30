@@ -556,4 +556,193 @@ public:
     virtual ~FloEvolHeisenQuasiSzSectorShiftRealTau() {};
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+// ===========================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * A modified version of FloEvolHeisenRandomCosSzSectorShiftRealTau. The xx and yy terms
+ * are discounted by (1-h) so that the system can localize when h approaches 1
+ */
+class FloEvolHeisenRandomCosSzSectorModifiedTau : public FloEvolVanillaReal
+{
+private:
+    const double h_; // Disorder strength
+    const double tau_; // Period
+    const int total_spin_z_; // Total spin z value, where up spin is 1 and down spin is -1
+
+    // Construct x and z part of time evolution operator
+    void Evol_X_Z_Construct_(MatrixXcd&, MatrixXcd&);
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    void Dim_Cal_(); // Calculate the true dimension of the restricted Hilbert space
+
+    const bool debug_; // Used for debug outputs
+
+    void Spin_Config_();
+    bool config_constructed_; // Whether spin configuration has been constructed
+
+    vector<double> random_h_; // Random longitude field
+
+    // Spin Configuration. It gives the number in full basic basis for each index in
+    // our restricted basic basis. The numbers will be sorted in ascending order
+    vector<int> config_;
+
+public:
+    FloEvolHeisenRandomCosSzSectorModifiedTau(int size, double h, double tau, int total_spin_z = 0,
+                                               bool debug = false):  FloEvolVanillaReal(size), h_(h), tau_(tau),
+                                                                     total_spin_z_(total_spin_z), debug_(debug),
+                                                                     config_constructed_(false)
+    { Repr_Init_(); Dim_Cal_(); }
+
+    // Construct evolutionary operator only for the sector of specifiec total Z spin,
+    // in the basis of restricted basic states whose total Z spin satisfy the condition.
+    // The map between the index in the restricted basis and full basic basis is given
+    // in config_
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    // Construct Transition Matrix
+    void Transition_Compute(TransitionMatrix&, const string&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    // Construct the Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    void Get_Ham(MatrixXcd&, string, string) const;
+
+    // Return config_ so that one can map from restricted binary basis to full binary basis
+    // This is introduced as a hack as it doesn't fit into Transition_Compute paragon
+    vector<int> Get_Spin_Config() const {return config_;}
+
+    string Eigen_Basis_Type() const {return "Restricted Basic";}
+
+    virtual ~FloEvolHeisenRandomCosSzSectorModifiedTau() {};
+};
+
+
+
+
+
+
+
+// =========================================================================================================
+
+
+
+
+
+
+
+
+/*
+ * A modified version of FloEvolHeisenQuasiCosSzSectorShiftRealTau. The xx and yy terms
+ * are discounted by (1-h) so that the system can localize when h approaches 1
+ */
+class FloEvolHeisenQuasiSzSectorModifiedTau : public FloEvolVanillaReal
+{
+private:
+    const double h_; // Disorder strength
+    const double tau_; // Period
+    const int total_spin_z_; // Total spin z value, where up spin is 1 and down spin is -1
+
+    // Construct x and z part of time evolution operator
+    void Evol_X_Z_Construct_(MatrixXcd&, MatrixXcd&);
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    void Dim_Cal_(); // Calculate the true dimension of the restricted Hilbert space
+
+    const bool debug_; // Used for debug outputs
+
+    void Spin_Config_();
+    bool config_constructed_; // Whether spin configuration has been constructed
+
+    vector<double> random_h_; // Random longitude field
+
+    // Spin Configuration. It gives the number in full basic basis for each index in
+    // our restricted basic basis. The numbers will be sorted in ascending order
+    vector<int> config_;
+
+public:
+    FloEvolHeisenQuasiSzSectorModifiedTau(int size, double h, double tau, int total_spin_z = 0,
+                                           bool debug = false):  FloEvolVanillaReal(size), h_(h), tau_(tau),
+                                                                 total_spin_z_(total_spin_z), debug_(debug),
+                                                                 config_constructed_(false)
+    { Repr_Init_(); Dim_Cal_(); }
+
+    // Construct evolutionary operator only for the sector of specifiec total Z spin,
+    // in the basis of restricted basic states whose total Z spin satisfy the condition.
+    // The map between the index in the restricted basis and full basic basis is given
+    // in config_
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    // Construct Transition Matrix
+    void Transition_Compute(TransitionMatrix&, const string&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    // Construct the Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    void Get_Ham(MatrixXcd&, string, string) const;
+
+    // Return config_ so that one can map from restricted binary basis to full binary basis
+    // This is introduced as a hack as it doesn't fit into Transition_Compute paragon
+    vector<int> Get_Spin_Config() const {return config_;}
+
+    string Eigen_Basis_Type() const {return "Restricted Basic";}
+
+    virtual ~FloEvolHeisenQuasiSzSectorModifiedTau() {};
+};
+
+
+
 #endif //MBL_V1_FLO_EVOL_MODEL_H
