@@ -54,4 +54,10 @@ string Ham_Evol_Ising_Random_Simp_Cos_Func(const AllPara&, EvolOP*&);
 // For Ising quasi-periodic simple hamiltonian operator
 string Ham_Evol_Ising_Quasi_Simp_Func(const AllPara&, EvolOP*&);
 
+// For Heisen random cos sz sector modified tau floquet operator
+string Flo_Evol_Heisen_Random_Cos_Sz_Sector_Modified_Tau_Func(const AllPara&, EvolOP*&);
+
+// For Heisen quasi-periodic sz sector modified tau floquet operator
+string Flo_Evol_Heisen_Quasi_Sz_Sector_Modified_Tau_Func(const AllPara&, EvolOP*&);
+
 #endif //MBL_V1_MODEL_FUNC_H
