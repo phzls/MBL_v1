@@ -28,7 +28,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolHeisenRandomCosSzSectorModifiedTau(4, 0.6, 0.8, 0, true);
+    floquet = new FloEvolHeisenQuasiSzSectorModifiedTau(4, 0.6, 0.8, 0, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
@@ -51,7 +51,7 @@ int main(){
     cout << "Floquet time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
     cout << "Eigenvalues:" << endl;
-    matrix_write(eval[0]);
+    complex_matrix_write(eval[0]);
     cout << endl;
 
     cout << "Eigenvectors:" << endl;

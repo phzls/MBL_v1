@@ -31,7 +31,7 @@ int main() {
 
 
     parameters.generic.task = "Disorder_Transition";
-    parameters.generic.model = "Ising_Quasi_Simp_Ham";
+    parameters.generic.model = "Heisen_Quasi_Sz_Sector_Modified_Tau_Flo";
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 2; // Number of realizations
@@ -47,7 +47,7 @@ int main() {
     parameters.floquet.J_min = 0.6; // Minimum J
     parameters.floquet.J_max = 0.9; // Maximum J
     parameters.floquet.tau = 0.8; // Time step size
-    parameters.floquet.J = 1;
+    parameters.floquet.J = 0.6;
     parameters.floquet.total_spin_z = 0;
 
     parameters.markov.K = 0.8; // Coupling strength to the bath in markov models
@@ -158,12 +158,12 @@ int main() {
     parameters.transition.flo_transition_compute["Entropy_Variance_All_Mean"] = true; // entropy variance for all
     // eigenstates using single mean
 
-    parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = false; // Level statistics average for
+    parameters.transition.flo_transition_compute["Flo_Level_Stats_Ave"] = true; // Level statistics average for
     // floquet system
 
     parameters.transition.flo_transition_compute["Ent_Scaled_Mean"] = true; // Scaled average entropy
 
-    parameters.transition.flo_transition_compute["Ham_Level_Stats_Ave"] = true; // Level statistics average for
+    parameters.transition.flo_transition_compute["Ham_Level_Stats_Ave"] = false; // Level statistics average for
     // hamiltonian system
 
 
