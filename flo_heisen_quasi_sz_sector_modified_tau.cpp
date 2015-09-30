@@ -28,8 +28,8 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
  * Construct the representation string and abstract type of the class.
  */
 void FloEvolHeisenQuasiSzSectorModifiedTau::Repr_Init_(){
-    repr_ << "Heisen_Quasi_Sz_Sector_Shift_Modified_Floquet_L=" << size_ << ",h=" << h_ << ",tau=" << tau_;
-    type_ = "Heisen_Quasi_Sz_Sector_Shift_Modified_Floquet";
+    repr_ << "Heisen_Quasi_Sz_Sector_Modified_Tau_Floquet_L=" << size_ << ",h=" << h_ << ",tau=" << tau_;
+    type_ = "Heisen_Quasi_Sz_Sector_Modified_Tau_Floquet";
 }
 
 /*
