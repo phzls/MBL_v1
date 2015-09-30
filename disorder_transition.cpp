@@ -233,6 +233,14 @@ void disorder_transition(const AllPara& parameters){
 
     cout << "Output data." << endl;
     clock_t out_begin = clock();
+
+    // Add tau value if it can be chosen
+    if( name.find("Tau") != string::npos ){
+        stringstream new_name;
+        new_name << name << ",tau=" << parameters.floquet.tau;
+        name = new_name.str();
+    }
+
     disorder_model_transition.Output(parameters, name);
     clock_t out_end = clock();
 
