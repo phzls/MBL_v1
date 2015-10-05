@@ -231,3 +231,34 @@ string Flo_Evol_Heisen_Quasi_Sz_Sector_Modified_Tau_Func(const AllPara& paramete
 
     return type;
 }
+
+// For Heisen modified random cos sz sector Hamiltonian operator
+string Ham_Evol_Heisen_Modified_Random_Cos_Sz_Sector_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double h = parameters.floquet.J; // random field strength
+    const int total_spin_z = parameters.floquet.total_spin_z;
+
+    const bool debug = parameters.generic.debug;
+
+    model = new HamEvolHeisenModifiedRandomCosSzSector(size, h, total_spin_z, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
+
+
+// For Heisen modified quasi-periodic sz sector Hamiltonian operator
+string Ham_Evol_Heisen_Modified_Quasi_Sz_Sector_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double h = parameters.floquet.J; // random field strength
+    const int total_spin_z = parameters.floquet.total_spin_z;
+
+    const bool debug = parameters.generic.debug;
+
+    model = new HamEvolHeisenModifiedQuasiSzSector(size, h, total_spin_z, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
