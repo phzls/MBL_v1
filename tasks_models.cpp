@@ -203,6 +203,26 @@ void TasksModels::Map_Construct_(){
     model_type15 = "Heisen_Quasi_Sz_Sector_Modified_Tau_Floquet";
     model_function15 = &Flo_Evol_Heisen_Quasi_Sz_Sector_Modified_Tau_Func;
     Model_Map_Insert(model_name15, model_type15, model_function15);
+
+    // Random Heisenberg Cos Total Z Spin Hamiltonian Operator
+    string model_name16;
+    string model_type16;
+    model_func model_function16;
+
+    model_name16 = "Heisen_Modified_Random_Cos_Sz_Sector_Ham";
+    model_type16 = "Heisen_Modified_Random_Cos_Sz_Sector_Hamiltonian";
+    model_function16 = &Ham_Evol_Heisen_Modified_Random_Cos_Sz_Sector_Func;
+    Model_Map_Insert(model_name16, model_type16, model_function16);
+
+    // Quasi-periodic Heisenberg Total Z Spin Hamiltonian Operator
+    string model_name17;
+    string model_type17;
+    model_func model_function17;
+
+    model_name17 = "Heisen_Modified_Quasi_Sz_Sector_Ham";
+    model_type17 = "Heisen_Modified_Quasi_Sz_Sector_Hamiltonian";
+    model_function17 = &Ham_Evol_Heisen_Modified_Quasi_Sz_Sector_Func;
+    Model_Map_Insert(model_name17, model_type17, model_function17);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
