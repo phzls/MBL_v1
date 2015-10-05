@@ -24,7 +24,7 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
  * Construct the representation string and abstract type of the class.
  */
 void HamEvolHeisenRandomCosSzSector::Repr_Init_(){
-    repr_ << "Heisen_Random_Cos_Sz_Sector_Hamiltonian_L=" << size_ << ",h=" << h_ << "Sz_" << total_spin_z_;
+    repr_ << "Heisen_Random_Cos_Sz_Sector_Hamiltonian_L=" << size_ << ",h=" << h_ << ",Sz_" << total_spin_z_;
     type_ = "Heisen_Random_Cos_Sz_Sector_Hamiltonian";
 }
 
