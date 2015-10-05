@@ -61,6 +61,12 @@ void Heisen_Random_Cos_Sz_Sector_Modified_Tau_Flo_Para(AllPara&, string);
 // For Heisenberg quasi-periodic sz sector modified tau floquet operator
 void Heisen_Quasi_Sz_Sector_Modified_Tau_Flo_Para(AllPara&, string);
 
+// For Heisenberg modified random cosine Sz sector Hamiltonian Operator
+void Heisen_Modified_Random_Cos_Sz_Sector_Ham_Para(AllPara&, string);
+
+// For Heisenberg modified quasi-periodic cosine Sz sector Hamiltonian Operator
+void Heisen_Modified_Quasi_Sz_Sector_Ham_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 

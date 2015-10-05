@@ -192,6 +192,30 @@ void Heisen_Quasi_Sz_Sector_Modified_Tau_Flo_Para(AllPara& parameters, string co
     para_get(filename, content, keyword, parameters.floquet.total_spin_z);
 }
 
+// For Heisenberg modified random cosine Sz sector Hamiltonian Operator
+void Heisen_Modified_Random_Cos_Sz_Sector_Ham_Para(AllPara& parameters, string count){
+    string filename = "heisen_modified_random_cos_sz_sector_ham_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "Total_Spin_Z";
+    para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
+// For Heisenberg modified quasi-periodic cosine Sz sector Hamiltonian Operator
+void Heisen_Modified_Quasi_Sz_Sector_Ham_Para(AllPara& parameters, string count){
+    string filename = "heisen_modified_quasi_sz_sector_ham_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+
+    keyword = "Total_Spin_Z";
+    para_get(filename, content, keyword, parameters.floquet.total_spin_z);
+}
+
 
 
 //=================================== TASKS =====================================================
