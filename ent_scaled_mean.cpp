@@ -107,6 +107,16 @@ void DisorderModelTransition::Ent_scaled_mean_compute_(AllPara const & parameter
                     dynamic_cast<const FloEvolHeisenQuasiSzSectorModifiedTau*>(model);
             spin_config = down_cast_model -> Get_Spin_Config();
         }
+        else if( dynamic_cast<const HamEvolHeisenModifiedRandomCosSzSector*>(model) ){
+            const HamEvolHeisenModifiedRandomCosSzSector* down_cast_model =
+                    dynamic_cast<const HamEvolHeisenModifiedRandomCosSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
+        else if( dynamic_cast<const HamEvolHeisenModifiedQuasiSzSector*>(model) ){
+            const HamEvolHeisenModifiedQuasiSzSector* down_cast_model =
+                    dynamic_cast<const HamEvolHeisenModifiedQuasiSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
 
         int index = 0;
         for(int i=0; i<local_info.evec_real.size(); i++){
