@@ -119,6 +119,16 @@ void DisorderModelTransition::Ent_var_compute_(AllPara const & parameters, const
                     dynamic_cast<const HamEvolHeisenModifiedQuasiSzSector*>(model);
             spin_config = down_cast_model -> Get_Spin_Config();
         }
+        else if( dynamic_cast<const HamEvolHeisenConModifiedRandomCosSzSector*>(model) ){
+            const HamEvolHeisenConModifiedRandomCosSzSector* down_cast_model =
+                    dynamic_cast<const HamEvolHeisenConModifiedRandomCosSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
+        else if( dynamic_cast<const HamEvolHeisenConModifiedQuasiSzSector*>(model) ){
+            const HamEvolHeisenConModifiedQuasiSzSector* down_cast_model =
+                    dynamic_cast<const HamEvolHeisenConModifiedQuasiSzSector*>(model);
+            spin_config = down_cast_model -> Get_Spin_Config();
+        }
 
 
         int index = 0;
