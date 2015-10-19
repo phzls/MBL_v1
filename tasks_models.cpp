@@ -231,7 +231,7 @@ void TasksModels::Map_Construct_(){
 
     model_name18 = "Heisen_Con_Modified_Random_Cos_Sz_Sector_Ham";
     model_type18 = "Heisen_Con_Modified_Random_Cos_Sz_Sector_Hamiltonian";
-    model_function18 = &Ham_Evol_Heisen_Modified_Random_Cos_Sz_Sector_Func;
+    model_function18 = &Ham_Evol_Heisen_Con_Modified_Random_Cos_Sz_Sector_Func;
     Model_Map_Insert(model_name18, model_type18, model_function18);
 
     // Continuous Modified Quasi-periodic Heisenberg Total Z Spin Hamiltonian Operator
@@ -241,7 +241,7 @@ void TasksModels::Map_Construct_(){
 
     model_name19 = "Heisen_Con_Modified_Quasi_Sz_Sector_Ham";
     model_type19 = "Heisen_Con_Modified_Quasi_Sz_Sector_Hamiltonian";
-    model_function19 = &Ham_Evol_Heisen_Modified_Quasi_Sz_Sector_Func;
+    model_function19 = &Ham_Evol_Heisen_Con_Modified_Quasi_Sz_Sector_Func;
     Model_Map_Insert(model_name19, model_type19, model_function19);
 }
 
