@@ -58,6 +58,8 @@ struct FloPara
 	double tau; // Time step
 
 	int total_spin_z; // Total Z spin for sector
+
+	double alpha; // The parameter used in continuous modified Hamiltonian
 };
 
 struct MatrixPara
