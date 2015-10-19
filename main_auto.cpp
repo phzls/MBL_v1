@@ -57,6 +57,8 @@ int main(int argc, char* argv[]){
     model_para_read_map["Ising_Quasi_Simp_Ham"] = Ising_Quasi_Simp_Ham_Para;
     model_para_read_map["Heisen_Modified_Random_Cos_Sz_Sector_Ham"] = Heisen_Modified_Random_Cos_Sz_Sector_Ham_Para;
     model_para_read_map["Heisen_Modified_Quasi_Sz_Sector_Ham"] = Heisen_Modified_Quasi_Sz_Sector_Ham_Para;
+    model_para_read_map["Heisen_Con_Modified_Random_Cos_Sz_Sector_Ham"] = Heisen_Con_Modified_Random_Cos_Sz_Sector_Ham_Para;
+    model_para_read_map["Heisen_Con_Modified_Quasi_Sz_Sector_Ham"] = Heisen_Con_Modified_Quasi_Sz_Sector_Ham_Para;
 
     task_para_read_map["Disorder_Transition"] = Disorder_Transition_Para;
     task_para_read_map["Single_Model_Time_Evolution"] = Single_Model_Time_Evolution_Para;
