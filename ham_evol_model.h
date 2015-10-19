@@ -435,4 +435,180 @@ public:
 
 
 
+
+
+
+
+
+// ==============================================================================================================
+
+
+
+
+
+
+
+/*
+ * This operator constructs the continuous modified Heisenberg random Hamiltonian
+ * with random fields given in cosine form. The "continuous" refers to (1-alpha*h)
+ * discount of zz term. xx and yy terms are discounted by 1-h
+ * This Hamiltonian only constructs one sector with given total spin Z The total
+ * spin Z is passed in as a parameter, where up spin is considered 1 and down spin
+ * is considered -1
+ */
+class HamEvolHeisenConModifiedRandomCosSzSector : public HamEvolVanillaReal
+{
+private:
+    const double h_; // Disorder strength
+
+    const double alpha_; // The parameter for zz discount
+
+    const int total_spin_z_; // Total spin z value, where up spin is 1 and down spin is -1
+
+    // Spin Configuration. It gives the number in full basic basis for each index in
+    // our restricted basic basis. The numbers will be sorted in ascending order
+    vector<int> config_;
+
+    void Spin_Config_();
+    bool config_constructed_; // Whether spin configuration has been constructed
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    void Dim_Cal_(); // Calculate the true dimension of the restricted Hilbert space
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_h_; // Random longitude field
+
+public:
+    HamEvolHeisenConModifiedRandomCosSzSector(int size, double h, double alpha, int total_spin_z = 0,
+                                              bool debug = false):
+            HamEvolVanillaReal(size), h_(h), alpha_(alpha), total_spin_z_(total_spin_z),
+            debug_(debug), config_constructed_(false) { Repr_Init_(); Dim_Cal_(); }
+
+    // Construct the Hamiltonian only for the sector of specifiec total Z spin,
+    // in the basis of restricted basic states whose total Z spin satisfy the condition.
+    // The map between the index in the restricted basis and full basic basis is given
+    // in config_
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    // Construct Transition Matrix
+    void Transition_Compute(TransitionMatrix&, const string&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    // Return config_ so that one can map from restricted binary basis to full binary basis
+    // This is introduced as a hack as it doesn't fit into Transition_Compute paragon
+    vector<int> Get_Spin_Config() const {return config_;}
+
+    string Eigen_Basis_Type() const {return "Restricted Basic";}
+
+    virtual ~HamEvolHeisenConModifiedRandomCosSzSector() {};
+};
+
+
+
+
+
+
+
+
+
+// =======================================================================================================
+
+
+
+
+
+
+
+
+
+/*
+ * This operator constructs the modified Heisenberg Hamiltonian with quasi-periodic fields
+ * given in cosine form. The "continuous" refers to (1-alpha*h) discount of zz term.
+ * xx and yy terms are discounted by 1-h
+ * It only constructs one sector with given total spin Z The total spin Z is passed in as
+ * a parameter, where up spin is considered 1 and down spin is considered -1
+ */
+class HamEvolHeisenConModifiedQuasiSzSector : public HamEvolVanillaReal
+{
+private:
+    const double h_; // Disorder strength
+
+    const double alpha_; // The parameter for zz discount
+
+    const int total_spin_z_; // Total spin z value, where up spin is 1 and down spin is -1
+
+    // Spin Configuration. It gives the number in full basic basis for each index in
+    // our restricted basic basis. The numbers will be sorted in ascending order
+    vector<int> config_;
+
+    void Spin_Config_();
+    bool config_constructed_; // Whether spin configuration has been constructed
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    void Dim_Cal_(); // Calculate the true dimension of the restricted Hilbert space
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_h_; // Random longitude field
+
+public:
+    HamEvolHeisenConModifiedQuasiSzSector(int size, double h, double alpha,
+                                          int total_spin_z = 0, bool debug = false):
+            HamEvolVanillaReal(size), h_(h), alpha_(alpha), total_spin_z_(total_spin_z),
+            debug_(debug), config_constructed_(false) { Repr_Init_(); Dim_Cal_(); }
+
+    // Construct the Hamiltonian only for the sector of specifiec total Z spin,
+    // in the basis of restricted basic states whose total Z spin satisfy the condition.
+    // The map between the index in the restricted basis and full basic basis is given
+    // in config_
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    // Construct Transition Matrix
+    void Transition_Compute(TransitionMatrix&, const string&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXcd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    void Transition_Compute(TransitionMatrix&, const string&, const vector<MatrixXd>&) const {
+        cout << "Not implemented yet." << endl;
+        abort();
+    }
+
+    // Return config_ so that one can map from restricted binary basis to full binary basis
+    // This is introduced as a hack as it doesn't fit into Transition_Compute paragon
+    vector<int> Get_Spin_Config() const {return config_;}
+
+    string Eigen_Basis_Type() const {return "Restricted Basic";}
+
+    virtual ~HamEvolHeisenConModifiedQuasiSzSector() {};
+};
+
+
+
 #endif //MBL_V1_HAM_EVOL_MODEL_H
