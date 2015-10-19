@@ -241,6 +241,13 @@ void disorder_transition(const AllPara& parameters){
         name = new_name.str();
     }
 
+    // Add alpha value for continuous modified model
+    if( name.find("Con_") != string::npos ){
+        stringstream new_name;
+        new_name << name << ",alpha=" << parameters.floquet.alpha;
+        name = new_name.str();
+    }
+
     disorder_model_transition.Output(parameters, name);
     clock_t out_end = clock();
 
