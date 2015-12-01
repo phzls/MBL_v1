@@ -36,8 +36,9 @@ void FloEvolXXZGaussianRandomShiftReal::Evol_Para_Init() {
 
     // Random Fields
     for (int i=0; i<size_;){
+        // Using Box Muller transformation to general standard normal
         double u1 = RanGen_mersenne.Random();
-        double u2 = RanGen_mersenne.BRandom();
+        double u2 = RanGen_mersenne.Random();
         gaussian_[i] = sqrt(-2*log(u1))*cos(2*Pi*u2);
         i++;
         if(i<size_) gaussian_[i] = sqrt(-2*log(u1))*sin(2*Pi*u2);
