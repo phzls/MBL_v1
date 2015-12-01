@@ -50,6 +50,7 @@ int main(int argc, char* argv[]){
     model_para_read_map["Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo"] = Heisen_Quasi_Sz_Sector_Shift_Real_Tau_Flo_Para;
     model_para_read_map["Heisen_Random_Cos_Sz_Sector_Modified_Tau_Flo"] = Heisen_Random_Cos_Sz_Sector_Modified_Tau_Flo_Para;
     model_para_read_map["Heisen_Quasi_Sz_Sector_Modified_Tau_Flo"] = Heisen_Quasi_Sz_Sector_Modified_Tau_Flo_Para;
+    model_para_read_map["XXZ_Gaussian_Random_Shift_Real_Flo"] = XXZ_Gaussian_Random_Shift_Real_Flo_Para;
 
     model_para_read_map["Heisen_Random_Cos_Sz_Sector_Ham"] = Heisen_Random_Cos_Sz_Sector_Ham_Para;
     model_para_read_map["Heisen_Quasi_Sz_Sector_Ham"] = Heisen_Quasi_Sz_Sector_Ham_Para;
