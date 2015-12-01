@@ -769,7 +769,7 @@ public:
  * has real eigenvectors, so only real eigenvectors are returned and only real part of
  * eigenvalues are computed.
  */
-class FloEvolXXZRandomShiftReal : public FloEvolVanillaReal
+class FloEvolXXZGaussianRandomShiftReal : public FloEvolVanillaReal
 {
 private:
     const double J_; // Disorder strength
@@ -794,7 +794,7 @@ private:
     bool initialized_; // Whether the gaussians and sigma_ have been computed
 
 public:
-    FloEvolXXZRandomShiftReal(int size, double J, bool debug = false):
+    FloEvolXXZGaussianRandomShiftReal(int size, double J, bool debug = false):
             FloEvolVanillaReal(size), J_(J), debug_(debug), h_(0.8090),
             g_(0.9045), tau_(0.8) { Repr_Init_();}
 
@@ -808,7 +808,7 @@ public:
     // and the last string specifies any extra requirement
     void Get_Ham(MatrixXcd&, string, string s = "");
 
-    virtual ~FloEvolXXZRandomShiftReal() {};
+    virtual ~FloEvolXXZGaussianRandomShiftReal() {};
 };
 
 
