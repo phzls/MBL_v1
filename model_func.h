@@ -72,7 +72,7 @@ string Ham_Evol_Heisen_Con_Modified_Random_Cos_Sz_Sector_Func(const AllPara&, Ev
 // For Heisen continuous modified quasi-periodic sz sector Hamiltonian operator
 string Ham_Evol_Heisen_Con_Modified_Quasi_Sz_Sector_Func(const AllPara&, EvolOP*&);
 
-// For XXZ random shift real floquet operator with Gaussian random fields
-string Flo_Evol_XXZ_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
+// For XXZ gaussian random shift real floquet operator with Gaussian random fields
+string Flo_Evol_XXZ_Gaussian_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
 
 #endif //MBL_V1_MODEL_FUNC_H
