@@ -3,7 +3,7 @@
 //
 
 /*
- * Implementation of FloEvolXXZRandomShiftReal class
+ * Implementation of FloEvolXXZGaussianRandomShiftReal class
  */
 
 #include <complex>
@@ -23,15 +23,15 @@ extern CRandomMersenne RanGen_mersenne; // points in [0,1)
 /*
  * Construct the representation string and abstract type of the class.
  */
-void FloEvolXXZRandomShiftReal::Repr_Init_(){
-    repr_ << "XXZ_Random_Shift_Real_Floquet_L=" << size_ << ",J=" << J_;
-    type_ = "XXZ_Random_Shift_Real_Floquet";
+void FloEvolXXZGaussianRandomShiftReal::Repr_Init_(){
+    repr_ << "XXZ_Gaussian_Random_Shift_Real_Floquet_L=" << size_ << ",J=" << J_;
+    type_ = "XXZ_Gaussian_Random_Shift_Real_Floquet";
 }
 
 /*
  * Initialize random numbers
  */
-void FloEvolXXZRandomShiftReal::Evol_Para_Init() {
+void FloEvolXXZGaussianRandomShiftReal::Evol_Para_Init() {
     gaussian_.resize(size_);
 
     // Random Fields
@@ -59,7 +59,7 @@ void FloEvolXXZRandomShiftReal::Evol_Para_Init() {
 /*
  * Construct the time evolution matrix
  */
-void FloEvolXXZRandomShiftReal::Evol_Construct() {
+void FloEvolXXZGaussianRandomShiftReal::Evol_Construct() {
     if (!constructed_){
         evol_op_ = MatrixXcd::Zero(dim_, dim_);
         evol_op_real_ = MatrixXd::Zero(dim_, dim_);
@@ -137,7 +137,7 @@ void FloEvolXXZRandomShiftReal::Evol_Construct() {
 /*
  * Construct X part of the evolution matrix
  */
-void FloEvolXXZRandomShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
+void FloEvolXXZGaussianRandomShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
     const int int_size = sizeof(int)*CHAR_BIT; // Number of bits in an integer
     for(int i=0; i<dim_; i++){
         bitset<int_size> spin1(i);
@@ -160,7 +160,7 @@ void FloEvolXXZRandomShiftReal::Evol_X_Construct_(MatrixXcd & evol_half_x) {
 /*
  *  Construct z part of the evolution matrix
  */
-void FloEvolXXZRandomShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
+void FloEvolXXZGaussianRandomShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
     const int int_size = sizeof(int)*CHAR_BIT; // Number of bits in an integer
     for (int i=0; i<dim_;i++){
         bitset<int_size> state(i);
@@ -177,7 +177,7 @@ void FloEvolXXZRandomShiftReal::Evol_Z_Construct_(MatrixXcd & evol_z) {
 /*
  * Construct the following Hamiltonian no matter what the input string is
  */
-void FloEvolXXZRandomShiftReal::Get_Ham(MatrixXcd& ham, string basis, string s){
+void FloEvolXXZGaussianRandomShiftReal::Get_Ham(MatrixXcd& ham, string basis, string s){
     ham = MatrixXcd::Zero(dim_, dim_);
     const int int_size = sizeof(int)*CHAR_BIT; // Number of bits in an integer
 
