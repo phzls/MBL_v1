@@ -31,7 +31,7 @@ int main() {
 
 
     parameters.generic.task = "Disorder_Transition";
-    parameters.generic.model = "Heisen_Quasi_Sz_Sector_Modified_Tau_Flo";
+    parameters.generic.model = "XXZ_Gaussian_Random_Shift_Real_Flo";
 
     parameters.generic.size = 4; // System size
     parameters.generic.num_realizations = 2; // Number of realizations
