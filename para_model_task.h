@@ -73,6 +73,9 @@ void Heisen_Con_Modified_Random_Cos_Sz_Sector_Ham_Para(AllPara&, string);
 // For Heisenberg continuous modified quasi-periodic cosine Sz sector Hamiltonian Operator
 void Heisen_Con_Modified_Quasi_Sz_Sector_Ham_Para(AllPara&, string);
 
+// For XXZ gaussian random shift real floquet operator
+void XXZ_Gaussian_Random_Shift_Real_Flo_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 
