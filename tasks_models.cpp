@@ -243,6 +243,16 @@ void TasksModels::Map_Construct_(){
     model_type19 = "Heisen_Con_Modified_Quasi_Sz_Sector_Hamiltonian";
     model_function19 = &Ham_Evol_Heisen_Con_Modified_Quasi_Sz_Sector_Func;
     Model_Map_Insert(model_name19, model_type19, model_function19);
+
+    // Random Shift Real XXZ Floquet Operator with Gaussian fields
+    string model_name20;
+    string model_type20;
+    model_func model_function20;
+
+    model_name20 = "XXZ_Gaussian_Random_Shift_Real_Flo";
+    model_type20 = "XXZ_Gaussian_Random_Shift_Real_Floquet";
+    model_function20 = &Flo_Evol_XXZ_Gaussian_Random_Shift_Real_Func;
+    Model_Map_Insert(model_name20, model_type20, model_function20);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
