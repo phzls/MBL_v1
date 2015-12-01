@@ -296,3 +296,18 @@ string Ham_Evol_Heisen_Con_Modified_Quasi_Sz_Sector_Func(const AllPara& paramete
     return type;
 }
 
+
+// For XXZ random shift real floquet operator with Gaussian random fields
+string Flo_Evol_XXZ_Random_Shift_Real_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double J = parameters.floquet.J; // Disorder strength
+
+    const bool debug = parameters.generic.debug;
+
+    model = new FloEvolXXZRandomShiftReal(size, J, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
+
