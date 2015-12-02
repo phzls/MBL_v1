@@ -772,11 +772,11 @@ public:
 class FloEvolXXZGaussianRandomShiftReal : public FloEvolVanillaReal
 {
 private:
-    const double J_; // Disorder strength
     const double h_; // Longitude field
     const double g_; // Transverse field
     const double tau_; // Time step
 
+    double J_; // Disorder strength
     double sigma_; // The SD for Gaussian random variable
 
     // Construct x part of time evolution operator
@@ -794,8 +794,12 @@ private:
     bool initialized_; // Whether the gaussians and sigma_ have been computed
 
 public:
-    FloEvolXXZGaussianRandomShiftReal(int size, double J, bool debug = false):
+    /*FloEvolXXZGaussianRandomShiftReal(int size, double J, bool debug = false):
             FloEvolVanillaReal(size), J_(J), debug_(debug), h_(0.8090),
+            g_(0.9045), tau_(0.8) { Repr_Init_();}*/
+
+    FloEvolXXZGaussianRandomShiftReal(int size, double sigma, bool debug = false):
+            FloEvolVanillaReal(size), sigma_(sigma), debug_(debug), h_(0.8090),
             g_(0.9045), tau_(0.8) { Repr_Init_();}
 
     // Construct evolutionary operator

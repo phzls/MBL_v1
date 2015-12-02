@@ -46,12 +46,14 @@ void FloEvolXXZGaussianRandomShiftReal::Evol_Para_Init() {
     }
 
     // The SD of gaussian random variables
-    sigma_ = sqrt( (1 - J_*J_) / ( h_*h_ + g_*g_ ) * ( 1 - 1.0/size_ + g_*g_ + h_*h_ ) );
+    // sigma_ = sqrt( (1 - J_*J_) / ( h_*h_ + g_*g_ ) * ( 1 - 1.0/size_ + g_*g_ + h_*h_ ) );
+    J_ = sqrt( 1 - sigma_*sigma_ * ( (h_*h_ + g_*g_)/( 1 - 1.0/size_ + g_*g_ + h_*h_ ) ) );
 
     if (debug_){
         cout << "Gaussian random numbers:" << endl;
         for (int i=0; i<size_;i++) cout << gaussian_[i] << endl;
         cout << "sigma: " << sigma_ << endl;
+        cout << "J: " << J_ << endl;
     }
 
     initialized_ = true;
