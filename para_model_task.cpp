@@ -250,7 +250,7 @@ void Heisen_Con_Modified_Quasi_Sz_Sector_Ham_Para(AllPara& parameters, string co
 void XXZ_Gaussian_Random_Shift_Real_Flo_Para(AllPara& parameters, string count){
     string filename = "xxz_gaussian_random_shift_real_flo_" + count;
     vector<vector<string> > content;
-    string keyword = "sigma";
+    string keyword = "J";
 
     para_file_read(filename, content);
     para_get(filename, content, keyword, parameters.floquet.J);
