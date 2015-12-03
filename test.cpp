@@ -28,7 +28,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolXXZGaussianRandomShiftReal(4, 1.1, true);
+    floquet = new FloEvolXXZUniformRandomShiftReal(8, 1.1, true);
 
     floquet -> Evol_Para_Init();
     floquet -> Evol_Construct();
