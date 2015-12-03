@@ -764,10 +764,14 @@ public:
 
 /*
  * This operator constructs the shifted version of flo_evol_xxz_random which is full version of
- * flo_evol_xxz_random with Gaussian random fields along particular direction.
+ * flo_evol_xxz_random with Gaussian random fields along particular direction. The trace of
+ * the corresponding H^2 is also fixed, which determines the relation between sigma and J.
+ *
  * Effectively, it is sqrt(U_x) * U_z * sqrt(U_x). It utilizes the feature that this operator
  * has real eigenvectors, so only real eigenvectors are returned and only real part of
  * eigenvalues are computed.
+ *
+ * Currently the model is parametrized by sigma
  */
 class FloEvolXXZGaussianRandomShiftReal : public FloEvolVanillaReal
 {
@@ -813,6 +817,86 @@ public:
     void Get_Ham(MatrixXcd&, string, string s = "");
 
     virtual ~FloEvolXXZGaussianRandomShiftReal() {};
+};
+
+
+
+
+
+
+
+
+
+
+
+
+// =============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * This operator constructs the shifted version of flo_evol_xxz_random which is full version of
+ * flo_evol_xxz_random with uniform random fields along particular direction. The trace of
+ * the corresponding H^2 is also fixed, which determines the relation between sigma and J.
+ *
+ * Effectively, it is sqrt(U_x) * U_z * sqrt(U_x). It utilizes the feature that this operator
+ * has real eigenvectors, so only real eigenvectors are returned and only real part of
+ * eigenvalues are computed.
+ *
+ * Currently the model is parametrized by sigma
+ */
+class FloEvolXXZUniformRandomShiftReal : public FloEvolVanillaReal
+{
+private:
+    const double h_; // Longitude field
+    const double g_; // Transverse field
+    const double tau_; // Time step
+
+    double J_; // Disorder strength
+    double sigma_; // The SD for uniform random variable
+
+    // Construct x part of time evolution operator
+    void Evol_X_Construct_(MatrixXcd&);
+
+    // Construct z part of time evolution operator
+    void Evol_Z_Construct_(MatrixXcd&);
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> uniform_; // A set of uniform random variables on -sqrt(3) to sqrt(3)
+
+    bool initialized_; // Whether the gaussians and sigma_ have been computed
+
+public:
+    /*FloEvolXXZUniformRandomShiftReal(int size, double J, bool debug = false):
+            FloEvolVanillaReal(size), J_(J), debug_(debug), h_(0.8090),
+            g_(0.9045), tau_(0.8) { Repr_Init_();}*/
+
+    FloEvolXXZUniformRandomShiftReal(int size, double sigma, bool debug = false):
+            FloEvolVanillaReal(size), sigma_(sigma), debug_(debug), h_(0.8090),
+            g_(0.9045), tau_(0.8) { Repr_Init_();}
+
+    // Construct evolutionary operator
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    // Construct the Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    void Get_Ham(MatrixXcd&, string, string s = "");
+
+    virtual ~FloEvolXXZUniformRandomShiftReal() {};
 };
 
 
