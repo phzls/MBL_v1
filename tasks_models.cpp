@@ -253,6 +253,16 @@ void TasksModels::Map_Construct_(){
     model_type20 = "XXZ_Gaussian_Random_Shift_Real_Floquet";
     model_function20 = &Flo_Evol_XXZ_Gaussian_Random_Shift_Real_Func;
     Model_Map_Insert(model_name20, model_type20, model_function20);
+
+    // Random Shift Real XXZ Floquet Operator with Uniform fields
+    string model_name21;
+    string model_type21;
+    model_func model_function21;
+
+    model_name21 = "XXZ_Uniform_Random_Shift_Real_Flo";
+    model_type21 = "XXZ_Uniform_Random_Shift_Real_Floquet";
+    model_function21 = &Flo_Evol_XXZ_Uniform_Random_Shift_Real_Func;
+    Model_Map_Insert(model_name21, model_type21, model_function21);
 }
 
 void TasksModels::Task_Map_Insert(const string& task_name, const string& task_type,
