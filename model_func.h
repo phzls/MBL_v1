@@ -75,4 +75,7 @@ string Ham_Evol_Heisen_Con_Modified_Quasi_Sz_Sector_Func(const AllPara&, EvolOP*
 // For XXZ gaussian random shift real floquet operator with Gaussian random fields
 string Flo_Evol_XXZ_Gaussian_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
 
+// For XXZ uniform random shift real floquet operator with uniform random fields
+string Flo_Evol_XXZ_Uniform_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
+
 #endif //MBL_V1_MODEL_FUNC_H

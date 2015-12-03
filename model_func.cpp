@@ -311,3 +311,18 @@ string Flo_Evol_XXZ_Gaussian_Random_Shift_Real_Func(const AllPara& parameters, E
     return type;
 }
 
+
+// For XXZ uniform random shift real floquet operator with Gaussian random fields
+string Flo_Evol_XXZ_Uniform_Random_Shift_Real_Func(const AllPara& parameters, EvolOP*& model){
+    const int size = parameters.generic.size; // System Size
+    const double sigma = parameters.floquet.J; // SD for Uniform
+
+    const bool debug = parameters.generic.debug;
+
+    model = new FloEvolXXZUniformRandomShiftReal(size, sigma, debug);
+
+    string type = model -> Type();
+
+    return type;
+}
+
