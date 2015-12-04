@@ -63,7 +63,7 @@ void DisorderModelTransition::Ent_var_all_mean_compute_(AllPara const & paramete
  * To get the desired result, we use the following formula:
  * Assume "local" mean for each realization is x, the mean of all x at one J for all realizations is y
  * "local" variance is w for each realization, then the "variance" with mean y for each realization is
- * w*N/(N-1) + (x-y)^z, where N is the number of eigenstates for each realization
+ * w*N/(N-1) + (x-y)^2, where N is the number of eigenstates for each realization
  * Here w is computed as unbiased, but in the end we use a biased as we only use 1 ddof for estimating y
  */
 void DisorderModelTransition::Ent_var_all_mean_out_(AllPara const & parameters, const string& name) {
