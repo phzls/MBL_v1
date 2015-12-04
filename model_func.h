@@ -78,4 +78,12 @@ string Flo_Evol_XXZ_Gaussian_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
 // For XXZ uniform random shift real floquet operator with uniform random fields
 string Flo_Evol_XXZ_Uniform_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
 
+// For XXZ gaussian random Z shift real floquet operator with Gaussian random fields
+// along z direction
+string Flo_Evol_XXZ_Gaussian_Z_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
+
+// For XXZ uniform random Z shift real floquet operator with uniform random fields
+// along z direction
+string Flo_Evol_XXZ_Uniform_Z_Random_Shift_Real_Func(const AllPara&, EvolOP*&);
+
 #endif //MBL_V1_MODEL_FUNC_H
