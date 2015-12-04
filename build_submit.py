@@ -52,8 +52,9 @@ def build_submit_file_read(tasks_models,  count, file_modify):
             print fp.bcolors.FAIL + "Answer must be Yes(Y) or No(N)." + fp.bcolors.ENDC
 
     # Generate Model data
-    fp.para_gen(data.model.lower(), tasks_models, data, count)
-    file_modify[data.model.lower()] = True
+    model_filename = fp.Model_Name_Gen(data.model)
+    fp.para_gen(model_filename, tasks_models, data, count)
+    file_modify[model_filename] = True
 
     # Generate Task data
     fp.para_gen(data.task.lower(), tasks_models, data, count)

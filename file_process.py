@@ -471,6 +471,15 @@ def display_file(filename, data, count):
 
     f.close()
 
-
+def Model_Name_Gen(model):
+    """
+    Generates filename from the model name
+    :param model: Name of the model
+    :return: Filename for the corresponding model
+    """
+    if (model.startswith("XXZ_") and model.endswith("Z_Random_Shift_Real_Flo")):
+        return "xxz_general_z_random_shift_real_flo"
+    else:
+        return data.model.lower()
 
 
