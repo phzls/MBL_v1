@@ -79,6 +79,9 @@ void XXZ_Gaussian_Random_Shift_Real_Flo_Para(AllPara&, string);
 // For XXZ uniform random shift real floquet operator
 void XXZ_Uniform_Random_Shift_Real_Flo_Para(AllPara&, string);
 
+// For XXZ general z random shift real floquet operator
+void XXZ_General_Z_Random_Shift_Real_Flo_Para(AllPara&, string);
+
 
 //=================================== TASKS =====================================================
 

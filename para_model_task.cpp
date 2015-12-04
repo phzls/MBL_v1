@@ -266,6 +266,17 @@ void XXZ_Uniform_Random_Shift_Real_Flo_Para(AllPara& parameters, string count){
     para_get(filename, content, keyword, parameters.floquet.J);
 }
 
+// For XXZ general z random shift real floquet operator
+void XXZ_General_Z_Random_Shift_Real_Flo_Para(AllPara& parameters, string count){
+    string filename = "xxz_general_z_random_shift_real_flo_" + count;
+    vector<vector<string> > content;
+    string keyword = "J";
+
+    para_file_read(filename, content);
+    para_get(filename, content, keyword, parameters.floquet.J);
+}
+
+
 
 
 //=================================== TASKS =====================================================
