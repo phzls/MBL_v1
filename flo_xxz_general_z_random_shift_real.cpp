@@ -30,9 +30,9 @@ void FloEvolXXZGeneralZRandomShiftReal::Repr_Init_(){
         abort();
     }
 
-    repr_ << "XXZ_" << rv_type_ << "_Random_Shift_Real_Floquet_L=" << size_
+    repr_ << "XXZ_" << rv_type_ << "_Z_Random_Shift_Real_Floquet_L=" << size_
           << ",sigma=" << sigma_;
-    type_ = "XXZ_" + rv_type_ + "_Random_Shift_Real_Floquet";
+    type_ = "XXZ_" + rv_type_ + "_Z_Random_Shift_Real_Floquet";
 }
 
 /*
