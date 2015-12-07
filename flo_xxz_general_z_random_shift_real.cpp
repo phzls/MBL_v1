@@ -84,7 +84,7 @@ void FloEvolXXZGeneralZRandomShiftReal::Evol_Construct() {
     }
 
     if(!initialized_){
-        cout << "Gaussians for " << repr_ << " have not been constructed." << endl;
+        cout << rv_type_ << " for " << repr_ << " have not been constructed." << endl;
         abort();
     }
 
