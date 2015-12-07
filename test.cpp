@@ -28,7 +28,7 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolXXZGeneralZRandomShiftReal(4, 0.6, "Uniform", true);
+    floquet = new FloEvolXXZGeneralRandomFieldShiftReal(4, 1.1, "Uniform", true);
 
     cout << "Model name:" << endl;
     cout << floquet->Repr() << endl;
