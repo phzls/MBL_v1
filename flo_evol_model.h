@@ -975,4 +975,80 @@ public:
 
 
 
+
+
+
+
+
+// ===============================================================================================
+
+
+
+
+
+
+
+/*
+ * This operator constructs the shifted version of flo_evol_xxz_random_field which is full
+ * version of flo_evol_xxz_random with generic random fields along (g,0,h) direction.
+ * The trace of the corresponding H^2 is fixed in the thermodynamic limit, which gives a
+ * relation between J and sigma, the SD of random fields. The random variables constructed
+ * all have mean 0 and variance 1. Its type is passed in as arguments during construction
+ *
+ * Effectively, it is sqrt(U_f) * U_z * sqrt(U_f), where U_f is the exponential of the whole
+ * random field part of the Hamiltonian. It utilizes the feature that this operator
+ * has real eigenvectors, so only real eigenvectors are returned and only real part of
+ * eigenvalues are computed.
+ *
+ * Currently the model is parametrized by sigma
+ */
+class FloEvolXXZGeneralRandomFieldShiftReal : public FloEvolVanillaReal
+{
+private:
+    const double h_; // Longitude field
+    const double g_; // Transverse field
+    const double tau_; // Time step
+
+    double sigma_; // The SD for random variable
+    double J_; // The strenght of zz coupling
+
+    const string rv_type_; // The type of random variable
+
+    // Construct x part of time evolution operator
+    void Evol_X_Construct_(MatrixXcd&);
+
+    // Construct z part of time evolution operator
+    void Evol_Z_Construct_(MatrixXcd&);
+
+    void Repr_Init_(); // Initialize the representation string stream as well as type
+
+    const bool debug_; // Used for debug outputs
+
+    vector<double> random_; // A set of random variables with mean 0 and variance 1
+
+    bool initialized_; // Whether the random variables and sigma_ have been computed
+
+public:
+    FloEvolXXZGeneralRandomFieldShiftReal(int size, double sigma, string rv_type = "Gaussian",
+                                      bool debug = false): FloEvolVanillaReal(size), sigma_(sigma),
+                                                           debug_(debug), h_(0.8090), g_(0.9045),
+                                                           tau_(0.8), rv_type_(rv_type)
+    { Repr_Init_();}
+
+    // Construct evolutionary operator
+    void Evol_Construct();
+
+    // Initialize random fields
+    void Evol_Para_Init();
+
+    // Construct the Hamiltonian. The second string specifies the basis
+    // and the last string specifies any extra requirement
+    void Get_Ham(MatrixXcd&, string, string s = "");
+
+    virtual ~FloEvolXXZGeneralRandomFieldShiftReal() {};
+};
+
+
+
+
 #endif //MBL_V1_FLO_EVOL_MODEL_H
