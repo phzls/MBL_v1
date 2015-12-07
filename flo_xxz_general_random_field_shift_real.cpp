@@ -60,7 +60,7 @@ void FloEvolXXZGeneralRandomFieldShiftReal::Evol_Para_Init() {
         }
     }
 
-    J_ = sqrt( 1 - sigma_*sigma_ * ( (h_*h_ + g_*g_)/( 1 - 1.0/size_ + g_*g_ + h_*h_ ) ) );
+    J_ = sqrt( 1 - sigma_*sigma_ * ( (h_*h_ + g_*g_)/( 1 + g_*g_ + h_*h_ ) ) );
 
     if (debug_){
         cout << rv_type_ << " random numbers:" << endl;
@@ -170,7 +170,8 @@ void FloEvolXXZGeneralRandomFieldShiftReal::Evol_X_Construct_(MatrixXcd & evol_h
 
                 double factor = (J_ + sigma_*random_[k]) * sq * tau_ / 2.0;
 
-                if(spin1 == spin2) prod *= ( cos(factor) - h_ / sq * spin1 * sin(factor) );
+                if(spin1 == spin2) prod *= complex<double>( cos(factor),
+                                                            - h_ / sq * spin1 * sin(factor) );
                 else prod *= complex<double>( 0, -g_/sq*sin(factor) );
             }
 
