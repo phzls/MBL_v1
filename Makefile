@@ -24,13 +24,13 @@ mbl_objects = main.o $(models) $(tasks) $(disorder_transition) $(small_methods) 
 task_model_objects = task_type_print.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(model_evolution) $(op_auto_corr)
 auto_objects = main_auto.o $(models) $(tasks) $(disorder_transition) $(small_methods) $(transitions) $(controls) $(para_get) $(model_evolution) $(op_auto_corr)
 
-CXXFLAGS = -O3 -fopenmp
+CXXFLAGS = -O3 -fopenmp -g3
 CXX = g++
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 CXX = icpc
-CXXFLAGS += -I $(INC)
+CXXFLAGS = -O3 -fopenmp -I $(INC)
 endif
 
 OUT = flo_xxz_all_random_simp_shift_real_12
