@@ -479,6 +479,8 @@ def Model_Name_Gen(model):
     """
     if (model.startswith("XXZ_") and model.endswith("Z_Random_Shift_Real_Flo")):
         return "xxz_general_z_random_shift_real_flo"
+    elif (model.startswith("XXZ_") and model.endswith("Random_Field_Shift_Real_Flo")):
+        return "xxz_general_random_field_shift_real_flo"
     else:
         return data.model.lower()
 
