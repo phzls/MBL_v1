@@ -925,7 +925,7 @@ public:
  * has real eigenvectors, so only real eigenvectors are returned and only real part of
  * eigenvalues are computed.
  *
- * Currently the model is parametrized by sigma^2
+ * Currently the model is parametrized by sqrt(1-sigma^2)
  */
 class FloEvolXXZGeneralZRandomShiftReal : public FloEvolVanillaReal
 {
@@ -953,9 +953,9 @@ private:
     bool initialized_; // Whether the random variables and sigma_ have been computed
 
 public:
-    FloEvolXXZGeneralZRandomShiftReal(int size, double sigma_square, string rv_type = "Gaussian",
+    FloEvolXXZGeneralZRandomShiftReal(int size, double transverse, string rv_type = "Gaussian",
                                       bool debug = false): FloEvolVanillaReal(size),
-                                                           sigma_(sqrt(sigma_square)),
+                                                           sigma_(sqrt(1-transverse*transverse)),
                                                            debug_(debug), h_(0.8090), g_(0.9045),
                                                            tau_(0.8), rv_type_(rv_type)
     { Repr_Init_();}
