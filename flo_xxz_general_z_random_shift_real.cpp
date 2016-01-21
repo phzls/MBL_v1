@@ -75,9 +75,6 @@ void FloEvolXXZGeneralZRandomShiftReal::Evol_Para_Init() {
 void FloEvolXXZGeneralZRandomShiftReal::Evol_Para_Copy(const vector< vector<double> >& random) {
     random_.resize(size_);
 
-    //cout << "Evol_Para_Copy not tested!!" << endl;
-    //abort();
-
     if(random.size() != 1){
         cout << type_ << " has only one set of random fields." << endl;
         cout << "Obtained: " << random.size() << endl;
