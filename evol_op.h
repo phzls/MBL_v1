@@ -54,6 +54,11 @@ public:
     // These parameters will only exist for concrete model classes.
     virtual void Evol_Para_Init() = 0;
 
+    // Pass in a vector to initialize the matrix. It does not block the calling of Evol_Para_Init
+    // which will then override the parameters
+    virtual void Evol_Para_Copy(const vector< vector<double> >&) = 0;
+    virtual void Evol_Para_Copy(const vector< vector< complex<double> > >&) = 0;
+
     // Constructing time evolution matrix
     virtual void Evol_Construct() = 0;
 
