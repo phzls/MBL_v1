@@ -47,6 +47,13 @@ public:
 
     void Evol_Para_Init();
 
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >&);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
+
     virtual ~FloEvolIsingRandomSimp() {};
 };
 
@@ -95,6 +102,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >&);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
@@ -148,6 +162,13 @@ public:
 
     // Initialize quasi-periodic fields
     void Evol_Para_Init();
+
+    // Copy quasi-periodic fields
+    void Evol_Para_Copy(const vector< vector<double> >&);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real quasi-periodic fields to copy." << endl;
+        abort();
+    }
 
     virtual ~FloEvolIsingQuasiSimpShiftReal() {};
 };
@@ -203,6 +224,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     virtual ~FloEvolIsingAllRandomSimpShiftReal() {};
 };
@@ -260,6 +288,13 @@ public:
     // Initialize quasi-periodic fields
     void Evol_Para_Init();
 
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
+
     virtual ~FloEvolIsingAllQuasiSimpShiftReal() {};
 };
 
@@ -314,6 +349,13 @@ public:
     // Initialize random fields
     void Evol_Para_Init();
 
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
+
     virtual ~FloEvolIsingRandomSimpShiftCosReal() {};
 };
 
@@ -332,7 +374,7 @@ public:
 
 /*
  * This operator constructs the shifted version of flo_evol_xxz_random_simp using a cosine with
- * phases as the longitude field. The period can also be veried
+ * phases as the longitude field. The period can also be varied
  */
 class FloEvolIsingRandomSimpShiftCosRealTau : public FloEvolVanillaReal
 {
@@ -361,6 +403,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
@@ -436,6 +485,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const {
@@ -524,8 +580,15 @@ public:
     // in config_
     void Evol_Construct();
 
-    // Initialize random fields
+    // Initialize quasi-periodic fields
     void Evol_Para_Init();
+
+    // Copy quasi-periodic fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const {
@@ -625,6 +688,13 @@ public:
     // Initialize random fields
     void Evol_Para_Init();
 
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
+
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const {
         cout << "Not implemented yet." << endl;
@@ -713,6 +783,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct Transition Matrix
     void Transition_Compute(TransitionMatrix&, const string&) const {
@@ -812,6 +889,13 @@ public:
     // Initialize random fields
     void Evol_Para_Init();
 
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
+
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
     void Get_Ham(MatrixXcd&, string, string s = "");
@@ -892,6 +976,13 @@ public:
     // Initialize random fields
     void Evol_Para_Init();
 
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
+
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
     void Get_Ham(MatrixXcd&, string, string s = "");
@@ -965,6 +1056,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
@@ -1041,6 +1139,13 @@ public:
 
     // Initialize random fields
     void Evol_Para_Init();
+
+    // Copy random fields
+    void Evol_Para_Copy(const vector< vector<double> >& para);
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " must have real random fields to copy." << endl;
+        abort();
+    }
 
     // Construct the Hamiltonian. The second string specifies the basis
     // and the last string specifies any extra requirement
