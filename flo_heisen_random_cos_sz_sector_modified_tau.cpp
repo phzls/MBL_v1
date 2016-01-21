@@ -53,6 +53,46 @@ void FloEvolHeisenRandomCosSzSectorModifiedTau::Evol_Para_Init() {
 }
 
 /*
+ * Copy random numbers
+ */
+void FloEvolHeisenRandomCosSzSectorModifiedTau::Evol_Para_Copy(const vector< vector<double> >& random_h) {
+    random_h_.resize(size_);
+
+    cout << "Evol_Para_Copy not tested!!" << endl;
+    abort();
+
+    if(random_h.size() != 1){
+        cout << type_ << " has only one set of random fields." << endl;
+        cout << "Obtained: " << random_h.size() << endl;
+        abort();
+    }
+
+    if(random_h[0].size() != size_){
+        cout << "Incorrect number of random fields passed in." << endl;
+        cout << "Expected: " << size_ << " Obtained: " << random_h[0].size() << endl;
+        abort();
+    }
+
+    // Copy random fields and check the bounds
+    const double lower_bound = -h_;
+    const double upper_bound = h_;
+    for(int i=0; i<size_; i++){
+        double val = random_h[0][i];
+        if(val < lower_bound || val > upper_bound){
+            cout << "Random field passed in at pos " << i << " is outside of bound." << endl;
+            cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+            cout << "Val: " << val << endl;
+        }
+        random_h_[i] = val;
+    }
+
+    if (debug_){
+        cout << "Random longitude field:" << endl;
+        for (int i=0; i<size_;i++) cout << random_h_[i] << endl;
+    }
+}
+
+/*
  * Compute the dimension of the restricted Hilbert space for that sector
  */
 void FloEvolHeisenRandomCosSzSectorModifiedTau::Dim_Cal_() {

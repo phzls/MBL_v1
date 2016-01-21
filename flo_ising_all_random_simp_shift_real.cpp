@@ -63,6 +63,91 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Init() {
 }
 
 /*
+ * Copy random fields. The order must be h, J, g
+ */
+void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Copy(const vector<vector<double> >& fields) {
+    random_h_.resize(size_);
+    random_J_.resize(size_-1);
+    random_g_.resize(size_);
+
+    cout << "Evol_Para_Copy not tested!!" << endl;
+    abort();
+
+    if(fields.size() != 1){
+        cout << type_ << " has three sets of random fields." << endl;
+        cout << "Obtained: " << fields.size() << endl;
+        abort();
+    }
+
+    // Copy h
+    if(fields[0].size() != size_){
+        cout << "Incorrect number of h fields passed in for " << 0 << endl;
+        cout << "Expected: " << size_ << " Obtained: " << fields[0].size() << endl;
+        abort();
+    }
+    double lower_bound = 1 - W_;
+    double upper_bound = 1 + W_;
+    for(int i=0; i<size_; i++){
+        double val = fields[0][i];
+        if(val < lower_bound || val > upper_bound){
+            cout << "h field passed in at pos " << i << " is outside of bound." << endl;
+            cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+            cout << "Val: " << val << endl;
+        }
+        random_h_[i] = val;
+    }
+
+    // Copy J
+    if(fields[1].size() != size_-1){
+        cout << "Incorrect number of J fields passed in for " << 1 << endl;
+        cout << "Expected: " << size_-1 << " Obtained: " << fields[1].size() << endl;
+        abort();
+    }
+    for(int i=0; i<size_-1; i++){
+        double val = fields[1][i];
+        if(val < lower_bound || val > upper_bound){
+            cout << "J field passed in at pos " << i << " is outside of bound." << endl;
+            cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+            cout << "Val: " << val << endl;
+        }
+        random_J_[i] = val;
+    }
+
+    // Copy g
+    if(fields[2].size() != size_){
+        cout << "Incorrect number of g fields passed in for " << 2 << endl;
+        cout << "Expected: " << size_ << " Obtained: " << fields[2].size() << endl;
+        abort();
+    }
+    lower_bound = sqrt(1-W_) * (1-W_) * (1-W_);
+    upper_bound = sqrt(1-W_);
+    for(int i=0; i<size_; i++){
+        double val = fields[2][i];
+        if(val < lower_bound || val > upper_bound){
+            cout << "g field passed in at pos " << i << " is outside of bound." << endl;
+            cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+            cout << "Val: " << val << endl;
+        }
+        random_g_[i] = val;
+    }
+
+
+    if (debug_){
+        cout << "Random longitude field:" << endl;
+        for (int i=0; i<size_;i++) cout << random_h_[i] << endl;
+        cout << endl;
+
+        cout << "Random NN interaction:" << endl;
+        for (int i=0; i<size_-1;i++) cout << random_J_[i] << endl;
+        cout << endl;
+
+        cout << "Random transverse field:" << endl;
+        for (int i=0; i<size_;i++) cout << random_g_[i] << endl;
+        cout << endl;
+    }
+}
+
+/*
  * Construct the time evolution matrix
  */
 void FloEvolIsingAllRandomSimpShiftReal::Evol_Construct() {

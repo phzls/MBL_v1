@@ -60,6 +60,44 @@ void FloEvolXXZGaussianRandomShiftReal::Evol_Para_Init() {
 }
 
 /*
+ * Copy random numbers
+ */
+void FloEvolXXZGaussianRandomShiftReal::Evol_Para_Copy(const vector< vector<double> >& gaussian) {
+    gaussian_.resize(size_);
+
+    cout << "Evol_Para_Copy not tested!!" << endl;
+    abort();
+
+    if(gaussian.size() != 1){
+        cout << type_ << " has only one set of random fields." << endl;
+        cout << "Obtained: " << gaussian.size() << endl;
+        abort();
+    }
+
+    if(gaussian[0].size() != size_){
+        cout << "Incorrect number of random fields passed in." << endl;
+        cout << "Expected: " << size_ << " Obtained: " << gaussian[0].size() << endl;
+        abort();
+    }
+
+    // Copy Random Fields
+    gaussian_ = gaussian[0];
+
+    // The SD of gaussian random variables
+    // sigma_ = sqrt( (1 - J_*J_) / ( h_*h_ + g_*g_ ) * ( 1 - 1.0/size_ + g_*g_ + h_*h_ ) );
+    J_ = sqrt( 1 - sigma_*sigma_ * ( (h_*h_ + g_*g_)/( 1 - 1.0/size_ + g_*g_ + h_*h_ ) ) );
+
+    if (debug_){
+        cout << "Gaussian random numbers:" << endl;
+        for (int i=0; i<size_;i++) cout << gaussian_[i] << endl;
+        cout << "sigma: " << sigma_ << endl;
+        cout << "J: " << J_ << endl;
+    }
+
+    initialized_ = true;
+}
+
+/*
  * Construct the time evolution matrix
  */
 void FloEvolXXZGaussianRandomShiftReal::Evol_Construct() {

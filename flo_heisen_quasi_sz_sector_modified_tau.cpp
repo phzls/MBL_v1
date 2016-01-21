@@ -33,7 +33,7 @@ void FloEvolHeisenQuasiSzSectorModifiedTau::Repr_Init_(){
 }
 
 /*
- * Initialize random numbers
+ * Initialize quasi-periodic fields
  */
 void FloEvolHeisenQuasiSzSectorModifiedTau::Evol_Para_Init() {
     random_h_.resize(size_);
@@ -50,6 +50,46 @@ void FloEvolHeisenQuasiSzSectorModifiedTau::Evol_Para_Init() {
         cout << "Longitude fields:" << endl;
         for (int i=0; i<size_; i++) cout << random_h_[i] << endl;
         cout << endl;
+    }
+}
+
+/*
+ * Copy quasi-periodic fields
+ */
+void FloEvolHeisenQuasiSzSectorModifiedTau::Evol_Para_Copy(const vector< vector<double> >& random_h) {
+    random_h_.resize(size_);
+
+    cout << "Evol_Para_Copy not tested!!" << endl;
+    abort();
+
+    if(random_h.size() != 1){
+        cout << type_ << " has only one set of quasi-periodic fields." << endl;
+        cout << "Obtained: " << random_h.size() << endl;
+        abort();
+    }
+
+    if(random_h[0].size() != size_){
+        cout << "Incorrect number of quasi-periodic fields passed in." << endl;
+        cout << "Expected: " << size_ << " Obtained: " << random_h[0].size() << endl;
+        abort();
+    }
+
+    // Copy quasi-periodic fields and check the bounds
+    const double lower_bound = -h_;
+    const double upper_bound = h_;
+    for(int i=0; i<size_; i++){
+        double val = random_h[0][i];
+        if(val < lower_bound || val > upper_bound){
+            cout << "Quasi-periodic field passed in at pos " << i << " is outside of bound." << endl;
+            cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+            cout << "Val: " << val << endl;
+        }
+        random_h_[i] = val;
+    }
+
+    if (debug_){
+        cout << "Quasi-periodic fields:" << endl;
+        for (int i=0; i<size_;i++) cout << random_h_[i] << endl;
     }
 }
 

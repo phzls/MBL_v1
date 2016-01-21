@@ -57,6 +57,52 @@ void FloEvolXXZUniformRandomShiftReal::Evol_Para_Init() {
 }
 
 /*
+ * Copy random numbers
+ */
+void FloEvolXXZUniformRandomShiftReal::Evol_Para_Copy(const vector< vector<double> >& uniform) {
+    uniform_.resize(size_);
+
+    cout << "Evol_Para_Copy not tested!!" << endl;
+    abort();
+
+    if(uniform.size() != 1){
+        cout << type_ << " has only one set of random fields." << endl;
+        cout << "Obtained: " << uniform.size() << endl;
+        abort();
+    }
+
+    if(uniform[0].size() != size_){
+        cout << "Incorrect number of random fields passed in." << endl;
+        cout << "Expected: " << size_ << " Obtained: " << uniform[0].size() << endl;
+        abort();
+    }
+
+    // Copy Random Fields and check the bounds
+    const double lower_bound = -sqrt(3);
+    const double upper_bound = sqrt(3);
+    for(int i=0; i<size_; i++){
+        double val = uniform[0][i];
+        if(val < lower_bound || val > upper_bound){
+            cout << "Random field passed in at pos " << i << " is outside of bound." << endl;
+            cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+            cout << "Val: " << val << endl;
+        }
+        uniform_[i] = val;
+    }
+
+    J_ = sqrt( 1 - sigma_*sigma_ * ( (h_*h_ + g_*g_)/( 1 - 1.0/size_ + g_*g_ + h_*h_ ) ) );
+
+    if (debug_){
+        cout << "Uniform random numbers:" << endl;
+        for (int i=0; i<size_;i++) cout << uniform_[i] << endl;
+        cout << "sigma: " << sigma_ << endl;
+        cout << "J: " << J_ << endl;
+    }
+
+    initialized_ = true;
+}
+
+/*
  * Construct the time evolution matrix
  */
 void FloEvolXXZUniformRandomShiftReal::Evol_Construct() {

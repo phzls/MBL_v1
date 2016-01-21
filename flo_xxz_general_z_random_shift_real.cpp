@@ -70,6 +70,54 @@ void FloEvolXXZGeneralZRandomShiftReal::Evol_Para_Init() {
 }
 
 /*
+ * Copy random numbers
+ */
+void FloEvolXXZGeneralZRandomShiftReal::Evol_Para_Copy(const vector< vector<double> >& random) {
+    random_.resize(size_);
+
+    cout << "Evol_Para_Copy not tested!!" << endl;
+    abort();
+
+    if(random.size() != 1){
+        cout << type_ << " has only one set of random fields." << endl;
+        cout << "Obtained: " << random.size() << endl;
+        abort();
+    }
+
+    if(random[0].size() != size_){
+        cout << "Incorrect number of random fields passed in." << endl;
+        cout << "Expected: " << size_ << " Obtained: " << random[0].size() << endl;
+        abort();
+    }
+
+    // Copy Random Fields and check the bounds if there are
+    if(rv_type_ == "Gaussian"){
+        random_ = random[0];
+    }
+    else if(rv_type_ == "Uniform"){
+        const double lower_bound = -sqrt(3);
+        const double upper_bound = sqrt(3);
+        for(int i=0; i<size_; i++){
+            double val = random[0][i];
+            if(val < lower_bound || val > upper_bound){
+                cout << "Random field passed in at pos " << i << " is outside of bound." << endl;
+                cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
+                cout << "Val: " << val << endl;
+            }
+            random_[i] = val;
+        }
+    }
+
+    if (debug_){
+        cout << "sigma: " << sigma_ << endl;
+        cout << rv_type_ << " random numbers:" << endl;
+        for (int i=0; i<size_;i++) cout << random_[i] << endl;
+    }
+
+    initialized_ = true;
+}
+
+/*
  * Construct the time evolution matrix
  */
 void FloEvolXXZGeneralZRandomShiftReal::Evol_Construct() {
