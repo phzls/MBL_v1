@@ -82,6 +82,7 @@ void FloEvolHeisenRandomCosSzSectorShiftRealTau::Evol_Para_Copy(const vector< ve
             cout << "Random field passed in at pos " << i << " is outside of bound." << endl;
             cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
             cout << "Val: " << val << endl;
+            abort();
         }
         random_h_[i] = val;
     }

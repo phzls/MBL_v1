@@ -93,6 +93,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Copy(const vector<vector<doub
             cout << "h field passed in at pos " << i << " is outside of bound." << endl;
             cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
             cout << "Val: " << val << endl;
+            abort();
         }
         random_h_[i] = val;
     }
@@ -109,6 +110,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Copy(const vector<vector<doub
             cout << "J field passed in at pos " << i << " is outside of bound." << endl;
             cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
             cout << "Val: " << val << endl;
+            abort();
         }
         random_J_[i] = val;
     }
@@ -127,6 +129,7 @@ void FloEvolIsingAllRandomSimpShiftReal::Evol_Para_Copy(const vector<vector<doub
             cout << "g field passed in at pos " << i << " is outside of bound." << endl;
             cout << "Lower bound: " << lower_bound << " Upper bound: " << upper_bound << endl;
             cout << "Val: " << val << endl;
+            abort();
         }
         random_g_[i] = val;
     }
