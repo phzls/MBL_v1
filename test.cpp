@@ -28,17 +28,36 @@ int main(){
     clock_t time_begin = clock();
     EvolOP* floquet;
 
-    floquet = new FloEvolXXZGeneralZRandomShiftReal(2, 0.8, "Uniform", true);
+    int L = 10;
+    floquet = new FloEvolXXZGeneralZRandomShiftReal(L, 0.8, "Uniform", false);
 
     cout << "Model name:" << endl;
     cout << floquet->Repr() << endl;
 
-    floquet -> Evol_Para_Init();
+    //floquet -> Evol_Para_Init();
+
+    vector< vector<double> > random(1, vector<double>(L) );
+    cout << "Passed in random numbers:" << endl;
+    for(int i=0; i<L; i++){
+        //double u = RanGen_mersenne.Random();
+        //random[0][i] = 2*sqrt(3)*u - sqrt(3);
+        //cout << random[0][i] << endl;
+
+        double u1 = RanGen_mersenne.Random();
+        double u2 = RanGen_mersenne.Random();
+        random[0][i] = sqrt(-2*log(u1))*cos(2*Pi*u2);
+        cout << random[0][i] << endl;
+        i++;
+        if(i<L) random[0][i] = sqrt(-2*log(u1))*sin(2*Pi*u2);
+        cout << random[0][i] << endl;
+    }
+    floquet -> Evol_Para_Copy(random);
+
     floquet -> Evol_Construct();
     clock_t time_end = clock();
     cout << "Construction time: " << double(time_end - time_begin) / CLOCKS_PER_SEC << "s" << endl;
 
-    time_begin = clock();
+    /*time_begin = clock();
     floquet -> Evol_Diag();
 
     vector<MatrixXd> evec;
@@ -70,7 +89,7 @@ int main(){
 
     cout << "Eigenvectors:" << endl;
     real_matrix_write(evec[0]);
-    cout << endl;
+    cout << endl;*/
 
     /*cout << "Eigenvalues:" << endl;
     for (int i=0; i<eval.size();i++){
@@ -86,8 +105,8 @@ int main(){
         cout << endl;
     }*/
 
-    delete floquet;
-    floquet = NULL;
+    //delete floquet;
+    //floquet = NULL;
 
     return 0;
 }
