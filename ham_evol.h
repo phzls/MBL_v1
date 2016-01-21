@@ -75,6 +75,16 @@ public:
         }
     }
 
+    // Copying fields not implemented
+    void Evol_Para_Copy(const vector< vector<double> >& para){
+        cout << type_ << " copying real fields not implemented" << endl;
+        abort();
+    }
+    void Evol_Para_Copy(const vector< vector< complex<double> > >& para){
+        cout << type_ << " copying complex fields not implemented" << endl;
+        abort();;
+    }
+
     // Return the string format of representation string stream
     string Repr() const {return repr_.str();}
 
