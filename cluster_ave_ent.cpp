@@ -40,7 +40,7 @@ ClusterAveEnt::ClusterAveEnt(const AllPara& parameters) :
     for(int i=0; i<J_N; i++){
         ave_ent_[i].resize(order_N-1);
 
-        for(int j=0; j<order_N; j++){
+        for(int j=0; j<order_N-1; j++){
             ave_ent_[i][j].resize(run_N);
 
             for(int k=0; k<run_N; k++) ave_ent_[i][j][k] = 0;
@@ -48,20 +48,27 @@ ClusterAveEnt::ClusterAveEnt(const AllPara& parameters) :
     }
 
     repr_ = "Average Entropy";
+    model_type_determined_ = false;
 }
 
 // Compute entropies from all orders by first constructing models.
-void ClusterAveEnt::Compute(const AllPara& local_parameters, const ClusterData& cluster_data,
+void ClusterAveEnt::Compute(AllPara& local_parameters, const ClusterData& cluster_data,
                             const ClusterLocalInfo& local_info) {
     // Total number of sites used on the maximum chain. The cut is at the middle
     const int total_size = 2*(order_N-1);
 
-    if(cluster_data.model_para.size() != total_size){
-        cout << "Incompatible order to number of model parameters" << endl;
-        cout << "Number of order: " << order_N << endl;
-        cout << "Number of model parameters: " << cluster_data.model_para.size() << endl;
-        abort();
+    for(int i=0; i<cluster_data.model_para[local_info.run_index].size(); i++){
+        if(cluster_data.model_para[local_info.run_index][i].size() != total_size){
+            cout << "Incompatible order to number of model parameters at " << local_info.run_index <<
+                    "th realization and " << i << "th vector" << endl;
+            cout << "Number of order: " << order_N << endl;
+            cout << "Number of model parameters: " <<
+                    cluster_data.model_para[local_info.run_index][i].size() << endl;
+            abort();
+        }
     }
+
+
 
     // Record of all entropy. The outer index is order, and the inner index is the starting
     // position of the sub-chain
@@ -71,6 +78,7 @@ void ClusterAveEnt::Compute(const AllPara& local_parameters, const ClusterData& 
                    << local_info.run_index << endl;
     for(int i=0; i<order_N-1; i++){
         int order = i+2; // This defines the length of the model
+        local_parameters.generic.size = order; // Size of the system
 
         all_ent[i].resize(1+1);
 
@@ -87,12 +95,19 @@ void ClusterAveEnt::Compute(const AllPara& local_parameters, const ClusterData& 
                 }
             }
 
+            if(debug) cout << "order: " << i <<  " starting position: " << j << endl;
+
             EvolOP* model;
             tasks_models.Model(model_name, local_parameters, model);
             model->Evol_Para_Copy(model_para); // Copy parameters
             model->Evol_Construct(); // Construct the model matrix
             model->Evol_Diag(true); // Diagonalize the matrix and keep eigenvectors
             model->OP_Erase(); // Erase the matrix
+
+            if(local_info.J_index == 0 && local_info.run_index == 0 && !model_type_determined_){
+                model_type_ = model->Type();
+                model_type_determined_ = true;
+            }
 
             vector<double> ent_vec; // Record entropy for each eigenstate
 
@@ -106,7 +121,6 @@ void ClusterAveEnt::Compute(const AllPara& local_parameters, const ClusterData& 
             ave_ent /= double(ent_vec.size());
 
             if(debug){
-                cout << "order: " << i <<  " starting position: " << j << endl;
                 cout << "Raw entropy: " << ave_ent << endl;
             }
 
@@ -158,14 +172,14 @@ void ClusterAveEnt::Output(const AllPara& parameters, const string& name) {
     }
 
     for (int i=0; i< J_N; i++){
-        if (ave_ent_[i].size() != order_N){
+        if (ave_ent_[i].size() != order_N-1){
             cout << "Wrong number of order at " << i <<"th J for linked cluster average entropy."
                  << endl;
-            cout << "Expected Number: " << order_N << endl;
+            cout << "Expected Number: " << order_N-1 << endl;
             cout << "Actual Number: " << ave_ent_[i].size() << endl;
             abort();
         }
-        for(int j=0; j<order_N; j++){
+        for(int j=0; j<order_N-1; j++){
             if (ave_ent_[i][j].size() != run_N){
                 cout << "Not enough number of realizations at " << i <<"th J "
                      << "and " << j << "th order for linked cluster average entropy." << endl;
@@ -177,8 +191,11 @@ void ClusterAveEnt::Output(const AllPara& parameters, const string& name) {
     }
 
     stringstream filename;
-    filename << name << ",size=" << size << ",Run=" << run_N << ",J_N=" << J_N << ",J_min=" << J_min
-    << ",J_max=" << J_max <<",order=" << order_N << ",ave_entropy";
+    string new_name = name;
+    if(name.size() > 0) new_name += ",";
+    filename << new_name << model_type_ << ",size=" << size << ",Run=" << run_N
+    << ",J_N=" << J_N << ",J_min=" << J_min << ",J_max=" << J_max <<",order="
+    << order_N << ",ave_entropy";
     if (version > 0) filename <<",v" << version;
     filename << ".txt";
 
@@ -191,7 +208,7 @@ void ClusterAveEnt::Output(const AllPara& parameters, const string& name) {
         if (J_N > 1) J = J_min + i * (J_max - J_min)/(J_N-1);
         else J = J_min;
 
-        for(int j=0; j<order_N;j++){
+        for(int j=0; j<order_N-1;j++){
             double order = j+2;
             double mean,sd;
             generic_mean_sd(ave_ent_[i][j], mean, sd);
