@@ -164,6 +164,15 @@ int main() {
 //============================================================================================
 
 
+    // Methods to be called for studying coefficients of linked clusters
+    // Average entropy among all eigenstates
+    parameters.linked_cluster_para.linked_cluster_cal["Average Entropy"] = true;
+
+
+
+//===============================================================================================
+
+
 
 
     Eigen::initParallel();
