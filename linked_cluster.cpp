@@ -56,7 +56,7 @@ void linked_cluster(const AllPara& parameters){
         // For now assume all parameters are real
         cluster_data.model_para.resize(num_realization);
         for(int j=0; j<num_realization;j++){
-            model_para_generation(parameters, cluster_data.model_para[j], order_N);
+            model_para_generation(parameters, cluster_data.model_para[j], 2*(order_N-1));
         }
 
         #pragma omp parallel num_threads(threads_N)
