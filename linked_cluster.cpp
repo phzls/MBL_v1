@@ -32,8 +32,6 @@ void linked_cluster(const AllPara& parameters){
 
     LinkedCluster linked_cluster(parameters);
 
-    AllPara local_parameters(parameters); // Local parameters which can be changed
-
     Eigen::initParallel();
 
     cout << "Linked Cluster:" << endl;
@@ -42,10 +40,7 @@ void linked_cluster(const AllPara& parameters){
         if (J_N > 1) J = J_min + i * (J_max - J_min)/(J_N-1);
         else J = J_min;
 
-        local_parameters.floquet.J = J;
-        local_parameters.floquet.total_spin_z = total_spin_z;
-
-        cout << "J: " << local_parameters.floquet.J << endl;
+        cout << "J: " << J << endl;
         cout << "Start computation." << endl;
 
         clock_t time_begin = clock();
@@ -67,8 +62,9 @@ void linked_cluster(const AllPara& parameters){
                 ClusterLocalInfo local_info;
                 local_info.J_index = i;
                 local_info.run_index = k;
+                local_info.J = J;
 
-                linked_cluster.Compute(local_parameters, cluster_data, local_info);
+                linked_cluster.Compute(parameters, cluster_data, local_info);
             }
         }
 
