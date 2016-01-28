@@ -20,16 +20,16 @@ void model_entropy_left_2(const EvolOP* model, int left_size, vector<double>& en
     const int dim = model->Get_Dim();
     const int size = model->Get_Size();
 
-    if( (1<<(size-1)) != dim){
+    if( (1<<size) != dim){
         cout << "model " << model->Repr() << " may not have local dimension 2" << endl;
-        cout << "size: " << size << " dim: " << dim << endl;
+        cout << "size: " << size << " dim: " << dim << " Expected dim: " << (1<<dim) << endl;
         abort();
     }
 
     ent.resize(dim);
     for(int i=0; i<ent.size(); i++) ent[i] = 0;
 
-    if(model->Evec_Type() == "real"){
+    if(model->Evec_Type() == "Real"){
         // Vector for eigenvectors in basic binary basis
         vector<vector<double > > evec_basic(dim);
         for (int i=0; i<evec_basic.size();i++) evec_basic[i].resize(dim);
@@ -49,7 +49,7 @@ void model_entropy_left_2(const EvolOP* model, int left_size, vector<double>& en
             ent[i] = state_entropy_left_2(evec, size, left_size);
         }
     }
-    else if(model->Evec_Type() == "complex"){
+    else if(model->Evec_Type() == "Complex"){
         // Vector for eigenvectors in basic binary basis
         vector<vector< complex<double> > > evec_basic(dim);
         for (int i=0; i<evec_basic.size();i++) evec_basic[i].resize(dim);
