@@ -343,7 +343,7 @@ def exception(name, data, para_temp_data):
     """
     exc = None
     if data.task is not None:
-        if (data.task == "Disorder_Transition") and (name == "J"):
+        if ((data.task == "Disorder_Transition") or (data.task == "Linked_Cluster")) and (name == "J"):
             exc = "Previous"
         if data.model is not None:
            if (data.task == "Disorder_Transition") and (data.model.find("Flo") != -1) and (name == "mid_half_spectrum"):
