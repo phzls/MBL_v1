@@ -194,9 +194,8 @@ void ClusterAveEnt::Output(const AllPara& parameters, const string& name) {
     stringstream filename;
     string new_name = name;
     if(name.size() > 0) new_name += ",";
-    filename << new_name << model_type_ << ",size=" << size << ",Run=" << run_N
-    << ",J_N=" << J_N << ",J_min=" << J_min << ",J_max=" << J_max <<",order="
-    << order_N << ",ave_entropy";
+    filename << new_name << model_type_ << ",Run=" << run_N << ",J_N=" << J_N << ",J_min="
+    << J_min << ",J_max=" << J_max <<",Order=" << order_N << ",ave_entropy";
     if (version > 0) filename <<",v" << version;
     filename << ".txt";
 
