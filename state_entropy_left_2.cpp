@@ -17,6 +17,12 @@ using namespace std;
 using namespace Eigen;
 
 double state_entropy_left_2(const VectorXd& state, int size, int left_size){
+    if(left_size<1 || left_size >= size){
+        cout << "left_size is too short or too long for entropy calculation" << endl;
+        cout << "left_size: " << left_size << " size: " << size << endl;
+        abort();
+    }
+
     MatrixXd reduced_d; // Reduced density matrix
     reduced_density_left_2(state, size, left_size, reduced_d);
 
@@ -43,6 +49,12 @@ double state_entropy_left_2(const VectorXd& state, int size, int left_size){
 }
 
 double state_entropy_left_2(const VectorXcd& state, int size, int left_size){
+    if(left_size<1 || left_size >= size){
+        cout << "left_size is too short or too long for entropy calculation" << endl;
+        cout << "left_size: " << left_size << " size: " << size << endl;
+        abort();
+    }
+
     MatrixXcd reduced_d; // Reduced density matrix
     reduced_density_left_2(state, size, left_size, reduced_d);
 
