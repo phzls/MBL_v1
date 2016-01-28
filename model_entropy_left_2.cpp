@@ -26,6 +26,12 @@ void model_entropy_left_2(const EvolOP* model, int left_size, vector<double>& en
         abort();
     }
 
+    if(! model->Get_Eigen_Computed()){
+        cout << "model " << model->Repr() << " has no eigenvectors computed for"
+             << " model entropy computation" << endl;
+        abort();
+    }
+
     ent.resize(dim);
     for(int i=0; i<ent.size(); i++) ent[i] = 0;
 
