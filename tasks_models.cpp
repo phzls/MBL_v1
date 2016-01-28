@@ -54,6 +54,17 @@ void TasksModels::Map_Construct_(){
     task_function4 = &flo_op_auto_corr;
     Task_Map_Insert(task_name4, task_type4, task_function4);
 
+    // Study the coefficients of linked clusters.
+    // For now all model parameters must be real
+    string task_name5;
+    string task_type5;
+    task_func task_function5;
+
+    task_name5 = "Linked_Cluster";
+    task_type5 = "All";
+    task_function5 = &linked_cluster;
+    Task_Map_Insert(task_name5, task_type5, task_function5);
+
     // Random Simple Ising Floquet Operator
     string model_name1;
     string model_type1;

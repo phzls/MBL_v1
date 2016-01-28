@@ -32,4 +32,10 @@ void multi_model_time_evolution(const AllPara&);
  */
 void flo_op_auto_corr(const AllPara&);
 
+/*
+ * Study the coefficients of linked clusters.
+ * For now all model parameters must be real
+ */
+void linked_cluster(const AllPara&);
+
 #endif //MBL_V1_TASK_FUNC_H
