@@ -42,6 +42,8 @@ public:
 
     // The name of the corresponding cluster computation
     string Name() const {return repr_;}
+
+    virtual ~ClusterCal(){};
 };
 
 
