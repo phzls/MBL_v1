@@ -548,3 +548,32 @@ void Op_Auto_Corr_Para(AllPara& parameters, string count){
     }
 }
 
+// For linked cluster
+void Linked_Cluster_Para(AllPara& parameters, string count){
+    string filename = "linked_cluster_" + count;
+    vector<vector<string> > content;
+
+    para_file_read(filename, content);
+
+    string keyword = "J_N";
+    para_get(filename, content, keyword, parameters.floquet.J_N);
+
+    keyword = "J_max";
+    para_get(filename, content, keyword, parameters.floquet.J_max);
+
+    keyword = "J_min";
+    para_get(filename, content, keyword, parameters.floquet.J_min);
+
+    vector<string> linked_cluster_map;
+    vector<string>::iterator it;
+
+    linked_cluster_map.push_back("Average Entropy");
+
+    for(it = linked_cluster_map.begin(); it != linked_cluster_map.end(); it++){
+        bool choice;
+        keyword = *it;
+        para_get(filename, content, keyword, choice);
+        parameters.linked_cluster_para.linked_cluster_cal[keyword] = choice;
+    }
+}
+
