@@ -27,6 +27,7 @@ struct ClusterLocalInfo
 {
     int J_index; // The index for J
     int run_index; // The index for realization
+    double J; // Coupling strength
 };
 
 // A base class for various calculations
@@ -36,7 +37,7 @@ protected:
     string repr_; // Representation string
 
 public:
-    virtual void Compute(AllPara&, const ClusterData&, const ClusterLocalInfo&) = 0;
+    virtual void Compute(const AllPara&, const ClusterData&, const ClusterLocalInfo&) = 0;
     // The string gives the first part of filename
     virtual void Output(const AllPara&, const std::string&) = 0;
 
@@ -62,7 +63,7 @@ public:
         cluster_initialize_(parameters);
     }
 
-    void Compute(AllPara& local_parameters, const ClusterData& cluster_data,
+    void Compute(const AllPara& local_parameters, const ClusterData& cluster_data,
                  const ClusterLocalInfo& local_info){
         for(int i=0; i<cluster_cal_.size(); i++){
             cluster_cal_[i]->Compute(local_parameters, cluster_data, local_info);
@@ -101,7 +102,7 @@ private:
     bool model_type_determined_; // Whether model type has been determiend
 public:
     // std::vector<EvolOP*> op_vec; // A vector of various operators
-    void Compute(AllPara&, const ClusterData&, const ClusterLocalInfo&);
+    void Compute(const AllPara&, const ClusterData&, const ClusterLocalInfo&);
     void Output(const AllPara&, const string&);
 
     ClusterAveEnt(const AllPara&);
