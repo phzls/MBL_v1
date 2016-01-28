@@ -12,7 +12,7 @@ void LinkedCluster::cluster_initialize_(const AllPara& parameters) {
     while(it != parameters.linked_cluster_para.linked_cluster_cal.end()){
         if(it->second){
             string name = it->first;
-            if(name == "Average Entropy") cluster_cal_.push_back( new ClusterAveEnt(parameters) );
+            if(name == "Average_Entropy") cluster_cal_.push_back( new ClusterAveEnt(parameters) );
             else{
                 cout << "Unknown name " << name << " for linked cluster computation" << endl;
                 abort();
