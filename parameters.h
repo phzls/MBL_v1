@@ -164,6 +164,15 @@ struct FloOpAutoCorr
 };
 
 /*
+ * Parameters used for linked cluster calculation
+ */
+struct LinkedClusterPara
+{
+    map<string, bool> linked_cluster_cal; // Determine what to compute for linked clusters
+    int order;
+};
+
+/*
  * All parameters.
  */
 struct AllPara
@@ -200,6 +209,9 @@ struct AllPara
 
     // Parameters for operator autocorrelation under Floquet dynamics
     FloOpAutoCorr flo_op_auto_corr;
+
+    // Parameters for linked cluster calculation
+    LinkedClusterPara linked_cluster_para;
 };
 
 #endif //MBL_V1_PARAMETERS_H
