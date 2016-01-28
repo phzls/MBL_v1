@@ -7,16 +7,19 @@
 using namespace std;
 
 void LinkedCluster::cluster_initialize_(const AllPara& parameters) {
-
     map<string,bool>::const_iterator it = parameters.linked_cluster_para.linked_cluster_cal.begin();
     while(it != parameters.linked_cluster_para.linked_cluster_cal.end()){
         if(it->second){
             string name = it->first;
-            if(name == "Average_Entropy") cluster_cal_.push_back( new ClusterAveEnt(parameters) );
+            if(name == "Average_Entropy"){
+                ClusterCal* ptr = new ClusterAveEnt(parameters);
+                cluster_cal_.push_back(ptr);
+            }
             else{
                 cout << "Unknown name " << name << " for linked cluster computation" << endl;
                 abort();
             }
         }
+        ++it;
     }
 }
