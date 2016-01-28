@@ -36,7 +36,7 @@ protected:
     string repr_; // Representation string
 
 public:
-    virtual void Compute(const AllPara&, const ClusterData&, const ClusterLocalInfo&) = 0;
+    virtual void Compute(AllPara&, const ClusterData&, const ClusterLocalInfo&) = 0;
     // The string gives the first part of filename
     virtual void Output(const AllPara&, const std::string&) = 0;
 
@@ -60,7 +60,7 @@ public:
         cluster_initialize_(parameters);
     }
 
-    void Compute(const AllPara& local_parameters, const ClusterData& cluster_data,
+    void Compute(AllPara& local_parameters, const ClusterData& cluster_data,
                  const ClusterLocalInfo& local_info){
         for(int i=0; i<cluster_cal_.size(); i++){
             cluster_cal_[i]->Compute(local_parameters, cluster_data, local_info);
@@ -95,9 +95,11 @@ private:
     const int run_N; // Number of realizations
     const string model_name; // Name of the model
     const bool debug; // Whether the program will output debug information
+    string model_type_; // Type of the model
+    bool model_type_determined_; // Whether model type has been determiend
 public:
     // std::vector<EvolOP*> op_vec; // A vector of various operators
-    void Compute(const AllPara&, const ClusterData&, const ClusterLocalInfo&);
+    void Compute(AllPara&, const ClusterData&, const ClusterLocalInfo&);
     void Output(const AllPara&, const string&);
 
     ClusterAveEnt(const AllPara&);
