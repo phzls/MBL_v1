@@ -32,8 +32,11 @@ def size_run_file_read(tasks_models,  count, file_modify):
         elif detail.lower().startswith('y'):
             run_detail = True
             fp.display_file("generic_para", data, count)
-            fp.display_file(data.model.lower(), data, count-1) # This file's name has not been updated yet
-            fp.display_file(data.task.lower(), data, count-1) # This file's name has not been updated yet
+            model_filename = fp.Model_Name_Gen(data.model)
+            # This file's name has not been updated yet
+            fp.display_file(model_filename, data, count-1)
+            # This file's name has not been updated yet
+            fp.display_file(data.task.lower(), data, count-1)
 
     return data
 
