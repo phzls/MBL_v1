@@ -52,7 +52,7 @@ ClusterAveEnt::ClusterAveEnt(const AllPara& parameters) :
 }
 
 // Compute entropies from all orders by first constructing models.
-void ClusterAveEnt::Compute(AllPara& local_parameters, const ClusterData& cluster_data,
+void ClusterAveEnt::Compute(const AllPara& parameters, const ClusterData& cluster_data,
                             const ClusterLocalInfo& local_info) {
     // Total number of sites used on the maximum chain. The cut is at the middle
     const int total_size = 2*(order_N-1);
@@ -68,11 +68,11 @@ void ClusterAveEnt::Compute(AllPara& local_parameters, const ClusterData& cluste
         }
     }
 
-
+    AllPara local_parameters(parameters); // Local parameters which can be changed
 
     // Record of all entropy. The outer index is order, and the inner index is the starting
     // position of the sub-chain
-    vector< vector<double> > all_ent(order_N);
+    vector< vector<double> > all_ent(order_N-1);
 
     if(debug) cout << "J index: " << local_info.J_index << " run index: "
                    << local_info.run_index << endl;
@@ -80,7 +80,7 @@ void ClusterAveEnt::Compute(AllPara& local_parameters, const ClusterData& cluste
         int order = i+2; // This defines the length of the model
         local_parameters.generic.size = order; // Size of the system
 
-        all_ent[i].resize(1+1);
+        all_ent[i].resize(order-1);
 
         // Model parameters
         vector< vector<double> > model_para(cluster_data.model_para[local_info.run_index].size(),
