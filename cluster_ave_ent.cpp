@@ -79,6 +79,7 @@ void ClusterAveEnt::Compute(const AllPara& parameters, const ClusterData& cluste
     for(int i=0; i<order_N-1; i++){
         int order = i+2; // This defines the length of the model
         local_parameters.generic.size = order; // Size of the system
+        local_parameters.floquet.J = local_info.J; // Coupling strength
 
         all_ent[i].resize(order-1);
 
