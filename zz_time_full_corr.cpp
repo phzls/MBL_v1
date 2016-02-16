@@ -284,8 +284,8 @@ double zz_time_full_corr_extra_terms(const vector< vector< complex<double> > >& 
                 if (k & 1 == 1) right_spin = 1;
                 if (k < half_dim ) left_spin = -1;
 
-                left_temp += left_spin * conj(evec_basic[i][k]) * evec_basic[j][k];
-                right_temp += right_spin * evec_basic[i][k] * conj(evec_basic[j][k]);
+                left_temp += double(left_spin) * conj(evec_basic[i][k]) * evec_basic[j][k];
+                right_temp += double(right_spin) * evec_basic[i][k] * conj(evec_basic[j][k]);
             }
 
             complex<double> sqr = left_temp*left_temp*right_temp*right_temp;
