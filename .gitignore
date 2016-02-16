@@ -36,6 +36,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.dSYM
 
 
 # Data files #
