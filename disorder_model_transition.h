@@ -49,6 +49,9 @@ struct DisorderModelData
     // Mean value of entropy for each realization
     vector< vector<double> > ent_mean;
 
+    // End-to-end sigma_z-sigma_z time four-point full correlation
+    vector< vector<double> > zz_time_full_corr;
+
     // Number of eigenstates, assuming it's the same across the calculation
     int model_dim;
 
@@ -208,6 +211,11 @@ private:
     void Ham_level_stats_ave_init_(const AllPara&);
     void Ham_level_stats_ave_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
     void Ham_level_stats_ave_out_(const AllPara&, const string&);
+
+    // For full end to end zz time four-point correlation where two extra terms are also included
+    void ZZ_time_full_corr_init_(const AllPara&);
+    void ZZ_time_full_corr_compute_(const AllPara&, const EvolOP*, const DisorderLocalInfo&);
+    void ZZ_time_full_corr_out_(const AllPara&, const string&);
 
 public:
     DisorderModelTransition(const AllPara& parameters) : evec_type_real_(true), eval_type_real_(true),
