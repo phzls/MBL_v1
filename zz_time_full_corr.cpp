@@ -9,7 +9,7 @@
  *
  * Compared to the zz_time_corr, it has two extra terms:
  *     1/Z^2 sum_{n,m} ( |<n|sigma^z_0|m>|^2 |<n|sigma^z_L|m>|^2 + <n|sigma^z_0|m>^2 <m|sigma^z_L|n>^2 )
- * Note this term is real.
+ * Note this term is real and n \neq m to avoid double counting.
  */
 
 #include <vector>
@@ -223,6 +223,9 @@ double zz_time_full_corr_extra_terms(const vector< vector<double> >& evec_basic,
 
     for (int i=0; i<evec_basic.size(); i++){
         for (int j=0; j<evec_basic.size(); j++){
+            // Avoid double counting
+            if (i == j) continue;
+
             // Record values for each pair of eigenstate
             double left_temp = 0;
             double right_temp = 0;
@@ -266,6 +269,9 @@ double zz_time_full_corr_extra_terms(const vector< vector< complex<double> > >& 
 
     for (int i=0; i<evec_basic.size(); i++){
         for (int j=0; j<evec_basic.size(); j++){
+            // Avoid double counting
+            if (i == j) continue;
+            
             // Record values for each pair of eigenstate
             complex<double> left_temp = 0;
             complex<double> right_temp = 0;
